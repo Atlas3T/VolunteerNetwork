@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e910e6e6f61745448a72efa8da878e6c" Name="Diagram1">
+        <EntityTypeShape EntityType="VolunteerNetworkModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VolunteerNetworkModel.AspNetRole" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="VolunteerNetworkModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="VolunteerNetworkModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VolunteerNetworkModel.AspNetUser" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="VolunteerNetworkModel.Country" Width="1.5" PointX="4.75" PointY="6.75" IsExpanded="true" />
+        <AssociationConnector Association="VolunteerNetworkModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="VolunteerNetworkModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="VolunteerNetworkModel.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="VolunteerNetworkModel.User" Width="1.5" PointX="5.25" PointY="11.25" />
+        <AssociationConnector Association="VolunteerNetworkModel.FK_User_AspNetUsers" />
+        <EntityTypeShape EntityType="VolunteerNetworkModel.SupportTask" Width="1.5" PointX="7.5" PointY="16.125" />
+        <AssociationConnector Association="VolunteerNetworkModel.FK_Task_User3" />
+        <AssociationConnector Association="VolunteerNetworkModel.FK_Task_User11" />
+        <AssociationConnector Association="VolunteerNetworkModel.FK_Task_User21" />
+        <EntityTypeShape EntityType="VolunteerNetworkModel.uk_towns" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="VolunteerNetworkModel.City" Width="1.5" PointX="9.375" PointY="0.75" />
+        <EntityTypeShape EntityType="VolunteerNetworkModel.State" Width="1.5" PointX="9.375" PointY="3.75" />
+        <EntityTypeShape EntityType="VolunteerNetworkModel.ShopperAddress" Width="1.5" PointX="7.5" PointY="8.875" />
+        <EntityTypeShape EntityType="VolunteerNetworkModel.VolunteerAddress" Width="1.5" PointX="10.5" PointY="8.875" />
+        <AssociationConnector Association="VolunteerNetworkModel.FK_ShopperAddress_User" />
+        <AssociationConnector Association="VolunteerNetworkModel.FK_VolunteerAddress_User" />
+        <AssociationConnector Association="VolunteerNetworkModel.FK_ShopperAddress_Countries" />
+        <AssociationConnector Association="VolunteerNetworkModel.FK_VolunteerAddress_Countries" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

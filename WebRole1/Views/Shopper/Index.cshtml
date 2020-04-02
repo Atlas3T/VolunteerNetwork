@@ -1,0 +1,42 @@
+﻿@model WebRole1.Models.TicketListModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<table style="width:100%">
+    <tr>
+        <th>title</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Edit record</th>
+        <th>Get record details</th>
+    </tr>
+    @foreach (var item in Model.tickets)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(m => item.Title, new { @class = "form-control" })
+    </td>
+    <td>
+        @Html.DisplayFor(m => item.Description, new { @class = "form-control" })
+    </td>
+    <td>
+        @Html.DisplayFor(m => item.Status, new { @class = "form-control" })
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.TicketNumber })
+    </td>
+    <td>
+        @Html.ActionLink("Details", "Details", new { id = item.TicketNumber })
+    </td>
+</tr>
+    }
+</table>

@@ -1,0 +1,945 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="VolunteerNetworkModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaims">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogins">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUserRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="uk_towns">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="45" />
+          <Property Name="county" Type="varchar" MaxLength="32" />
+          <Property Name="country" Type="varchar" MaxLength="16" />
+          <Property Name="grid_reference" Type="varchar" MaxLength="8" />
+          <Property Name="easting" Type="int" />
+          <Property Name="northing" Type="int" />
+          <Property Name="latitude" Type="numeric" Precision="8" Scale="5" />
+          <Property Name="longitude" Type="numeric" Precision="8" Scale="5" />
+          <Property Name="elevation" Type="int" />
+          <Property Name="postcode_sector" Type="varchar" MaxLength="6" />
+          <Property Name="local_government_area" Type="varchar" MaxLength="44" />
+          <Property Name="nuts_region" Type="varchar" MaxLength="24" />
+          <Property Name="type" Type="varchar" MaxLength="13" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AspNetUsersId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Forename" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ShopperAddress">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="AddressLine1" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="AddressLine2" Type="nvarchar" MaxLength="255" />
+          <Property Name="AddressLine3" Type="nvarchar" MaxLength="255" />
+          <Property Name="AddressLine4" Type="nvarchar" MaxLength="255" />
+          <Property Name="Locality" Type="int" Nullable="false" />
+          <Property Name="Region" Type="int" Nullable="false" />
+          <Property Name="Postcode" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Country" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SupportTask">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="RaisedBy" Type="int" Nullable="false" />
+          <Property Name="ClosedBy" Type="int" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="DateRaised" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="DateClosed" Type="datetime2" Precision="7" />
+          <Property Name="AssignedTo" Type="int" />
+          <Property Name="severity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cities">
+          <Key>
+            <PropertyRef Name="CityId" />
+          </Key>
+          <Property Name="CityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StateId" Type="int" Nullable="false" />
+          <Property Name="CityName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="StateName" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Countries">
+          <Key>
+            <PropertyRef Name="CountryID" />
+          </Key>
+          <Property Name="CountryID" Type="int" Nullable="false" />
+          <Property Name="CountryName" Type="varchar" MaxLength="50" />
+          <Property Name="TwoCharCountryCode" Type="char" MaxLength="2" />
+          <Property Name="ThreeCharCountryCode" Type="char" MaxLength="3" />
+        </EntityType>
+        <EntityType Name="States">
+          <Key>
+            <PropertyRef Name="StateId" />
+          </Key>
+          <Property Name="StateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CountryId" Type="int" Nullable="false" />
+          <Property Name="StateName" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="VolunteerAddress">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="AddressLine1" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="AddressLine2" Type="nvarchar" MaxLength="255" />
+          <Property Name="AddressLine3" Type="nvarchar" MaxLength="255" />
+          <Property Name="AddressLine4" Type="nvarchar" MaxLength="255" />
+          <Property Name="Locality" Type="int" Nullable="false" />
+          <Property Name="Region" Type="int" Nullable="false" />
+          <Property Name="Postcode" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Country" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShopperAddress_Countries">
+          <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
+          <End Role="ShopperAddress" Type="Self.ShopperAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="CountryID" />
+            </Principal>
+            <Dependent Role="ShopperAddress">
+              <PropertyRef Name="Country" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShopperAddress_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="ShopperAddress" Type="Self.ShopperAddress" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ShopperAddress">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Task_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="SupportTask" Type="Self.SupportTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SupportTask">
+              <PropertyRef Name="RaisedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Task_User1">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="SupportTask" Type="Self.SupportTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SupportTask">
+              <PropertyRef Name="ClosedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Task_User2">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="SupportTask" Type="Self.SupportTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SupportTask">
+              <PropertyRef Name="AssignedTo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="AspNetUsersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VolunteerAddress_Countries">
+          <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
+          <End Role="VolunteerAddress" Type="Self.VolunteerAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="CountryID" />
+            </Principal>
+            <Dependent Role="VolunteerAddress">
+              <PropertyRef Name="Country" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VolunteerAddress_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="VolunteerAddress" Type="Self.VolunteerAddress" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VolunteerAddress">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VolunteerNetworkModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="uk_towns" EntityType="Self.uk_towns" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShopperAddress" EntityType="Self.ShopperAddress" Schema="shopper" store:Type="Tables" />
+          <EntitySet Name="SupportTask" EntityType="Self.SupportTask" Schema="shopper" store:Type="Tables" />
+          <EntitySet Name="Cities" EntityType="Self.Cities" Schema="utilities" store:Type="Tables" />
+          <EntitySet Name="Countries" EntityType="Self.Countries" Schema="utilities" store:Type="Tables" />
+          <EntitySet Name="States" EntityType="Self.States" Schema="utilities" store:Type="Tables" />
+          <EntitySet Name="VolunteerAddress" EntityType="Self.VolunteerAddress" Schema="volunteer" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShopperAddress_Countries" Association="Self.FK_ShopperAddress_Countries">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="ShopperAddress" EntitySet="ShopperAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShopperAddress_User" Association="Self.FK_ShopperAddress_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="ShopperAddress" EntitySet="ShopperAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Task_User" Association="Self.FK_Task_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="SupportTask" EntitySet="SupportTask" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Task_User1" Association="Self.FK_Task_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="SupportTask" EntitySet="SupportTask" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Task_User2" Association="Self.FK_Task_User2">
+            <End Role="User" EntitySet="User" />
+            <End Role="SupportTask" EntitySet="SupportTask" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_AspNetUsers" Association="Self.FK_User_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VolunteerAddress_Countries" Association="Self.FK_VolunteerAddress_Countries">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="VolunteerAddress" EntitySet="VolunteerAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VolunteerAddress_User" Association="Self.FK_VolunteerAddress_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="VolunteerAddress" EntitySet="VolunteerAddress" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VolunteerNetworkModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AspNetRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaims" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUserLogin">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogins" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
+          <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
+          <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <NavigationProperty Name="Users" Relationship="VolunteerNetworkModel.FK_User_AspNetUsers" FromRole="AspNetUser" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="CountryID" />
+          </Key>
+          <Property Name="CountryID" Type="Int32" Nullable="false" />
+          <Property Name="CountryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TwoCharCountryCode" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="ThreeCharCountryCode" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="ShopperAddresses" Relationship="VolunteerNetworkModel.FK_ShopperAddress_Countries" FromRole="Country" ToRole="ShopperAddress" />
+          <NavigationProperty Name="VolunteerAddresses" Relationship="VolunteerNetworkModel.FK_VolunteerAddress_Countries" FromRole="Country" ToRole="VolunteerAddress" />
+          </EntityType>
+        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserClaims">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserLogins">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AspNetUserRoles">
+          <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="VolunteerNetworkEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
+          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaim" />
+          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogin" />
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+          <EntitySet Name="Countries" EntityType="Self.Country" />
+          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
+          <EntitySet Name="Users" EntityType="VolunteerNetworkModel.User" />
+          <AssociationSet Name="FK_User_AspNetUsers" Association="VolunteerNetworkModel.FK_User_AspNetUsers">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <EntitySet Name="SupportTasks" EntityType="VolunteerNetworkModel.SupportTask" />
+          <AssociationSet Name="FK_Task_User3" Association="VolunteerNetworkModel.FK_Task_User3">
+            <End Role="User" EntitySet="Users" />
+            <End Role="SupportTask" EntitySet="SupportTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Task_User11" Association="VolunteerNetworkModel.FK_Task_User11">
+            <End Role="User" EntitySet="Users" />
+            <End Role="SupportTask" EntitySet="SupportTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Task_User21" Association="VolunteerNetworkModel.FK_Task_User21">
+            <End Role="User" EntitySet="Users" />
+            <End Role="SupportTask" EntitySet="SupportTasks" />
+          </AssociationSet>
+          <EntitySet Name="uk_towns" EntityType="VolunteerNetworkModel.uk_towns" />
+          <EntitySet Name="Cities" EntityType="VolunteerNetworkModel.City" />
+          <EntitySet Name="States" EntityType="VolunteerNetworkModel.State" />
+          <EntitySet Name="ShopperAddresses" EntityType="VolunteerNetworkModel.ShopperAddress" />
+          <EntitySet Name="VolunteerAddresses" EntityType="VolunteerNetworkModel.VolunteerAddress" />
+          <AssociationSet Name="FK_ShopperAddress_User" Association="VolunteerNetworkModel.FK_ShopperAddress_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ShopperAddress" EntitySet="ShopperAddresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VolunteerAddress_User" Association="VolunteerNetworkModel.FK_VolunteerAddress_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="VolunteerAddress" EntitySet="VolunteerAddresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShopperAddress_Countries" Association="VolunteerNetworkModel.FK_ShopperAddress_Countries">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="ShopperAddress" EntitySet="ShopperAddresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VolunteerAddress_Countries" Association="VolunteerNetworkModel.FK_VolunteerAddress_Countries">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="VolunteerAddress" EntitySet="VolunteerAddresses" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AspNetUsersId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Forename" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Surname" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="AspNetUser" Relationship="VolunteerNetworkModel.FK_User_AspNetUsers" FromRole="User" ToRole="AspNetUser" />
+          <NavigationProperty Name="SupportTasks" Relationship="VolunteerNetworkModel.FK_Task_User3" FromRole="User" ToRole="SupportTask" />
+          <NavigationProperty Name="SupportTasks1" Relationship="VolunteerNetworkModel.FK_Task_User11" FromRole="User" ToRole="SupportTask" />
+          <NavigationProperty Name="SupportTasks2" Relationship="VolunteerNetworkModel.FK_Task_User21" FromRole="User" ToRole="SupportTask" />
+          <NavigationProperty Name="ShopperAddress" Relationship="VolunteerNetworkModel.FK_ShopperAddress_User" FromRole="User" ToRole="ShopperAddress" />
+          <NavigationProperty Name="VolunteerAddress" Relationship="VolunteerNetworkModel.FK_VolunteerAddress_User" FromRole="User" ToRole="VolunteerAddress" />
+        </EntityType>
+        <Association Name="FK_User_AspNetUsers">
+          <End Type="VolunteerNetworkModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="VolunteerNetworkModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="AspNetUsersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SupportTask">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="RaisedBy" Type="Int32" Nullable="false" />
+          <Property Name="ClosedBy" Type="Int32" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="DateRaised" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="DateClosed" Type="DateTime" Precision="7" />
+          <Property Name="AssignedTo" Type="Int32" />
+          <Property Name="severity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="VolunteerNetworkModel.FK_Task_User3" FromRole="SupportTask" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="VolunteerNetworkModel.FK_Task_User11" FromRole="SupportTask" ToRole="User" />
+          <NavigationProperty Name="User2" Relationship="VolunteerNetworkModel.FK_Task_User21" FromRole="SupportTask" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Task_User3">
+          <End Type="VolunteerNetworkModel.User" Role="User" Multiplicity="1" />
+          <End Type="VolunteerNetworkModel.SupportTask" Role="SupportTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SupportTask">
+              <PropertyRef Name="RaisedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Task_User11">
+          <End Type="VolunteerNetworkModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="VolunteerNetworkModel.SupportTask" Role="SupportTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SupportTask">
+              <PropertyRef Name="ClosedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Task_User21">
+          <End Type="VolunteerNetworkModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="VolunteerNetworkModel.SupportTask" Role="SupportTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SupportTask">
+              <PropertyRef Name="AssignedTo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="uk_towns">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="county" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="country" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="grid_reference" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="easting" Type="Int32" />
+          <Property Name="northing" Type="Int32" />
+          <Property Name="latitude" Type="Decimal" Precision="8" Scale="5" />
+          <Property Name="longitude" Type="Decimal" Precision="8" Scale="5" />
+          <Property Name="elevation" Type="Int32" />
+          <Property Name="postcode_sector" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="local_government_area" Type="String" MaxLength="44" FixedLength="false" Unicode="false" />
+          <Property Name="nuts_region" Type="String" MaxLength="24" FixedLength="false" Unicode="false" />
+          <Property Name="type" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="CityId" />
+          </Key>
+          <Property Name="CityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StateId" Type="Int32" Nullable="false" />
+          <Property Name="CityName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StateName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="StateId" />
+          </Key>
+          <Property Name="StateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CountryId" Type="Int32" Nullable="false" />
+          <Property Name="StateName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ShopperAddress">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="AddressLine1" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine2" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine3" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine4" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Locality" Type="Int32" Nullable="false" />
+          <Property Name="Region" Type="Int32" Nullable="false" />
+          <Property Name="Postcode" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="VolunteerNetworkModel.FK_ShopperAddress_User" FromRole="ShopperAddress" ToRole="User" />
+          <NavigationProperty Name="Country1" Relationship="VolunteerNetworkModel.FK_ShopperAddress_Countries" FromRole="ShopperAddress" ToRole="Country" />
+        </EntityType>
+        <EntityType Name="VolunteerAddress">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="AddressLine1" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine2" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine3" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="AddressLine4" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Locality" Type="Int32" Nullable="false" />
+          <Property Name="Region" Type="Int32" Nullable="false" />
+          <Property Name="Postcode" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="VolunteerNetworkModel.FK_VolunteerAddress_User" FromRole="VolunteerAddress" ToRole="User" />
+          <NavigationProperty Name="Country1" Relationship="VolunteerNetworkModel.FK_VolunteerAddress_Countries" FromRole="VolunteerAddress" ToRole="Country" />
+        </EntityType>
+        <Association Name="FK_ShopperAddress_User">
+          <End Type="VolunteerNetworkModel.User" Role="User" Multiplicity="1" />
+          <End Type="VolunteerNetworkModel.ShopperAddress" Role="ShopperAddress" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ShopperAddress">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VolunteerAddress_User">
+          <End Type="VolunteerNetworkModel.User" Role="User" Multiplicity="1" />
+          <End Type="VolunteerNetworkModel.VolunteerAddress" Role="VolunteerAddress" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="VolunteerAddress">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShopperAddress_Countries">
+          <End Type="VolunteerNetworkModel.Country" Role="Country" Multiplicity="1" />
+          <End Type="VolunteerNetworkModel.ShopperAddress" Role="ShopperAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryID" />
+            </Principal>
+            <Dependent Role="ShopperAddress">
+              <PropertyRef Name="Country" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VolunteerAddress_Countries">
+          <End Type="VolunteerNetworkModel.Country" Role="Country" Multiplicity="1" />
+          <End Type="VolunteerNetworkModel.VolunteerAddress" Role="VolunteerAddress" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="CountryID" />
+            </Principal>
+            <Dependent Role="VolunteerAddress">
+              <PropertyRef Name="Country" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="VolunteerNetworkModelStoreContainer" CdmEntityContainer="VolunteerNetworkEntities">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="VolunteerNetworkModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetRoles">
+            <EntityTypeMapping TypeName="VolunteerNetworkModel.AspNetRole">
+              <MappingFragment StoreEntitySet="AspNetRoles">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserClaims">
+            <EntityTypeMapping TypeName="VolunteerNetworkModel.AspNetUserClaim">
+              <MappingFragment StoreEntitySet="AspNetUserClaims">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUserLogins">
+            <EntityTypeMapping TypeName="VolunteerNetworkModel.AspNetUserLogin">
+              <MappingFragment StoreEntitySet="AspNetUserLogins">
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="VolunteerNetworkModel.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="VolunteerNetworkModel.Country">
+              <MappingFragment StoreEntitySet="Countries">
+                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="TwoCharCountryCode" ColumnName="TwoCharCountryCode" />
+                <ScalarProperty Name="ThreeCharCountryCode" ColumnName="ThreeCharCountryCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="VolunteerNetworkModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetRoles">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="VolunteerNetworkModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Forename" ColumnName="Forename" />
+                <ScalarProperty Name="AspNetUsersId" ColumnName="AspNetUsersId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SupportTasks">
+            <EntityTypeMapping TypeName="VolunteerNetworkModel.SupportTask">
+              <MappingFragment StoreEntitySet="SupportTask">
+                <ScalarProperty Name="severity" ColumnName="severity" />
+                <ScalarProperty Name="AssignedTo" ColumnName="AssignedTo" />
+                <ScalarProperty Name="DateClosed" ColumnName="DateClosed" />
+                <ScalarProperty Name="DateRaised" ColumnName="DateRaised" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ClosedBy" ColumnName="ClosedBy" />
+                <ScalarProperty Name="RaisedBy" ColumnName="RaisedBy" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="uk_towns">
+            <EntityTypeMapping TypeName="VolunteerNetworkModel.uk_towns">
+              <MappingFragment StoreEntitySet="uk_towns">
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="nuts_region" ColumnName="nuts_region" />
+                <ScalarProperty Name="local_government_area" ColumnName="local_government_area" />
+                <ScalarProperty Name="postcode_sector" ColumnName="postcode_sector" />
+                <ScalarProperty Name="elevation" ColumnName="elevation" />
+                <ScalarProperty Name="longitude" ColumnName="longitude" />
+                <ScalarProperty Name="latitude" ColumnName="latitude" />
+                <ScalarProperty Name="northing" ColumnName="northing" />
+                <ScalarProperty Name="easting" ColumnName="easting" />
+                <ScalarProperty Name="grid_reference" ColumnName="grid_reference" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="county" ColumnName="county" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cities">
+            <EntityTypeMapping TypeName="VolunteerNetworkModel.City">
+              <MappingFragment StoreEntitySet="Cities">
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="States">
+            <EntityTypeMapping TypeName="VolunteerNetworkModel.State">
+              <MappingFragment StoreEntitySet="States">
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShopperAddresses">
+            <EntityTypeMapping TypeName="VolunteerNetworkModel.ShopperAddress">
+              <MappingFragment StoreEntitySet="ShopperAddress">
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Postcode" ColumnName="Postcode" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="Locality" ColumnName="Locality" />
+                <ScalarProperty Name="AddressLine4" ColumnName="AddressLine4" />
+                <ScalarProperty Name="AddressLine3" ColumnName="AddressLine3" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VolunteerAddresses">
+            <EntityTypeMapping TypeName="VolunteerNetworkModel.VolunteerAddress">
+              <MappingFragment StoreEntitySet="VolunteerAddress">
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Postcode" ColumnName="Postcode" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="Locality" ColumnName="Locality" />
+                <ScalarProperty Name="AddressLine4" ColumnName="AddressLine4" />
+                <ScalarProperty Name="AddressLine3" ColumnName="AddressLine3" />
+                <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+                <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
