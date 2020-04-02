@@ -348,6 +348,7 @@
     <Content Include="Views\Shopper\Edit.cshtml" />
     <Content Include="Views\Volunteer\MyProfile.cshtml" />
     <Content Include="Views\Shopper\MyProfile.cshtml" />
+    <Content Include="Views\Volunteer\TicketAddress.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

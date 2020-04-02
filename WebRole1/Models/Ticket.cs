@@ -84,5 +84,14 @@ namespace WebRole1.Models
 
         [Display(Name = "Severity")]
         public int Severity { get; set; }
+
+        [Display(Name = "Status")]
+        public string StatusText { get; set; }
+
+        [Display(Name = "Severity")]
+        public string SeverityText { get; set; }
+
+        [Display(Name = "Type")]
+        public string TypeText { get; set; }
     }
 }

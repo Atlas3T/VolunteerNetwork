@@ -16,7 +16,7 @@ namespace WebRole1.Controllers
 
         public ActionResult MyProfile()
         {
-            VolunteerModel volunteerModel = new VolunteerModel(); ;
+            VolunteerModel volunteerModel = new VolunteerModel();
 
             using (var db = new VolunteerNetworkEntities())
             {
@@ -37,7 +37,7 @@ namespace WebRole1.Controllers
                 {
                     User thisUser = users.FirstOrDefault();
                     volunteerModel.firstName = thisUser.Forename;
-                    volunteerModel.surname = thisUser.Forename;
+                    volunteerModel.surname = thisUser.Surname;
                     volunteerModel.address = new Address();
 
                     VolunteerAddress thisAddress = (from s in db.VolunteerAddresses
@@ -220,7 +220,7 @@ namespace WebRole1.Controllers
                     ticketListModel.tickets = new List<Ticket>();
                     foreach (SupportTask s in supportTasks)
                     {
-                        ticketListModel.tickets.Add(new Ticket
+                        var ticket = new Ticket
                         {
                             TicketNumber = s.Id,
                             Title = s.Title,
@@ -232,8 +232,24 @@ namespace WebRole1.Controllers
                             DateRaised = s.DateRaised,
                             DateClosed = s.DateClosed,
                             AssignedTo = s.AssignedTo,
-                            Severity = s.severity
-                        });
+                            Severity = s.severity,
+                        };
+
+                        switch (s.Status)
+                        {
+                            case (int)TicketStatus.Assigned:
+                                ticket.StatusText = "Assigned";
+                                break;
+                            case (int)TicketStatus.Closed:
+                                ticket.StatusText = "Closed";
+                                break;
+                            case (int)TicketStatus.Unassigned:
+                            default:
+                                ticket.StatusText = "Unassigned";
+                                break;
+                        }
+
+                        ticketListModel.tickets.Add(ticket);
                     }
                 }
                 return View(ticketListModel);
@@ -332,9 +348,122 @@ namespace WebRole1.Controllers
                     Severity = thisTask.severity
                 };
 
+                switch (thisTask.Status)
+                {
+                    case (int)TicketStatus.Assigned:
+                        thisTicket.StatusText = "Assigned";
+                        break;
+                    case (int)TicketStatus.Closed:
+                        thisTicket.StatusText = "Closed";
+                        break;
+                    case (int)TicketStatus.Unassigned:
+                    default:
+                        thisTicket.StatusText = "Unassigned";
+                        break;
+                }
+
+
+                switch (thisTask.severity)
+                {
+                    case (int)TicketSeverity.Medium:
+                        thisTicket.SeverityText = "Medium";
+                        break;
+                    case (int)TicketSeverity.High:
+                        thisTicket.SeverityText = "High";
+                        break;
+                    case (int)TicketSeverity.Low:
+                    default:
+                        thisTicket.SeverityText = "Low";
+                        break;
+                }
+
+
+                switch (thisTask.Type)
+                {
+                    case (int)TicketType.FoodDelivery:
+                        thisTicket.TypeText = "Food delivery";
+                        break;
+                    case (int)TicketType.General:
+                    default:
+                        thisTicket.TypeText = "General";
+                        break;
+                }
+
                 return View(thisTicket);
             }
         }
+
+        public ActionResult TicketAddress(int id)
+        {
+            ViewBag.Id = id;
+            ShopperModel shopperModel = new ShopperModel();
+
+            using (var db = new VolunteerNetworkEntities())
+            {
+                SetCountryList(db);
+
+                var thisTask = (from s in db.SupportTasks
+                                where s.Id == id
+                                select s).FirstOrDefault();
+
+                var thisUser = (from s in db.Users
+                               where s.Id == thisTask.RaisedBy
+                               select s).FirstOrDefault();
+
+                var thisUserAddress = (from s in db.ShopperAddresses
+                                       where s.UserId == thisTask.RaisedBy
+                                       select s).FirstOrDefault();
+
+                shopperModel.firstName = thisUser.Forename;
+                shopperModel.surname = thisUser.Surname;
+                shopperModel.address = new Address();
+
+                ShopperAddress thisAddress = (from s in db.ShopperAddresses
+                                                where s.UserId == thisUser.Id
+                                                select s).FirstOrDefault();
+
+                shopperModel.address.AddressLine1 = thisAddress.AddressLine1;
+                shopperModel.address.AddressLine2 = thisAddress.AddressLine2;
+                shopperModel.address.AddressLine3 = thisAddress.AddressLine3;
+                shopperModel.address.AddressLine4 = thisAddress.AddressLine4;
+                shopperModel.address.CountryId = thisAddress.Country;
+                shopperModel.address.CityId = thisAddress.Locality;
+                shopperModel.address.Postcode = thisAddress.Postcode;
+                shopperModel.address.StateId = thisAddress.Region;
+                shopperModel.address.Countries = countryList;
+
+                foreach (var country in db.Countries)
+                {
+                    shopperModel.address.Countries.Add(new SelectListItem { Text = country.CountryName, Value = country.CountryID.ToString() });
+                }
+
+                if (shopperModel.address.Countries != null)
+                {
+                    var states = (from state in db.States
+                                  where state.CountryId == shopperModel.address.CountryId
+                                  select state).ToList();
+                    foreach (var state in states)
+                    {
+                        shopperModel.address.States.Add(new SelectListItem { Text = state.StateName, Value = state.StateId.ToString() });
+                    }
+
+                    if (shopperModel.address.States != null)
+                    {
+                        var cities = (from city in db.Cities
+                                      where city.StateId == shopperModel.address.StateId
+                                      select city).ToList();
+                        foreach (var city in cities)
+                        {
+                            shopperModel.address.Cities.Add(new SelectListItem { Text = city.CityName, Value = city.CityId.ToString() });
+                        }
+                    }
+                }
+
+                return View(shopperModel);
+            }
+        }
+
+        
 
         private static void SetCountryList(VolunteerNetworkEntities db)
         {

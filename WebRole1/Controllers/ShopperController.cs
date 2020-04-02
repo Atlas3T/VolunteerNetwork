@@ -219,7 +219,7 @@ namespace WebRole1.Controllers
                     ticketListModel.tickets = new List<Ticket>();
                     foreach (SupportTask s in supportTasks)
                     {
-                        ticketListModel.tickets.Add(new Ticket
+                        var ticket = new Ticket
                         {
                             TicketNumber = s.Id,
                             Title = s.Title,
@@ -231,8 +231,24 @@ namespace WebRole1.Controllers
                             DateRaised = s.DateRaised,
                             DateClosed = s.DateClosed,
                             AssignedTo = s.AssignedTo,
-                            Severity = s.severity
-                        });
+                            Severity = s.severity,
+                        };
+
+                        switch (s.Status)
+                        {
+                            case (int)TicketStatus.Assigned:
+                                ticket.StatusText = "Assigned";
+                                break;
+                            case (int)TicketStatus.Closed:
+                                ticket.StatusText = "Closed";
+                                break;
+                            case (int)TicketStatus.Unassigned:
+                            default:
+                                ticket.StatusText = "Unassigned";
+                                break;
+                        }
+
+                        ticketListModel.tickets.Add(ticket);
                     }
                 }
 
@@ -355,6 +371,45 @@ namespace WebRole1.Controllers
                         AssignedTo = thisTask.AssignedTo,
                         Severity = thisTask.severity
                     };
+
+                    switch (thisTask.Status)
+                    {
+                        case (int)TicketStatus.Assigned:
+                            thisTicket.StatusText = "Assigned";
+                            break;
+                        case (int)TicketStatus.Closed:
+                            thisTicket.StatusText = "Closed";
+                            break;
+                        case (int)TicketStatus.Unassigned:
+                        default:
+                            thisTicket.StatusText = "Unassigned";
+                            break;
+                    }
+
+                    switch (thisTask.severity)
+                    {
+                        case (int)TicketSeverity.Medium:
+                            thisTicket.SeverityText = "Medium";
+                            break;
+                        case (int)TicketSeverity.High:
+                            thisTicket.SeverityText = "High";
+                            break;
+                        case (int)TicketSeverity.Low:
+                        default:
+                            thisTicket.SeverityText = "Low";
+                            break;
+                    }
+
+                    switch (thisTask.Type)
+                    {
+                        case (int)TicketType.FoodDelivery:
+                            thisTicket.TypeText = "Food delivery";
+                            break;
+                        case (int)TicketType.General:
+                        default:
+                            thisTicket.TypeText = "General";
+                            break;
+                    }
                 }
 
                 return View(thisTicket);
@@ -389,6 +444,21 @@ namespace WebRole1.Controllers
                         AssignedTo = thisTask.AssignedTo,
                         Severity = thisTask.severity
                     };
+
+                    switch(thisTask.severity)
+                    {
+                        case (int)TicketStatus.Unassigned:
+                            thisTicket.StatusText = "Unassigned";
+                            break;
+                        case (int)TicketStatus.Assigned:
+                            thisTicket.StatusText = "Assigned";
+                            break;
+                        case (int)TicketStatus.Closed:
+                            thisTicket.StatusText = "Closed";
+                            break;
+                        default:
+                            break;
+                    }
                 }
 
                 return View(thisTicket);

@@ -54,16 +54,16 @@ namespace WebRole1.Models
 
     enum TicketStatus
     {
-        Unassigned,
-        Assigned,
-        Closed
+        Unassigned = 1,
+        Assigned = 2,
+        Closed = 3
     }
 
     enum TicketSeverity
     {
-        Low,
-        Medium,
-        High
+        Low = 1,
+        Medium = 2,
+        High = 3
     }
 
     enum TicketType
