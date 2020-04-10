@@ -14,8 +14,20 @@ namespace WebRole1
     
     public partial class State
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public State()
+        {
+            this.ShopperAddresses = new HashSet<ShopperAddress>();
+            this.VolunteerAddresses = new HashSet<VolunteerAddress>();
+        }
+    
         public int StateId { get; set; }
         public int CountryId { get; set; }
         public string StateName { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ShopperAddress> ShopperAddresses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VolunteerAddress> VolunteerAddresses { get; set; }
     }
 }

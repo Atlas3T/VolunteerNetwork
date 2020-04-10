@@ -13,6 +13,7 @@ namespace WebRole1.Controllers
     public class VolunteerController : Controller
     {
         public static List<SelectListItem> countryList = null;
+        public static List<SelectListItem> countyList = null;
 
         public ActionResult MyProfile()
         {
@@ -21,6 +22,7 @@ namespace WebRole1.Controllers
             using (var db = new VolunteerNetworkEntities())
             {
                 VolunteerController.SetCountryList(db);
+                VolunteerController.SetCountyList(db);
 
                 string strCurrentUserId = User.Identity.GetUserId();
 
@@ -30,8 +32,12 @@ namespace WebRole1.Controllers
 
                 if (users.Count() == 0)
                 {
-                    volunteerModel.address = new Address();
-                    volunteerModel.address.Countries = countryList;
+                    volunteerModel.address = new Address
+                    {
+                        Countries = countryList,
+                        CountryId = 235,
+                        States = countyList
+                    };
                 }
                 else
                 {
@@ -48,11 +54,20 @@ namespace WebRole1.Controllers
                     volunteerModel.address.AddressLine2 = thisAddress.AddressLine2;
                     volunteerModel.address.AddressLine3 = thisAddress.AddressLine3;
                     volunteerModel.address.AddressLine4 = thisAddress.AddressLine4;
-                    volunteerModel.address.CountryId = thisAddress.Country;
+                    volunteerModel.address.CountryId = 235; //thisAddress.Country;
                     volunteerModel.address.CityId = thisAddress.Locality;
                     volunteerModel.address.Postcode = thisAddress.Postcode;
                     volunteerModel.address.StateId = thisAddress.Region;
                     volunteerModel.address.Countries = countryList;
+
+                    SearchArea thisSearchArea = (from s in db.SearchAreas
+                                                    where s.UserId == thisUser.Id
+                                                    select s).FirstOrDefault();
+
+                    volunteerModel.address.VolunteerAreaOneId = (int)thisSearchArea.City1;
+                    volunteerModel.address.VolunteerAreaTwoId = thisSearchArea.City2;
+                    volunteerModel.address.VolunteerAreaThreeId = thisSearchArea.City3;
+                    volunteerModel.address.VolunteerAreaFourId = thisSearchArea.City4;
 
                     foreach (var country in db.Countries)
                     {
@@ -62,7 +77,7 @@ namespace WebRole1.Controllers
                     if (volunteerModel.address.Countries != null)
                     {
                         var states = (from state in db.States
-                                      where state.CountryId == volunteerModel.address.CountryId
+                                      where state.CountryId == 235 //volunteerModel.address.CountryId
                                       select state).ToList();
                         foreach (var state in states)
                         {
@@ -77,20 +92,27 @@ namespace WebRole1.Controllers
                             foreach (var city in cities)
                             {
                                 volunteerModel.address.Cities.Add(new SelectListItem { Text = city.CityName, Value = city.CityId.ToString() });
+
+                                volunteerModel.address.searchCitiesListOne.Add(new SelectListItem { Text = city.CityName, Value = city.CityId.ToString() });
+                                volunteerModel.address.searchCitiesListTwo.Add(new SelectListItem { Text = city.CityName, Value = city.CityId.ToString() });
+                                volunteerModel.address.searchCitiesListThree.Add(new SelectListItem { Text = city.CityName, Value = city.CityId.ToString() });
+                                volunteerModel.address.searchCitiesListFour.Add(new SelectListItem { Text = city.CityName, Value = city.CityId.ToString() });
+                                
+
                             }
                         }
                     }
                 }
+
                 return View(volunteerModel);
             }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult MyProfile(VolunteerModel model, int? countryId, int? stateId, int? cityId)
+        public ActionResult MyProfile(VolunteerModel model)
         {
             if (ModelState.IsValid &&
-                model.address.CountryId > 0 &&
                 model.address.StateId > 0 &&
                 model.address.CityId > 0)
             {
@@ -123,11 +145,34 @@ namespace WebRole1.Controllers
                             Locality = model.address.CityId,
                             Region = model.address.StateId,
                             Postcode = model.address.Postcode,
-                            Country = model.address.CountryId,
+                            Country = 235, //model.address.CountryId,
                             UserId = newUser.Id
                         };
 
                         db.VolunteerAddresses.Add(newAddress);
+
+
+                        SearchArea newSearchArea = new SearchArea
+                        {
+                            City1 = model.address.VolunteerAreaOneId,
+                            UserId = newUser.Id
+                        };
+
+                        if (model.address.VolunteerAreaTwoId != null)
+                        {
+                            newSearchArea.City1 = model.address.VolunteerAreaTwoId;
+                        }
+                        if (model.address.VolunteerAreaThreeId != null)
+                        {
+                            newSearchArea.City1 = model.address.VolunteerAreaThreeId;
+                        }
+                        if (model.address.VolunteerAreaFourId != null)
+                        {
+                            newSearchArea.City1 = model.address.VolunteerAreaFourId;
+                        }
+
+                        db.SearchAreas.Add(newSearchArea);
+
                         db.SaveChanges();
                     }
                     else
@@ -145,10 +190,38 @@ namespace WebRole1.Controllers
                         thisAddress.AddressLine2 = model.address.AddressLine2;
                         thisAddress.AddressLine3 = model.address.AddressLine3;
                         thisAddress.AddressLine4 = model.address.AddressLine4;
-                        thisAddress.Country = model.address.CountryId;
+                        thisAddress.Country = 235; // model.address.CountryId;
                         thisAddress.Locality = model.address.CityId;
                         thisAddress.Postcode = model.address.Postcode;
                         thisAddress.Region = model.address.StateId;
+
+
+
+
+
+                        SearchArea thisSearchArea = (from s in db.SearchAreas
+                                                     where s.UserId == thisUser.Id
+                                                     select s).FirstOrDefault();
+
+
+                        thisSearchArea.City1 = model.address.VolunteerAreaOneId;
+
+                        if (model.address.VolunteerAreaTwoId != null)
+                        {
+                            thisSearchArea.City2 = model.address.VolunteerAreaTwoId;
+                        }
+                        if (model.address.VolunteerAreaThreeId != null)
+                        {
+                            thisSearchArea.City3 = model.address.VolunteerAreaThreeId;
+                        }
+                        if (model.address.VolunteerAreaFourId != null)
+                        {
+                            thisSearchArea.City4 = model.address.VolunteerAreaFourId;
+                        }
+
+
+
+
 
                         db.SaveChanges();
                     }
@@ -158,6 +231,8 @@ namespace WebRole1.Controllers
             {
                 using (var db = new VolunteerNetworkEntities())
                 {
+                    model.address.CountryId = 235;
+
                     foreach (var country in db.Countries)
                     {
                         model.address.Countries.Add(new SelectListItem { Text = country.CountryName, Value = country.CountryID.ToString() });
@@ -166,7 +241,8 @@ namespace WebRole1.Controllers
                     if (model.address.Countries != null)
                     {
                         var states = (from state in db.States
-                                      where state.CountryId == model.address.CountryId
+                                      where state.CountryId == 235
+//                                      where state.CountryId == model.address.CountryId
                                       select state).ToList();
                         foreach (var state in states)
                         {
@@ -181,6 +257,11 @@ namespace WebRole1.Controllers
                             foreach (var city in cities)
                             {
                                 model.address.Cities.Add(new SelectListItem { Text = city.CityName, Value = city.CityId.ToString() });
+                                model.address.searchCitiesListOne.Add(new SelectListItem { Text = city.CityName, Value = city.CityId.ToString() });
+                                model.address.searchCitiesListTwo.Add(new SelectListItem { Text = city.CityName, Value = city.CityId.ToString() });
+                                model.address.searchCitiesListThree.Add(new SelectListItem { Text = city.CityName, Value = city.CityId.ToString() });
+                                model.address.searchCitiesListFour.Add(new SelectListItem { Text = city.CityName, Value = city.CityId.ToString() });
+
                             }
                         }
                     }
@@ -211,10 +292,16 @@ namespace WebRole1.Controllers
                 }
                 else
                 {
-                    User thisUser = users.FirstOrDefault();
+                    var searchAreas = (from s in db.SearchAreas
+                                where s.UserId == users.FirstOrDefault().Id
+                                select s).FirstOrDefault();
 
                     var supportTasks = from s in db.SupportTasks
-                                       where ((s.AssignedTo == thisUser.Id || s.Status == (int)TicketStatus.Unassigned) && s.User.ShopperAddress.Locality == thisUser.VolunteerAddress.Locality)
+                                       where ((s.AssignedTo == users.FirstOrDefault().Id || s.Status == (int)TicketStatus.Unassigned) &&
+                                              (s.User.ShopperAddress.Locality == searchAreas.City1 ||
+                                               s.User.ShopperAddress.Locality == searchAreas.City2 ||
+                                               s.User.ShopperAddress.Locality == searchAreas.City3 ||
+                                               s.User.ShopperAddress.Locality == searchAreas.City4))
                                        select s;
 
                     ticketListModel.tickets = new List<Ticket>();
@@ -407,8 +494,8 @@ namespace WebRole1.Controllers
                                 select s).FirstOrDefault();
 
                 var thisUser = (from s in db.Users
-                               where s.Id == thisTask.RaisedBy
-                               select s).FirstOrDefault();
+                                where s.Id == thisTask.RaisedBy
+                                select s).FirstOrDefault();
 
                 var thisUserAddress = (from s in db.ShopperAddresses
                                        where s.UserId == thisTask.RaisedBy
@@ -419,8 +506,8 @@ namespace WebRole1.Controllers
                 shopperModel.address = new Address();
 
                 ShopperAddress thisAddress = (from s in db.ShopperAddresses
-                                                where s.UserId == thisUser.Id
-                                                select s).FirstOrDefault();
+                                              where s.UserId == thisUser.Id
+                                              select s).FirstOrDefault();
 
                 shopperModel.address.AddressLine1 = thisAddress.AddressLine1;
                 shopperModel.address.AddressLine2 = thisAddress.AddressLine2;
@@ -463,7 +550,7 @@ namespace WebRole1.Controllers
             }
         }
 
-        
+
 
         private static void SetCountryList(VolunteerNetworkEntities db)
         {
@@ -477,6 +564,22 @@ namespace WebRole1.Controllers
                 foreach (Country thiscountry in countries)
                 {
                     countryList.Add(new SelectListItem { Text = thiscountry.CountryName, Value = thiscountry.CountryID.ToString() });
+                }
+            }
+        }
+
+        private static void SetCountyList(VolunteerNetworkEntities db)
+        {
+            if (countyList == null)
+            {
+                VolunteerController.countyList = new List<SelectListItem>();
+
+                var counties = from s in db.States
+                               select s;
+
+                foreach (State thiscounty in counties)
+                {
+                    countyList.Add(new SelectListItem { Text = thiscounty.StateName, Value = thiscounty.StateId.ToString() });
                 }
             }
         }

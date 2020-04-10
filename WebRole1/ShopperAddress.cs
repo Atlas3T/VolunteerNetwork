@@ -25,6 +25,8 @@ namespace WebRole1
         public int Country { get; set; }
     
         public virtual User User { get; set; }
+        public virtual City City { get; set; }
         public virtual Country Country1 { get; set; }
+        public virtual State State { get; set; }
     }
 }

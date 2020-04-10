@@ -27,6 +27,11 @@ namespace WebRole1.Models
             this.Countries = new List<SelectListItem>();
             this.States = new List<SelectListItem>();
             this.Cities = new List<SelectListItem>();
+
+            this.searchCitiesListOne = new List<SelectListItem>();
+            this.searchCitiesListTwo = new List<SelectListItem>();
+            this.searchCitiesListThree = new List<SelectListItem>();
+            this.searchCitiesListFour = new List<SelectListItem>();
         }
 
         public List<SelectListItem> Countries { get; set; }
@@ -35,21 +40,39 @@ namespace WebRole1.Models
 
         public List<SelectListItem> Cities { get; set; }
 
-        [Display(Name = "Cities")]
+        [Display(Name = "Country")]
         [Required]
         public int CountryId { get; set; }
 
-        [Display(Name = "States")]
+        [Display(Name = "State or County")]
         [Required]
         public int StateId { get; set; }
 
-        [Display(Name = "Cities")]
+        [Display(Name = "City")]
         [Required]
         public int CityId { get; set; }
 
-        [Display(Name = "Postcode")]
+        [Display(Name = "Postcode or Zipcode")]
         [Required]
         public string Postcode { get; set; }
+
+        [Display(Name = "volunteer area 1")]
+        [Required]
+        public int VolunteerAreaOneId { get; set; }
+        public List<SelectListItem> searchCitiesListOne { get; set; }
+
+        [Display(Name = "volunteer area 2")]
+        public int? VolunteerAreaTwoId { get; set; }
+        public List<SelectListItem> searchCitiesListTwo { get; set; }
+
+        [Display(Name = "volunteer area 3")]
+        public int? VolunteerAreaThreeId { get; set; }
+        public List<SelectListItem> searchCitiesListThree { get; set; }
+
+
+        [Display(Name = "volunteer area 4")]
+        public int? VolunteerAreaFourId { get; set; }
+        public List<SelectListItem> searchCitiesListFour { get; set; }
     }
 
     enum TicketStatus

@@ -82,11 +82,14 @@ namespace WebRole1.Controllers
                 case SignInStatus.Success:
                     using (var db = new VolunteerNetworkEntities())
                     {
-                        var roles = from s in db.AspNetRoles
-                                    where s.AspNetUsers.FirstOrDefault().UserName == model.Email
-                                    select s;
+                        var user = (from s in db.AspNetUsers
+                                    where s.UserName == model.Email
+                                    select s).FirstOrDefault();
 
-                        returnUrl = roles.FirstOrDefault().Name;
+                        var role = user.AspNetRoles.FirstOrDefault();
+
+
+                        returnUrl = role.Name;
                     }
                     return RedirectToAction("Index", returnUrl);
 //                    return RedirectToLocal(returnUrl);

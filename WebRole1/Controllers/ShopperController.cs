@@ -13,6 +13,7 @@ namespace WebRole1.Controllers
     public class ShopperController : Controller
     {
         public static List<SelectListItem> countryList = null;
+        public static List<SelectListItem> countyList = null;
 
         public ActionResult MyProfile()
         {
@@ -21,6 +22,7 @@ namespace WebRole1.Controllers
             using (var db = new VolunteerNetworkEntities())
             {
                 ShopperController.SetCountryList(db);
+                ShopperController.SetCountyList(db);
 
                 string strCurrentUserId = User.Identity.GetUserId();
 
@@ -30,8 +32,12 @@ namespace WebRole1.Controllers
 
                 if (users.Count() == 0)
                 {
-                    shopperModel.address = new Address();
-                    shopperModel.address.Countries = countryList;
+                    shopperModel.address = new Address
+                    {
+                        Countries = countryList,
+                        CountryId = 235,
+                        States = countyList
+                    };
                 }
                 else
                 {
@@ -41,8 +47,8 @@ namespace WebRole1.Controllers
                     shopperModel.address = new Address();
 
                     ShopperAddress thisAddress = (from s in db.ShopperAddresses
-                                                    where s.UserId == thisUser.Id
-                                                    select s).FirstOrDefault();
+                                                  where s.UserId == thisUser.Id
+                                                  select s).FirstOrDefault();
 
                     shopperModel.address.AddressLine1 = thisAddress.AddressLine1;
                     shopperModel.address.AddressLine2 = thisAddress.AddressLine2;
@@ -90,7 +96,6 @@ namespace WebRole1.Controllers
         public ActionResult MyProfile(ShopperModel model)
         {
             if (ModelState.IsValid &&
-                model.address.CountryId > 0 &&
                 model.address.StateId > 0 &&
                 model.address.CityId > 0)
             {
@@ -123,7 +128,7 @@ namespace WebRole1.Controllers
                             Locality = model.address.CityId,
                             Region = model.address.StateId,
                             Postcode = model.address.Postcode,
-                            Country = model.address.CountryId,
+                            Country = 235, //model.address.CountryId,
                             UserId = newUser.Id
                         };
 
@@ -138,14 +143,14 @@ namespace WebRole1.Controllers
                         thisUser.Surname = model.surname;
 
                         ShopperAddress thisAddress = (from s in db.ShopperAddresses
-                                                        where s.UserId == thisUser.Id
-                                                        select s).FirstOrDefault();
+                                                      where s.UserId == thisUser.Id
+                                                      select s).FirstOrDefault();
 
                         thisAddress.AddressLine1 = model.address.AddressLine1;
                         thisAddress.AddressLine2 = model.address.AddressLine2;
                         thisAddress.AddressLine3 = model.address.AddressLine3;
                         thisAddress.AddressLine4 = model.address.AddressLine4;
-                        thisAddress.Country = model.address.CountryId;
+                        thisAddress.Country = 235; //model.address.CountryId;
                         thisAddress.Locality = model.address.CityId;
                         thisAddress.Postcode = model.address.Postcode;
                         thisAddress.Region = model.address.StateId;
@@ -158,6 +163,8 @@ namespace WebRole1.Controllers
             {
                 using (var db = new VolunteerNetworkEntities())
                 {
+                    model.address.CountryId = 235;
+
                     foreach (var country in db.Countries)
                     {
                         model.address.Countries.Add(new SelectListItem { Text = country.CountryName, Value = country.CountryID.ToString() });
@@ -166,7 +173,8 @@ namespace WebRole1.Controllers
                     if (model.address.Countries != null)
                     {
                         var states = (from state in db.States
-                                      where state.CountryId == model.address.CountryId
+                                      where state.CountryId == 235
+//                                      where state.CountryId == model.address.CountryId
                                       select state).ToList();
                         foreach (var state in states)
                         {
@@ -445,7 +453,7 @@ namespace WebRole1.Controllers
                         Severity = thisTask.severity
                     };
 
-                    switch(thisTask.severity)
+                    switch (thisTask.severity)
                     {
                         case (int)TicketStatus.Unassigned:
                             thisTicket.StatusText = "Unassigned";
@@ -506,6 +514,22 @@ namespace WebRole1.Controllers
                 foreach (Country thiscountry in countries)
                 {
                     countryList.Add(new SelectListItem { Text = thiscountry.CountryName, Value = thiscountry.CountryID.ToString() });
+                }
+            }
+        }
+
+        private static void SetCountyList(VolunteerNetworkEntities db)
+        {
+            if (countyList == null)
+            {
+                ShopperController.countyList = new List<SelectListItem>();
+
+                var counties = from s in db.States
+                                select s;
+
+                foreach (State thiscounty in counties)
+                {
+                    countyList.Add(new SelectListItem { Text = thiscounty.StateName, Value = thiscounty.StateId.ToString() });
                 }
             }
         }

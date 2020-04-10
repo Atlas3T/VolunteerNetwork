@@ -13,20 +13,6 @@ namespace WebRole1.Controllers
             return View();
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "What is the volunteer network?";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
         public ActionResult DashboardJump()
         {
             if (User.IsInRole("Shopper"))

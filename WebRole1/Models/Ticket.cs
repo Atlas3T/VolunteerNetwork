@@ -13,9 +13,11 @@ namespace WebRole1.Models
         public int TicketNumber { get; set; }
 
         [Display(Name = "Title")]
+        [Required]
         public string Title { get; set; }
 
         [Display(Name = "Description")]
+        [Required]
         public string Description { get; set; }
 
         public List<SelectListItem> TypeList

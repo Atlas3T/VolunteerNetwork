@@ -1,0 +1,49 @@
+﻿@model WebRole1.Models.TicketListModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutSimple.cshtml";
+}
+
+<div class="section-content section-content-boxed">
+    <div class="row g-gs justify-content-center align-items-center">
+        <div class="col-lg-12">
+            <div class="list-block pr-lg-12">
+
+                <h2>Your ticket list</h2>
+                <h4>The tasks below represent all of your personal tasks which have either been processed or are awaiting processing.</h4>
+                <h4>To change the address associated to your tasks please visit your <a href="/Shopper/MyProfile">profile page</a>.</h4>
+                <hr />
+                <table style="width:100%">
+                    <tr>
+                        <th>title</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Edit record</th>
+                        <th>Get record details</th>
+                    </tr>
+                    @foreach (var item in Model.tickets)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(m => item.Title, new { @class = "form-control" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.Description, new { @class = "form-control" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => item.StatusText, new { @class = "form-control" })
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.TicketNumber })
+                            </td>
+                            <td>
+                                @Html.ActionLink("Details", "Details", new { id = item.TicketNumber })
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

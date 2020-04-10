@@ -1,10 +1,14 @@
 ﻿@model WebRole1.Models.RegisterViewModel
 @{
     ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_LayoutSimple.cshtml";
 }
 
 <h2>@ViewBag.Title.</h2>
-
+<p>
+    Please register either as a volunteer or as a Shopper with a Shopper being someone requiring support, such as for delivery of groceries during isolation.
+    Shoppers can only see their own support request tasks while volunteers can see support tasks in their local area.
+</p>
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()

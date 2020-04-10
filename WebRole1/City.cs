@@ -14,9 +14,33 @@ namespace WebRole1
     
     public partial class City
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public City()
+        {
+            this.ShopperAddresses = new HashSet<ShopperAddress>();
+            this.SearchAreas = new HashSet<SearchArea>();
+            this.SearchAreas1 = new HashSet<SearchArea>();
+            this.SearchAreas2 = new HashSet<SearchArea>();
+            this.SearchAreas3 = new HashSet<SearchArea>();
+            this.VolunteerAddresses = new HashSet<VolunteerAddress>();
+        }
+    
         public int CityId { get; set; }
         public int StateId { get; set; }
         public string CityName { get; set; }
         public string StateName { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ShopperAddress> ShopperAddresses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SearchArea> SearchAreas { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SearchArea> SearchAreas1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SearchArea> SearchAreas2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SearchArea> SearchAreas3 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VolunteerAddress> VolunteerAddresses { get; set; }
     }
 }

@@ -1,0 +1,536 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="VolunteerNetworkModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="VolunteerNetworkEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="C__MigrationHistory" EntityType="VolunteerNetworkModel.C__MigrationHistory" />
+    <EntitySet Name="AspNetRoles" EntityType="VolunteerNetworkModel.AspNetRole" />
+    <EntitySet Name="AspNetUserClaims" EntityType="VolunteerNetworkModel.AspNetUserClaim" />
+    <EntitySet Name="AspNetUserLogins" EntityType="VolunteerNetworkModel.AspNetUserLogin" />
+    <EntitySet Name="AspNetUsers" EntityType="VolunteerNetworkModel.AspNetUser" />
+    <EntitySet Name="uk_towns" EntityType="VolunteerNetworkModel.uk_towns" />
+    <EntitySet Name="Users" EntityType="VolunteerNetworkModel.User" />
+    <EntitySet Name="ShopperAddresses" EntityType="VolunteerNetworkModel.ShopperAddress" />
+    <EntitySet Name="SupportTasks" EntityType="VolunteerNetworkModel.SupportTask" />
+    <EntitySet Name="Cities" EntityType="VolunteerNetworkModel.City" />
+    <EntitySet Name="Countries" EntityType="VolunteerNetworkModel.Country" />
+    <EntitySet Name="States" EntityType="VolunteerNetworkModel.State" />
+    <EntitySet Name="SearchAreas" EntityType="VolunteerNetworkModel.SearchArea" />
+    <EntitySet Name="VolunteerAddresses" EntityType="VolunteerNetworkModel.VolunteerAddress" />
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="VolunteerNetworkModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="VolunteerNetworkModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_AspNetUsers" Association="VolunteerNetworkModel.FK_User_AspNetUsers">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SearchAreas_User" Association="VolunteerNetworkModel.FK_SearchAreas_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="SearchArea" EntitySet="SearchAreas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShopperAddress_User" Association="VolunteerNetworkModel.FK_ShopperAddress_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="ShopperAddress" EntitySet="ShopperAddresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Task_User" Association="VolunteerNetworkModel.FK_Task_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="SupportTask" EntitySet="SupportTasks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Task_User1" Association="VolunteerNetworkModel.FK_Task_User1">
+      <End Role="User" EntitySet="Users" />
+      <End Role="SupportTask" EntitySet="SupportTasks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Task_User2" Association="VolunteerNetworkModel.FK_Task_User2">
+      <End Role="User" EntitySet="Users" />
+      <End Role="SupportTask" EntitySet="SupportTasks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VolunteerAddress_User" Association="VolunteerNetworkModel.FK_VolunteerAddress_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="VolunteerAddress" EntitySet="VolunteerAddresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShopperAddress_Cities" Association="VolunteerNetworkModel.FK_ShopperAddress_Cities">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="ShopperAddress" EntitySet="ShopperAddresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShopperAddress_Countries" Association="VolunteerNetworkModel.FK_ShopperAddress_Countries">
+      <End Role="Country" EntitySet="Countries" />
+      <End Role="ShopperAddress" EntitySet="ShopperAddresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShopperAddress_States" Association="VolunteerNetworkModel.FK_ShopperAddress_States">
+      <End Role="State" EntitySet="States" />
+      <End Role="ShopperAddress" EntitySet="ShopperAddresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SearchAreas_Cities" Association="VolunteerNetworkModel.FK_SearchAreas_Cities">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="SearchArea" EntitySet="SearchAreas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SearchAreas_Cities1" Association="VolunteerNetworkModel.FK_SearchAreas_Cities1">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="SearchArea" EntitySet="SearchAreas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SearchAreas_Cities2" Association="VolunteerNetworkModel.FK_SearchAreas_Cities2">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="SearchArea" EntitySet="SearchAreas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SearchAreas_Cities3" Association="VolunteerNetworkModel.FK_SearchAreas_Cities3">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="SearchArea" EntitySet="SearchAreas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VolunteerAddress_Cities" Association="VolunteerNetworkModel.FK_VolunteerAddress_Cities">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="VolunteerAddress" EntitySet="VolunteerAddresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VolunteerAddress_Countries" Association="VolunteerNetworkModel.FK_VolunteerAddress_Countries">
+      <End Role="Country" EntitySet="Countries" />
+      <End Role="VolunteerAddress" EntitySet="VolunteerAddresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VolunteerAddress_States" Association="VolunteerNetworkModel.FK_VolunteerAddress_States">
+      <End Role="State" EntitySet="States" />
+      <End Role="VolunteerAddress" EntitySet="VolunteerAddresses" />
+    </AssociationSet>
+    <AssociationSet Name="AspNetUserRoles" Association="VolunteerNetworkModel.AspNetUserRoles">
+      <End Role="AspNetRole" EntitySet="AspNetRoles" />
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="C__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="ContextKey" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+    <Property Name="Model" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+    <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="AspNetRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUsers" Relationship="VolunteerNetworkModel.AspNetUserRoles" FromRole="AspNetRole" ToRole="AspNetUser" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaim">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="VolunteerNetworkModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUserClaim" ToRole="AspNetUser" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogin">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="ProviderKey" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="VolunteerNetworkModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUserLogin" ToRole="AspNetUser" />
+  </EntityType>
+  <EntityType Name="AspNetUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUserClaims" Relationship="VolunteerNetworkModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserClaim" />
+    <NavigationProperty Name="AspNetUserLogins" Relationship="VolunteerNetworkModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUser" ToRole="AspNetUserLogin" />
+    <NavigationProperty Name="Users" Relationship="VolunteerNetworkModel.FK_User_AspNetUsers" FromRole="AspNetUser" ToRole="User" />
+    <NavigationProperty Name="AspNetRoles" Relationship="VolunteerNetworkModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
+  </EntityType>
+  <EntityType Name="uk_towns">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="county" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+    <Property Name="country" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+    <Property Name="grid_reference" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="easting" Type="Int32" />
+    <Property Name="northing" Type="Int32" />
+    <Property Name="latitude" Type="Decimal" Precision="8" Scale="5" />
+    <Property Name="longitude" Type="Decimal" Precision="8" Scale="5" />
+    <Property Name="elevation" Type="Int32" />
+    <Property Name="postcode_sector" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="local_government_area" Type="String" MaxLength="44" FixedLength="false" Unicode="false" />
+    <Property Name="nuts_region" Type="String" MaxLength="24" FixedLength="false" Unicode="false" />
+    <Property Name="type" Type="String" MaxLength="13" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AspNetUsersId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Forename" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Surname" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="VolunteerNetworkModel.FK_User_AspNetUsers" FromRole="User" ToRole="AspNetUser" />
+    <NavigationProperty Name="SearchArea" Relationship="VolunteerNetworkModel.FK_SearchAreas_User" FromRole="User" ToRole="SearchArea" />
+    <NavigationProperty Name="ShopperAddress" Relationship="VolunteerNetworkModel.FK_ShopperAddress_User" FromRole="User" ToRole="ShopperAddress" />
+    <NavigationProperty Name="SupportTasks" Relationship="VolunteerNetworkModel.FK_Task_User" FromRole="User" ToRole="SupportTask" />
+    <NavigationProperty Name="SupportTasks1" Relationship="VolunteerNetworkModel.FK_Task_User1" FromRole="User" ToRole="SupportTask" />
+    <NavigationProperty Name="SupportTasks2" Relationship="VolunteerNetworkModel.FK_Task_User2" FromRole="User" ToRole="SupportTask" />
+    <NavigationProperty Name="VolunteerAddress" Relationship="VolunteerNetworkModel.FK_VolunteerAddress_User" FromRole="User" ToRole="VolunteerAddress" />
+  </EntityType>
+  <EntityType Name="ShopperAddress">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="AddressLine1" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="AddressLine2" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="AddressLine3" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="AddressLine4" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Locality" Type="Int32" Nullable="false" />
+    <Property Name="Region" Type="Int32" Nullable="false" />
+    <Property Name="Postcode" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="Country" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="VolunteerNetworkModel.FK_ShopperAddress_User" FromRole="ShopperAddress" ToRole="User" />
+    <NavigationProperty Name="City" Relationship="VolunteerNetworkModel.FK_ShopperAddress_Cities" FromRole="ShopperAddress" ToRole="City" />
+    <NavigationProperty Name="Country1" Relationship="VolunteerNetworkModel.FK_ShopperAddress_Countries" FromRole="ShopperAddress" ToRole="Country" />
+    <NavigationProperty Name="State" Relationship="VolunteerNetworkModel.FK_ShopperAddress_States" FromRole="ShopperAddress" ToRole="State" />
+  </EntityType>
+  <EntityType Name="SupportTask">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="RaisedBy" Type="Int32" Nullable="false" />
+    <Property Name="ClosedBy" Type="Int32" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <Property Name="DateRaised" Type="DateTime" Nullable="false" Precision="7" />
+    <Property Name="DateClosed" Type="DateTime" Precision="7" />
+    <Property Name="AssignedTo" Type="Int32" />
+    <Property Name="severity" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="VolunteerNetworkModel.FK_Task_User" FromRole="SupportTask" ToRole="User" />
+    <NavigationProperty Name="User1" Relationship="VolunteerNetworkModel.FK_Task_User1" FromRole="SupportTask" ToRole="User" />
+    <NavigationProperty Name="User2" Relationship="VolunteerNetworkModel.FK_Task_User2" FromRole="SupportTask" ToRole="User" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="CityId" />
+    </Key>
+    <Property Name="CityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StateId" Type="Int32" Nullable="false" />
+    <Property Name="CityName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="StateName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ShopperAddresses" Relationship="VolunteerNetworkModel.FK_ShopperAddress_Cities" FromRole="City" ToRole="ShopperAddress" />
+    <NavigationProperty Name="SearchAreas" Relationship="VolunteerNetworkModel.FK_SearchAreas_Cities" FromRole="City" ToRole="SearchArea" />
+    <NavigationProperty Name="SearchAreas1" Relationship="VolunteerNetworkModel.FK_SearchAreas_Cities1" FromRole="City" ToRole="SearchArea" />
+    <NavigationProperty Name="SearchAreas2" Relationship="VolunteerNetworkModel.FK_SearchAreas_Cities2" FromRole="City" ToRole="SearchArea" />
+    <NavigationProperty Name="SearchAreas3" Relationship="VolunteerNetworkModel.FK_SearchAreas_Cities3" FromRole="City" ToRole="SearchArea" />
+    <NavigationProperty Name="VolunteerAddresses" Relationship="VolunteerNetworkModel.FK_VolunteerAddress_Cities" FromRole="City" ToRole="VolunteerAddress" />
+  </EntityType>
+  <EntityType Name="Country">
+    <Key>
+      <PropertyRef Name="CountryID" />
+    </Key>
+    <Property Name="CountryID" Type="Int32" Nullable="false" />
+    <Property Name="CountryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TwoCharCountryCode" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+    <Property Name="ThreeCharCountryCode" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="ShopperAddresses" Relationship="VolunteerNetworkModel.FK_ShopperAddress_Countries" FromRole="Country" ToRole="ShopperAddress" />
+    <NavigationProperty Name="VolunteerAddresses" Relationship="VolunteerNetworkModel.FK_VolunteerAddress_Countries" FromRole="Country" ToRole="VolunteerAddress" />
+  </EntityType>
+  <EntityType Name="State">
+    <Key>
+      <PropertyRef Name="StateId" />
+    </Key>
+    <Property Name="StateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CountryId" Type="Int32" Nullable="false" />
+    <Property Name="StateName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ShopperAddresses" Relationship="VolunteerNetworkModel.FK_ShopperAddress_States" FromRole="State" ToRole="ShopperAddress" />
+    <NavigationProperty Name="VolunteerAddresses" Relationship="VolunteerNetworkModel.FK_VolunteerAddress_States" FromRole="State" ToRole="VolunteerAddress" />
+  </EntityType>
+  <EntityType Name="SearchArea">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="City1" Type="Int32" />
+    <Property Name="City2" Type="Int32" />
+    <Property Name="City3" Type="Int32" />
+    <Property Name="City4" Type="Int32" />
+    <NavigationProperty Name="User" Relationship="VolunteerNetworkModel.FK_SearchAreas_User" FromRole="SearchArea" ToRole="User" />
+    <NavigationProperty Name="City" Relationship="VolunteerNetworkModel.FK_SearchAreas_Cities" FromRole="SearchArea" ToRole="City" />
+    <NavigationProperty Name="City5" Relationship="VolunteerNetworkModel.FK_SearchAreas_Cities1" FromRole="SearchArea" ToRole="City" />
+    <NavigationProperty Name="City6" Relationship="VolunteerNetworkModel.FK_SearchAreas_Cities2" FromRole="SearchArea" ToRole="City" />
+    <NavigationProperty Name="City7" Relationship="VolunteerNetworkModel.FK_SearchAreas_Cities3" FromRole="SearchArea" ToRole="City" />
+  </EntityType>
+  <EntityType Name="VolunteerAddress">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="AddressLine1" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="AddressLine2" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="AddressLine3" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="AddressLine4" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Locality" Type="Int32" Nullable="false" />
+    <Property Name="Region" Type="Int32" Nullable="false" />
+    <Property Name="Postcode" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="Country" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="VolunteerNetworkModel.FK_VolunteerAddress_User" FromRole="VolunteerAddress" ToRole="User" />
+    <NavigationProperty Name="City" Relationship="VolunteerNetworkModel.FK_VolunteerAddress_Cities" FromRole="VolunteerAddress" ToRole="City" />
+    <NavigationProperty Name="Country1" Relationship="VolunteerNetworkModel.FK_VolunteerAddress_Countries" FromRole="VolunteerAddress" ToRole="Country" />
+    <NavigationProperty Name="State" Relationship="VolunteerNetworkModel.FK_VolunteerAddress_States" FromRole="VolunteerAddress" ToRole="State" />
+  </EntityType>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Type="VolunteerNetworkModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="VolunteerNetworkModel.AspNetUserClaim" Role="AspNetUserClaim" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaim">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Type="VolunteerNetworkModel.AspNetUser" Role="AspNetUser" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="VolunteerNetworkModel.AspNetUserLogin" Role="AspNetUserLogin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogin">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_AspNetUsers">
+    <End Type="VolunteerNetworkModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+    <End Type="VolunteerNetworkModel.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="AspNetUsersId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SearchAreas_User">
+    <End Type="VolunteerNetworkModel.User" Role="User" Multiplicity="1" />
+    <End Type="VolunteerNetworkModel.SearchArea" Role="SearchArea" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SearchArea">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShopperAddress_User">
+    <End Type="VolunteerNetworkModel.User" Role="User" Multiplicity="1" />
+    <End Type="VolunteerNetworkModel.ShopperAddress" Role="ShopperAddress" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ShopperAddress">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Task_User">
+    <End Type="VolunteerNetworkModel.User" Role="User" Multiplicity="1" />
+    <End Type="VolunteerNetworkModel.SupportTask" Role="SupportTask" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SupportTask">
+        <PropertyRef Name="RaisedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Task_User1">
+    <End Type="VolunteerNetworkModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="VolunteerNetworkModel.SupportTask" Role="SupportTask" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SupportTask">
+        <PropertyRef Name="ClosedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Task_User2">
+    <End Type="VolunteerNetworkModel.User" Role="User" Multiplicity="0..1" />
+    <End Type="VolunteerNetworkModel.SupportTask" Role="SupportTask" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SupportTask">
+        <PropertyRef Name="AssignedTo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VolunteerAddress_User">
+    <End Type="VolunteerNetworkModel.User" Role="User" Multiplicity="1" />
+    <End Type="VolunteerNetworkModel.VolunteerAddress" Role="VolunteerAddress" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="VolunteerAddress">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShopperAddress_Cities">
+    <End Type="VolunteerNetworkModel.City" Role="City" Multiplicity="1" />
+    <End Type="VolunteerNetworkModel.ShopperAddress" Role="ShopperAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="ShopperAddress">
+        <PropertyRef Name="Locality" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShopperAddress_Countries">
+    <End Type="VolunteerNetworkModel.Country" Role="Country" Multiplicity="1" />
+    <End Type="VolunteerNetworkModel.ShopperAddress" Role="ShopperAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="ShopperAddress">
+        <PropertyRef Name="Country" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShopperAddress_States">
+    <End Type="VolunteerNetworkModel.State" Role="State" Multiplicity="1" />
+    <End Type="VolunteerNetworkModel.ShopperAddress" Role="ShopperAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="State">
+        <PropertyRef Name="StateId" />
+      </Principal>
+      <Dependent Role="ShopperAddress">
+        <PropertyRef Name="Region" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SearchAreas_Cities">
+    <End Type="VolunteerNetworkModel.City" Role="City" Multiplicity="0..1" />
+    <End Type="VolunteerNetworkModel.SearchArea" Role="SearchArea" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="SearchArea">
+        <PropertyRef Name="City1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SearchAreas_Cities1">
+    <End Type="VolunteerNetworkModel.City" Role="City" Multiplicity="0..1" />
+    <End Type="VolunteerNetworkModel.SearchArea" Role="SearchArea" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="SearchArea">
+        <PropertyRef Name="City2" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SearchAreas_Cities2">
+    <End Type="VolunteerNetworkModel.City" Role="City" Multiplicity="0..1" />
+    <End Type="VolunteerNetworkModel.SearchArea" Role="SearchArea" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="SearchArea">
+        <PropertyRef Name="City3" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SearchAreas_Cities3">
+    <End Type="VolunteerNetworkModel.City" Role="City" Multiplicity="0..1" />
+    <End Type="VolunteerNetworkModel.SearchArea" Role="SearchArea" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="SearchArea">
+        <PropertyRef Name="City4" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VolunteerAddress_Cities">
+    <End Type="VolunteerNetworkModel.City" Role="City" Multiplicity="1" />
+    <End Type="VolunteerNetworkModel.VolunteerAddress" Role="VolunteerAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="VolunteerAddress">
+        <PropertyRef Name="Locality" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VolunteerAddress_Countries">
+    <End Type="VolunteerNetworkModel.Country" Role="Country" Multiplicity="1" />
+    <End Type="VolunteerNetworkModel.VolunteerAddress" Role="VolunteerAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Country">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="VolunteerAddress">
+        <PropertyRef Name="Country" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VolunteerAddress_States">
+    <End Type="VolunteerNetworkModel.State" Role="State" Multiplicity="1" />
+    <End Type="VolunteerNetworkModel.VolunteerAddress" Role="VolunteerAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="State">
+        <PropertyRef Name="StateId" />
+      </Principal>
+      <Dependent Role="VolunteerAddress">
+        <PropertyRef Name="Region" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AspNetUserRoles">
+    <End Type="VolunteerNetworkModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
+    <End Type="VolunteerNetworkModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+  </Association>
+</Schema>

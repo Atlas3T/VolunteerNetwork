@@ -30,13 +30,14 @@ namespace WebRole1
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
-        public virtual DbSet<Country> Countries { get; set; }
-        public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<SupportTask> SupportTasks { get; set; }
         public virtual DbSet<uk_towns> uk_towns { get; set; }
-        public virtual DbSet<City> Cities { get; set; }
-        public virtual DbSet<State> States { get; set; }
+        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<ShopperAddress> ShopperAddresses { get; set; }
+        public virtual DbSet<SupportTask> SupportTasks { get; set; }
+        public virtual DbSet<City> Cities { get; set; }
+        public virtual DbSet<Country> Countries { get; set; }
+        public virtual DbSet<State> States { get; set; }
+        public virtual DbSet<SearchArea> SearchAreas { get; set; }
         public virtual DbSet<VolunteerAddress> VolunteerAddresses { get; set; }
     }
 }

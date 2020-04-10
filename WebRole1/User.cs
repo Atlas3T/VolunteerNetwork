@@ -28,13 +28,14 @@ namespace WebRole1
         public string Surname { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
+        public virtual SearchArea SearchArea { get; set; }
+        public virtual ShopperAddress ShopperAddress { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SupportTask> SupportTasks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SupportTask> SupportTasks1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SupportTask> SupportTasks2 { get; set; }
-        public virtual ShopperAddress ShopperAddress { get; set; }
         public virtual VolunteerAddress VolunteerAddress { get; set; }
     }
 }

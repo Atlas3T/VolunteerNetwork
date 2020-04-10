@@ -145,6 +145,16 @@
     <Property Name="CountryId" Type="int" Nullable="false" />
     <Property Name="StateName" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
+  <EntityType Name="SearchAreas">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="City1" Type="int" />
+    <Property Name="City2" Type="int" />
+    <Property Name="City3" Type="int" />
+    <Property Name="City4" Type="int" />
+  </EntityType>
   <EntityType Name="VolunteerAddress">
     <Key>
       <PropertyRef Name="UserId" />
@@ -215,6 +225,78 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_SearchAreas_Cities">
+    <End Role="Cities" Type="Self.Cities" Multiplicity="0..1" />
+    <End Role="SearchAreas" Type="Self.SearchAreas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cities">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="SearchAreas">
+        <PropertyRef Name="City1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SearchAreas_Cities1">
+    <End Role="Cities" Type="Self.Cities" Multiplicity="0..1" />
+    <End Role="SearchAreas" Type="Self.SearchAreas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cities">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="SearchAreas">
+        <PropertyRef Name="City2" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SearchAreas_Cities2">
+    <End Role="Cities" Type="Self.Cities" Multiplicity="0..1" />
+    <End Role="SearchAreas" Type="Self.SearchAreas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cities">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="SearchAreas">
+        <PropertyRef Name="City3" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SearchAreas_Cities3">
+    <End Role="Cities" Type="Self.Cities" Multiplicity="0..1" />
+    <End Role="SearchAreas" Type="Self.SearchAreas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cities">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="SearchAreas">
+        <PropertyRef Name="City4" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SearchAreas_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="SearchAreas" Type="Self.SearchAreas" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SearchAreas">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShopperAddress_Cities">
+    <End Role="Cities" Type="Self.Cities" Multiplicity="1" />
+    <End Role="ShopperAddress" Type="Self.ShopperAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cities">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="ShopperAddress">
+        <PropertyRef Name="Locality" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ShopperAddress_Countries">
     <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
     <End Role="ShopperAddress" Type="Self.ShopperAddress" Multiplicity="*" />
@@ -224,6 +306,18 @@
       </Principal>
       <Dependent Role="ShopperAddress">
         <PropertyRef Name="Country" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ShopperAddress_States">
+    <End Role="States" Type="Self.States" Multiplicity="1" />
+    <End Role="ShopperAddress" Type="Self.ShopperAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="States">
+        <PropertyRef Name="StateId" />
+      </Principal>
+      <Dependent Role="ShopperAddress">
+        <PropertyRef Name="Region" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -287,6 +381,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_VolunteerAddress_Cities">
+    <End Role="Cities" Type="Self.Cities" Multiplicity="1" />
+    <End Role="VolunteerAddress" Type="Self.VolunteerAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cities">
+        <PropertyRef Name="CityId" />
+      </Principal>
+      <Dependent Role="VolunteerAddress">
+        <PropertyRef Name="Locality" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_VolunteerAddress_Countries">
     <End Role="Countries" Type="Self.Countries" Multiplicity="1" />
     <End Role="VolunteerAddress" Type="Self.VolunteerAddress" Multiplicity="*" />
@@ -296,6 +402,18 @@
       </Principal>
       <Dependent Role="VolunteerAddress">
         <PropertyRef Name="Country" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VolunteerAddress_States">
+    <End Role="States" Type="Self.States" Multiplicity="1" />
+    <End Role="VolunteerAddress" Type="Self.VolunteerAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="States">
+        <PropertyRef Name="StateId" />
+      </Principal>
+      <Dependent Role="VolunteerAddress">
+        <PropertyRef Name="Region" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -325,6 +443,7 @@
     <EntitySet Name="Cities" EntityType="Self.Cities" Schema="utilities" store:Type="Tables" />
     <EntitySet Name="Countries" EntityType="Self.Countries" Schema="utilities" store:Type="Tables" />
     <EntitySet Name="States" EntityType="Self.States" Schema="utilities" store:Type="Tables" />
+    <EntitySet Name="SearchAreas" EntityType="Self.SearchAreas" Schema="volunteer" store:Type="Tables" />
     <EntitySet Name="VolunteerAddress" EntityType="Self.VolunteerAddress" Schema="volunteer" store:Type="Tables" />
     <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -342,8 +461,36 @@
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
     </AssociationSet>
+    <AssociationSet Name="FK_SearchAreas_Cities" Association="Self.FK_SearchAreas_Cities">
+      <End Role="Cities" EntitySet="Cities" />
+      <End Role="SearchAreas" EntitySet="SearchAreas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SearchAreas_Cities1" Association="Self.FK_SearchAreas_Cities1">
+      <End Role="Cities" EntitySet="Cities" />
+      <End Role="SearchAreas" EntitySet="SearchAreas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SearchAreas_Cities2" Association="Self.FK_SearchAreas_Cities2">
+      <End Role="Cities" EntitySet="Cities" />
+      <End Role="SearchAreas" EntitySet="SearchAreas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SearchAreas_Cities3" Association="Self.FK_SearchAreas_Cities3">
+      <End Role="Cities" EntitySet="Cities" />
+      <End Role="SearchAreas" EntitySet="SearchAreas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SearchAreas_User" Association="Self.FK_SearchAreas_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="SearchAreas" EntitySet="SearchAreas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShopperAddress_Cities" Association="Self.FK_ShopperAddress_Cities">
+      <End Role="Cities" EntitySet="Cities" />
+      <End Role="ShopperAddress" EntitySet="ShopperAddress" />
+    </AssociationSet>
     <AssociationSet Name="FK_ShopperAddress_Countries" Association="Self.FK_ShopperAddress_Countries">
       <End Role="Countries" EntitySet="Countries" />
+      <End Role="ShopperAddress" EntitySet="ShopperAddress" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ShopperAddress_States" Association="Self.FK_ShopperAddress_States">
+      <End Role="States" EntitySet="States" />
       <End Role="ShopperAddress" EntitySet="ShopperAddress" />
     </AssociationSet>
     <AssociationSet Name="FK_ShopperAddress_User" Association="Self.FK_ShopperAddress_User">
@@ -366,8 +513,16 @@
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="User" EntitySet="User" />
     </AssociationSet>
+    <AssociationSet Name="FK_VolunteerAddress_Cities" Association="Self.FK_VolunteerAddress_Cities">
+      <End Role="Cities" EntitySet="Cities" />
+      <End Role="VolunteerAddress" EntitySet="VolunteerAddress" />
+    </AssociationSet>
     <AssociationSet Name="FK_VolunteerAddress_Countries" Association="Self.FK_VolunteerAddress_Countries">
       <End Role="Countries" EntitySet="Countries" />
+      <End Role="VolunteerAddress" EntitySet="VolunteerAddress" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VolunteerAddress_States" Association="Self.FK_VolunteerAddress_States">
+      <End Role="States" EntitySet="States" />
       <End Role="VolunteerAddress" EntitySet="VolunteerAddress" />
     </AssociationSet>
     <AssociationSet Name="FK_VolunteerAddress_User" Association="Self.FK_VolunteerAddress_User">

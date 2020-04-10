@@ -1,0 +1,90 @@
+﻿@model WebRole1.Models.Ticket
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutSimple.cshtml";
+}
+
+<h2>Ticket Details</h2>
+<div class="row" >
+    <div style="width:100%;">
+        @using (Html.BeginForm("Index", "shopper", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+
+            <section class="section section-l bg-light section-steps pb-4" id="steps" >
+                <div>
+                    <div class="section-content section-content-boxed" >
+                        <div class="row g-gs justify-content-center align-items-center">
+                            <div class="col-lg-8">
+                                <div class="list-block pr-lg-8">
+                                    @Html.AntiForgeryToken()
+                                    <h4 class="title">View ticket details</h4>
+                                    <hr />
+                                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.TicketNumber, new { @class = "col-md-20 control-label" })
+                                        <div class="col-md-10">
+                                            @Html.DisplayFor(m => m.TicketNumber, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.DateRaised, new { @class = "col-md-20 control-label" })
+                                        <div class="col-md-10">
+                                            @Html.DisplayFor(m => m.DateRaised, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.DateClosed, new { @class = "col-md-20 control-label" })
+                                        <div class="col-md-10">
+                                            @Html.DisplayFor(m => m.DateClosed, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.Title, new { @class = "col-md-20 control-label" })
+                                        <div class="col-md-10">
+                                            @Html.DisplayFor(m => m.Title, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.Description, new { @class = "col-md-20 control-label" })
+                                        <div class="col-md-10">
+                                            @Html.DisplayFor(m => m.Description, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.RaisedBy, new { @class = "col-md-20 control-label" })
+                                        <div class="col-md-10">
+                                            @Html.ActionLink("Get Address", "TicketAddress", new { id = Model.TicketNumber })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.SeverityText, new { @class = "col-md-20 control-label" })
+                                        <div class="col-md-10">
+                                            @Html.DisplayFor(m => m.SeverityText, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.StatusText, new { @class = "col-md-20 control-label" })
+                                        <div class="col-md-10">
+                                            @Html.DisplayFor(m => m.StatusText, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.TypeText, new { @class = "col-md-20 control-label" })
+                                        <div class="col-md-10">
+                                            @Html.DisplayFor(m => m.TypeText, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="form-group" style="padding-top:20px;">
+                <div class="col-md-offset-0 col-md-10">
+                    @Html.ActionLink("Close", "Index", "volunteer")
+                </div>
+            </div>
+        }
+        </div></div>

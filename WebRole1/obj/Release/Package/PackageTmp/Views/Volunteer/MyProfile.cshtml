@@ -1,0 +1,156 @@
+﻿@model WebRole1.Models.VolunteerModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutSimple.cshtml";
+}
+
+<h2>Manage your profile</h2>
+
+
+@using (Html.BeginForm("MyProfile", "Volunteer", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "myprofileform" }))
+{
+
+
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+
+    <div class="section-content section-content-boxed">
+        <div class="row g-gs justify-content-center align-items-center">
+            <div class="col-lg-12">
+                <div class="list-block pr-lg-12">
+
+
+                    <h4>It's important that your name and address is recorded for validation purposes and so that people receiving support know who to expect to arrive.</h4>
+                    <hr />
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.firstName, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.firstName, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.surname, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.surname, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.address.AddressLine1, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.address.AddressLine1, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.address.AddressLine2, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.address.AddressLine2, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.address.AddressLine3, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.address.AddressLine3, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.address.AddressLine4, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.address.AddressLine4, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.address.Postcode, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.address.Postcode, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(x => Model.address.CountryId, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-5">
+                            @Html.DropDownListFor(m => m.address.CountryId, Model.address.Countries, "Please select", new { disabled = "disabled" })
+                            @Html.ValidationMessageFor(x => x.address.CountryId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(x => Model.address.StateId, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-5">
+                            @Html.DropDownListFor(m => m.address.StateId, Model.address.States, "Please select", new { onchange = "document.getElementById(\"myprofileform\").submit();" })
+                            @Html.ValidationMessageFor(x => x.address.StateId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(x => Model.address.CityId, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-5">
+                            @Html.DropDownListFor(m => m.address.CityId, Model.address.Cities, "Please select", new { disabled = "disabled" })
+                            @Html.ValidationMessageFor(x => x.address.CityId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="section-content section-content-boxed">
+        <div class="row g-gs justify-content-center align-items-center">
+            <div class="col-lg-12">
+                <div class="list-block pr-lg-12">
+                    <div style="border:dashed; border-width: 1px; border-color: #bbbbbb; padding: 10px; background-color: #EEEEEE; margin-top:40px;">
+                        <h4>The list of people needing support is determined by your selections here. Only people in your support areas will be listed in your volunteer support page.</h4>
+                        <hr />
+                        <div class="form-group">
+                            @Html.LabelFor(x => Model.address.VolunteerAreaOneId, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-5">
+                                @Html.DropDownListFor(m => m.address.VolunteerAreaOneId, Model.address.searchCitiesListOne, "Please select", new { disabled = "disabled" })
+                                @Html.ValidationMessageFor(x => x.address.VolunteerAreaOneId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(x => Model.address.VolunteerAreaTwoId, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-5">
+                                @Html.DropDownListFor(m => m.address.VolunteerAreaTwoId, Model.address.searchCitiesListTwo, "Please select", new { disabled = "disabled" })
+                                @Html.ValidationMessageFor(x => x.address.VolunteerAreaTwoId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(x => Model.address.VolunteerAreaThreeId, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-5">
+                                @Html.DropDownListFor(m => m.address.VolunteerAreaThreeId, Model.address.searchCitiesListThree, "Please select", new { disabled = "disabled" })
+                                @Html.ValidationMessageFor(x => x.address.VolunteerAreaThreeId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(x => Model.address.VolunteerAreaFourId, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-5">
+                                @Html.DropDownListFor(m => m.address.VolunteerAreaFourId, Model.address.searchCitiesListFour, "Please select", new { disabled = "disabled" })
+                                @Html.ValidationMessageFor(x => x.address.VolunteerAreaFourId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+
+                    </div>
+                    </div></div></div></div>
+                    <div class="form-group">
+                        <div class="col-md-offset-0 col-md-10" style="margin-top:20px;">
+                            <input type="submit" class="btn btn-default" value="Update" />
+                        </div>
+                    </div>
+                    }
+
+                    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+                    <script type="text/javascript">
+                        $(function () {
+                            if ($("#address_CityId option").length > 1) {
+                                $("#address_CityId").removeAttr("disabled");
+                                $("#address_VolunteerAreaOneId").removeAttr("disabled");
+                                $("#address_VolunteerAreaTwoId").removeAttr("disabled");
+                                $("#address_VolunteerAreaThreeId").removeAttr("disabled");
+                                $("#address_VolunteerAreaFourId").removeAttr("disabled");
+                            }
+                        });
+                    </script>
