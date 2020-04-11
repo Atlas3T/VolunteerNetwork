@@ -219,10 +219,6 @@ namespace WebRole1.Controllers
                             thisSearchArea.City4 = model.address.VolunteerAreaFourId;
                         }
 
-
-
-
-
                         db.SaveChanges();
                     }
                 }
@@ -549,8 +545,6 @@ namespace WebRole1.Controllers
                 return View(shopperModel);
             }
         }
-
-
 
         private static void SetCountryList(VolunteerNetworkEntities db)
         {

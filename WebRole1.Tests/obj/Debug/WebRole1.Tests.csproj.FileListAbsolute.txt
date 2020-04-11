@@ -116,3 +116,6 @@ C:\Users\DarrenOliveiro-Pries\source\repos\VolunteerNetwork\VolunteerNetwork\Web
 C:\Users\DarrenOliveiro-Pries\source\repos\VolunteerNetwork\VolunteerNetwork\WebRole1.Tests\obj\Debug\WebRole1.Tests.csproj.CopyComplete
 C:\Users\DarrenOliveiro-Pries\source\repos\VolunteerNetwork\VolunteerNetwork\WebRole1.Tests\obj\Debug\WebRole1.Tests.dll
 C:\Users\DarrenOliveiro-Pries\source\repos\VolunteerNetwork\VolunteerNetwork\WebRole1.Tests\obj\Debug\WebRole1.Tests.pdb
+C:\Users\DarrenOliveiro-Pries\source\repos\VolunteerNetwork\VolunteerNetwork\WebRole1.Tests\bin\Debug\SendGrid.dll
+C:\Users\DarrenOliveiro-Pries\source\repos\VolunteerNetwork\VolunteerNetwork\WebRole1.Tests\bin\Debug\SendGrid.pdb
+C:\Users\DarrenOliveiro-Pries\source\repos\VolunteerNetwork\VolunteerNetwork\WebRole1.Tests\bin\Debug\SendGrid.xml

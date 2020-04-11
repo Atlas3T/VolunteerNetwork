@@ -67,6 +67,9 @@
     <Reference Include="Microsoft.WindowsAzure.Storage, Version=8.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WindowsAzure.Storage.8.0.1\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
+    <Reference Include="SendGrid, Version=9.13.2.0, Culture=neutral, PublicKeyToken=4f047e93159395ca, processorArchitecture=MSIL">
+      <HintPath>..\packages\SendGrid.9.13.2\lib\net452\SendGrid.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -286,6 +289,8 @@
     <Content Include="assets\js\index.html" />
     <Content Include="assets\js\scripts.js" />
     <Content Include="assets\scss\index.html" />
+    <Content Include="Content\assets\beefree-khs42gw03nm.html" />
+    <Content Include="Content\assets\beefree-khs42gw03nmreset.html" />
     <Content Include="Content\assets\css\bundle.css" />
     <Content Include="Content\assets\css\index.html" />
     <Content Include="Content\assets\css\styles.css" />
@@ -309,6 +314,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\bg_password.gif" />
     <Content Include="images\blog\blog-a.jpg" />
     <Content Include="images\blog\blog-b.jpg" />
     <Content Include="images\blog\blog-c.jpg" />
@@ -339,6 +345,7 @@
     <Content Include="images\gfx\symptom-a.png" />
     <Content Include="images\gfx\symptom-b.png" />
     <Content Include="images\gfx\symptom-c.png" />
+    <Content Include="images\illo.png" />
     <Content Include="images\index.html" />
     <Content Include="images\logo-dark.png" />
     <Content Include="images\logo-dark2x.png" />
@@ -661,6 +668,7 @@
     <Content Include="Views\Shopper\MyProfile.cshtml" />
     <Content Include="Views\Volunteer\TicketAddress.cshtml" />
     <Content Include="Views\Shared\_LayoutSimple.cshtml" />
+    <Content Include="Views\Shared\Info.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

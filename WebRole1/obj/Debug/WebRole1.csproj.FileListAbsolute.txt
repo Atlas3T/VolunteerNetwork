@@ -313,3 +313,6 @@ C:\Users\DarrenOliveiro-Pries\source\repos\VolunteerNetwork\VolunteerNetwork\Web
 C:\Users\DarrenOliveiro-Pries\source\repos\VolunteerNetwork\VolunteerNetwork\WebRole1\obj\Debug\WebRole1.csproj.CopyComplete
 C:\Users\DarrenOliveiro-Pries\source\repos\VolunteerNetwork\VolunteerNetwork\WebRole1\obj\Debug\WebRole1.dll
 C:\Users\DarrenOliveiro-Pries\source\repos\VolunteerNetwork\VolunteerNetwork\WebRole1\obj\Debug\WebRole1.pdb
+C:\Users\DarrenOliveiro-Pries\source\repos\VolunteerNetwork\VolunteerNetwork\WebRole1\bin\SendGrid.dll
+C:\Users\DarrenOliveiro-Pries\source\repos\VolunteerNetwork\VolunteerNetwork\WebRole1\bin\SendGrid.pdb
+C:\Users\DarrenOliveiro-Pries\source\repos\VolunteerNetwork\VolunteerNetwork\WebRole1\bin\SendGrid.xml

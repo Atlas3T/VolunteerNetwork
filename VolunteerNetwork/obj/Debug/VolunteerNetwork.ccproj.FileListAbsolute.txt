@@ -312,3 +312,6 @@ C:\Users\DarrenOliveiro-Pries\source\repos\VolunteerNetwork\VolunteerNetwork\Vol
 C:\Users\DarrenOliveiro-Pries\source\repos\VolunteerNetwork\VolunteerNetwork\VolunteerNetwork\obj\Debug\WebRole1\bin\zh-Hant\Microsoft.Data.OData.resources.dll
 C:\Users\DarrenOliveiro-Pries\source\repos\VolunteerNetwork\VolunteerNetwork\VolunteerNetwork\obj\Debug\WebRole1\bin\zh-Hant\Microsoft.Data.Services.Client.resources.dll
 C:\Users\DarrenOliveiro-Pries\source\repos\VolunteerNetwork\VolunteerNetwork\VolunteerNetwork\obj\Debug\WebRole1\bin\zh-Hant\System.Spatial.resources.dll
+C:\Users\DarrenOliveiro-Pries\source\repos\VolunteerNetwork\VolunteerNetwork\VolunteerNetwork\obj\Debug\WebRole1\bin\SendGrid.dll
+C:\Users\DarrenOliveiro-Pries\source\repos\VolunteerNetwork\VolunteerNetwork\VolunteerNetwork\obj\Debug\WebRole1\bin\SendGrid.pdb
+C:\Users\DarrenOliveiro-Pries\source\repos\VolunteerNetwork\VolunteerNetwork\VolunteerNetwork\obj\Debug\WebRole1\bin\SendGrid.xml

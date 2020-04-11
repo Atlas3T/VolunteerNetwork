@@ -4,8 +4,18 @@
 }
 
 <h2>@ViewBag.Title.</h2>
-<div>
-    <p>
-        Thank you for confirming your email. Please @Html.ActionLink("Click here to Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
-    </p>
-</div>
+<section class="section section-l bg-light section-steps pb-4" id="steps">
+    <div>
+        <div class="section-content section-content-boxed">
+            <div class="row g-gs justify-content-center align-items-center">
+                <div class="col-lg-8">
+                    <div class="list-block pr-lg-8">
+                        <p>
+                            Thank you for confirming your email. Please @Html.ActionLink("Click here to Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

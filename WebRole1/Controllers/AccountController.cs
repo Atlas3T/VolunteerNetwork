@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -74,6 +75,19 @@ namespace WebRole1.Controllers
                 return View(model);
             }
 
+            // Require the user to have a confirmed email before they can log on.
+            var user = await UserManager.FindByNameAsync(model.Email);
+            if (user != null)
+            {
+                if (!await UserManager.IsEmailConfirmedAsync(user.Id))
+                {
+                    string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account-Resend");
+
+                    ViewBag.errorMessage = "You must have a confirmed email to log on.";
+                    return View("Error");
+                }
+            }
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
@@ -82,11 +96,11 @@ namespace WebRole1.Controllers
                 case SignInStatus.Success:
                     using (var db = new VolunteerNetworkEntities())
                     {
-                        var user = (from s in db.AspNetUsers
+                        var thisuser = (from s in db.AspNetUsers
                                     where s.UserName == model.Email
                                     select s).FirstOrDefault();
 
-                        var role = user.AspNetRoles.FirstOrDefault();
+                        var role = thisuser.AspNetRoles.FirstOrDefault();
 
 
                         returnUrl = role.Name;
@@ -189,15 +203,21 @@ namespace WebRole1.Controllers
 
                     if (roleresult.Succeeded)
                     {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        //                      await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                        string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account");
 
                         // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                         // Send an email with this link
                         // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                         // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                         // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                        
-                        return RedirectToAction("Index", model.SelectedAccountType);
+
+                        ViewBag.Message = "Check your email and confirm your account, you must be confirmed "
+                             + "before you can log in.";
+
+                        return View("Info");
+                        //     return RedirectToAction("Index", model.SelectedAccountType);
                     }
                     AddErrors(roleresult);
                 }
@@ -247,10 +267,20 @@ namespace WebRole1.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+
+                var emailFilePath = Server.MapPath("~/Content/assets/beefree-khs42gw03nmreset.html");
+                using (StreamReader sr = new StreamReader(emailFilePath))
+                {
+                    // Read the stream to a string, and write the string to the console.
+                    String line = sr.ReadToEnd();
+                    line = line.Replace("%REPLACE%", callbackUrl);
+
+                    await UserManager.SendEmailAsync(user.Id, "Reset Password", line);
+                }
+
+                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form
@@ -331,6 +361,25 @@ namespace WebRole1.Controllers
             var userFactors = await UserManager.GetValidTwoFactorProvidersAsync(userId);
             var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
             return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
+        }
+
+        private async Task<string> SendEmailConfirmationTokenAsync(string userID, string subject)
+        {
+            string code = await UserManager.GenerateEmailConfirmationTokenAsync(userID);
+            var callbackUrl = Url.Action("ConfirmEmail", "Account",
+               new { userId = userID, code = code }, protocol: Request.Url.Scheme);
+
+            var emailFilePath = Server.MapPath("~/Content/assets/beefree-khs42gw03nm.html");
+            using (StreamReader sr = new StreamReader(emailFilePath))
+            {
+                // Read the stream to a string, and write the string to the console.
+                String line = sr.ReadToEnd();
+                line = line.Replace("%REPLACE%", callbackUrl);
+
+                await UserManager.SendEmailAsync(userID, subject, line);
+            }
+
+            return callbackUrl;
         }
 
         //
