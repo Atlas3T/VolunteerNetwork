@@ -88,6 +88,8 @@
     <Property Name="AspNetUsersId" Type="nvarchar" MaxLength="128" Nullable="false" />
     <Property Name="Forename" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Surname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="KYCVerified" Type="bit" Nullable="false" />
+    <Property Name="RefId" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="ShopperAddress">
     <Key>
@@ -136,6 +138,15 @@
     <Property Name="CountryName" Type="varchar" MaxLength="50" />
     <Property Name="TwoCharCountryCode" Type="char" MaxLength="2" />
     <Property Name="ThreeCharCountryCode" Type="char" MaxLength="3" />
+  </EntityType>
+  <EntityType Name="ErrorLog">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar(max)" />
+    <Property Name="ErrorType" Type="nvarchar(max)" />
+    <Property Name="ErrorMessage" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="States">
     <Key>
@@ -442,6 +453,7 @@
     <EntitySet Name="SupportTask" EntityType="Self.SupportTask" Schema="shopper" store:Type="Tables" />
     <EntitySet Name="Cities" EntityType="Self.Cities" Schema="utilities" store:Type="Tables" />
     <EntitySet Name="Countries" EntityType="Self.Countries" Schema="utilities" store:Type="Tables" />
+    <EntitySet Name="ErrorLog" EntityType="Self.ErrorLog" Schema="utilities" store:Type="Tables" />
     <EntitySet Name="States" EntityType="Self.States" Schema="utilities" store:Type="Tables" />
     <EntitySet Name="SearchAreas" EntityType="Self.SearchAreas" Schema="volunteer" store:Type="Tables" />
     <EntitySet Name="VolunteerAddress" EntityType="Self.VolunteerAddress" Schema="volunteer" store:Type="Tables" />

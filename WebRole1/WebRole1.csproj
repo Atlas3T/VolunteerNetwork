@@ -73,6 +73,9 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Spatial, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -222,6 +225,9 @@
     <Compile Include="C__MigrationHistory.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="ErrorLog.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -242,6 +248,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\KYCModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ShopperModel.cs" />
     <Compile Include="Models\Ticket.cs" />
@@ -279,7 +286,50 @@
     <Content Include="assets\css\styles.css" />
     <Content Include="assets\fonts\index.html" />
     <Content Include="assets\fonts\Nioicon.svg" />
+    <Content Include="assets\images\2.png" />
+    <Content Include="assets\images\3.png" />
+    <Content Include="assets\images\4.png" />
+    <Content Include="assets\images\5.png" />
+    <Content Include="assets\images\6.png" />
+    <Content Include="assets\images\8.png" />
+    <Content Include="assets\images\android-icon-144x144.png" />
+    <Content Include="assets\images\android-icon-192x192.png" />
+    <Content Include="assets\images\android-icon-36x36.png" />
+    <Content Include="assets\images\android-icon-48x48.png" />
+    <Content Include="assets\images\android-icon-72x72.png" />
+    <Content Include="assets\images\android-icon-96x96.png" />
+    <Content Include="assets\images\android.png" />
+    <Content Include="assets\images\apple-icon-114x114.png" />
+    <Content Include="assets\images\apple-icon-120x120.png" />
+    <Content Include="assets\images\apple-icon-144x144.png" />
+    <Content Include="assets\images\apple-icon-152x152.png" />
+    <Content Include="assets\images\apple-icon-180x180.png" />
+    <Content Include="assets\images\apple-icon-57x57.png" />
+    <Content Include="assets\images\apple-icon-60x60.png" />
+    <Content Include="assets\images\apple-icon-72x72.png" />
+    <Content Include="assets\images\apple-icon-76x76.png" />
+    <Content Include="assets\images\apple-icon-precomposed.png" />
+    <Content Include="assets\images\apple-icon.png" />
+    <Content Include="assets\images\apple.png" />
+    <Content Include="assets\images\appstore.png" />
+    <Content Include="assets\images\arrow.png" />
+    <Content Include="assets\images\browserconfig.xml" />
+    <Content Include="assets\images\check.png" />
+    <Content Include="assets\images\e9489302.svg" />
+    <Content Include="assets\images\favicon-16x16.png" />
+    <Content Include="assets\images\favicon-32x32.png" />
+    <Content Include="assets\images\favicon-96x96.png" />
+    <Content Include="assets\images\favicon.ico" />
     <Content Include="assets\images\index.html" />
+    <Content Include="assets\images\logo-Blockpass-1024-white-transparent.png" />
+    <Content Include="assets\images\logo-blockpass-foundation.png" />
+    <Content Include="assets\images\ms-icon-144x144.png" />
+    <Content Include="assets\images\ms-icon-150x150.png" />
+    <Content Include="assets\images\ms-icon-310x310.png" />
+    <Content Include="assets\images\ms-icon-70x70.png" />
+    <Content Include="assets\images\pass-token-large.png" />
+    <Content Include="assets\images\pass-token.png" />
+    <Content Include="assets\images\playstore.png" />
     <Content Include="assets\images\shape-a-sm.png" />
     <Content Include="assets\images\shape-a.png" />
     <Content Include="assets\images\shape-b.png" />
@@ -612,6 +662,8 @@
     <Content Include="Content\assets\scss\styles\_utilities.scss" />
     <Content Include="Content\assets\scss\_mixins.scss" />
     <Content Include="Content\assets\scss\_variables.scss" />
+    <Content Include="assets\images\hashes.json" />
+    <Content Include="assets\images\manifest.json" />
     <None Include="Properties\PublishProfiles\Volunteerapp - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -669,6 +721,8 @@
     <Content Include="Views\Volunteer\TicketAddress.cshtml" />
     <Content Include="Views\Shared\_LayoutSimple.cshtml" />
     <Content Include="Views\Shared\Info.cshtml" />
+    <Content Include="Views\Volunteer\KYCCheck.cshtml" />
+    <Content Include="Views\Shared\_LayoutKYC.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

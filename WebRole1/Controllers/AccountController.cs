@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -19,6 +21,8 @@ namespace WebRole1.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+
+        static HttpClient client = new HttpClient();
 
         public AccountController()
         {
@@ -84,6 +88,7 @@ namespace WebRole1.Controllers
                     string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account-Resend");
 
                     ViewBag.errorMessage = "You must have a confirmed email to log on.";
+                    ErrorClass.LogError(string.Empty, ErrorMessageType.Warning.ToString(), ViewBag.errorMessage);
                     return View("Error");
                 }
             }
@@ -96,14 +101,73 @@ namespace WebRole1.Controllers
                 case SignInStatus.Success:
                     using (var db = new VolunteerNetworkEntities())
                     {
-                        var thisuser = (from s in db.AspNetUsers
-                                    where s.UserName == model.Email
-                                    select s).FirstOrDefault();
+                        try
+                        {
+                            var thisAspuser = (from s in db.AspNetUsers
+                                            where s.UserName == model.Email
+                                            select s).FirstOrDefault();
 
-                        var role = thisuser.AspNetRoles.FirstOrDefault();
+                            var role = thisAspuser.AspNetRoles.FirstOrDefault();
 
+                            if (string.Compare(role.Name, "shopper") == 0)
+                            {
+                                returnUrl = role.Name;
+                            }
+                            else
+                            {
+                                var users = from s in db.Users
+                                            where s.AspNetUsersId == thisAspuser.Id
+                                            select s;
 
-                        returnUrl = role.Name;
+                                if (users.Count() == 0)
+                                {
+                                    returnUrl = "volunteer/MyProfile";
+                                }
+                                else
+                                {
+                                    User thisUser = users.FirstOrDefault();
+                                    if (thisUser.KYCVerified == true)
+                                    {
+                                        returnUrl = "volunteer/Index";
+                                    }
+                                    else
+                                    {
+                                        returnUrl = "volunteer/KYCCheck";
+
+                                        if (client.BaseAddress == null)
+                                        {
+                                            client.BaseAddress = new Uri("https://kyc.blockpass.org/kyc/1.0/connect/volunteernetwork_67c10/refId/" + thisUser.RefId);
+                                            client.DefaultRequestHeaders.Accept.Clear();
+                                            client.DefaultRequestHeaders.Accept.Add(
+                                                new MediaTypeWithQualityHeaderValue("application/json"));
+                                            client.DefaultRequestHeaders.Add("Authorization", "e0f89d938e2646a10479342eb946b247");
+                                            client.DefaultRequestHeaders.Add("cache-control", "no-cache");
+                                        }
+
+                                        HttpResponseMessage response = await client.GetAsync("https://kyc.blockpass.org/kyc/1.0/connect/volunteernetwork_67c10/refId/" + thisUser.RefId);
+                                        if (response.IsSuccessStatusCode)
+                                        {
+//                                            var kycResultraw = await response.Content.ReadAsStringAsync();
+                                            var kycResult = await response.Content.ReadAsAsync<KYCModel>();
+
+                                            if (string.Compare(kycResult.data.status, "approved") == 0)
+                                            {
+                                                thisUser.KYCVerified = true;
+                                                db.SaveChanges();
+
+                                                returnUrl = "volunteer/Index";
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            returnUrl = role.Name;
+                        }
+                        catch (Exception e)
+                        {
+                            ErrorClass.LogError(User.Identity.GetUserId(), ErrorMessageType.Exception.ToString(), e.Message);
+                        }
                     }
                     return RedirectToAction("Index", returnUrl);
 //                    return RedirectToLocal(returnUrl);
@@ -114,6 +178,7 @@ namespace WebRole1.Controllers
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
+                    ErrorClass.LogError(string.Empty, ErrorMessageType.Warning.ToString(), "Invalid login attempt.");
                     return View(model);
             }
         }
@@ -219,8 +284,10 @@ namespace WebRole1.Controllers
                         return View("Info");
                         //     return RedirectToAction("Index", model.SelectedAccountType);
                     }
+                    ErrorClass.LogError(User.Identity.GetUserId(), ErrorMessageType.Warning.ToString(), roleresult.Errors.FirstOrDefault());
                     AddErrors(roleresult);
                 }
+                ErrorClass.LogError(User.Identity.GetUserId(), ErrorMessageType.Warning.ToString(), result.Errors.FirstOrDefault());
                 AddErrors(result);
             }
 
@@ -235,6 +302,7 @@ namespace WebRole1.Controllers
         {
             if (userId == null || code == null)
             {
+                ErrorClass.LogError(User.Identity.GetUserId(), ErrorMessageType.Warning.ToString(), "Confirm email UserId == null or code == Null");
                 return View("Error");
             }
             var result = await UserManager.ConfirmEmailAsync(userId, code);
@@ -258,28 +326,34 @@ namespace WebRole1.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                try
                 {
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
+                    var user = await UserManager.FindByNameAsync(model.Email);
+                    if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                    {
+                        // Don't reveal that the user does not exist or is not confirmed
+                        return View("ForgotPasswordConfirmation");
+                    }
+
+                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                    // Send an email with this link
+                    string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+
+                    var emailFilePath = Server.MapPath("~/Content/assets/beefree-khs42gw03nmreset.html");
+                    using (StreamReader sr = new StreamReader(emailFilePath))
+                    {
+                        // Read the stream to a string, and write the string to the console.
+                        String line = sr.ReadToEnd();
+                        line = line.Replace("%REPLACE%", callbackUrl);
+
+                        await UserManager.SendEmailAsync(user.Id, "Reset Password", line);
+                    }
                 }
-
-                // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                // Send an email with this link
-                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-
-                var emailFilePath = Server.MapPath("~/Content/assets/beefree-khs42gw03nmreset.html");
-                using (StreamReader sr = new StreamReader(emailFilePath))
+                catch (Exception e)
                 {
-                    // Read the stream to a string, and write the string to the console.
-                    String line = sr.ReadToEnd();
-                    line = line.Replace("%REPLACE%", callbackUrl);
-
-                    await UserManager.SendEmailAsync(user.Id, "Reset Password", line);
+                    ErrorClass.LogError(User.Identity.GetUserId(), ErrorMessageType.Exception.ToString(), e.Message);
                 }
-
                  return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
@@ -326,6 +400,7 @@ namespace WebRole1.Controllers
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
             AddErrors(result);
+            ErrorClass.LogError(User.Identity.GetUserId(), ErrorMessageType.Warning.ToString(), result.Errors.FirstOrDefault());
             return View();
         }
 
@@ -356,6 +431,7 @@ namespace WebRole1.Controllers
             var userId = await SignInManager.GetVerifiedUserIdAsync();
             if (userId == null)
             {
+                ErrorClass.LogError(User.Identity.GetUserId(), ErrorMessageType.Warning.ToString(), "Sendcode UserId == null");
                 return View("Error");
             }
             var userFactors = await UserManager.GetValidTwoFactorProvidersAsync(userId);
@@ -397,6 +473,7 @@ namespace WebRole1.Controllers
             // Generate the token and send it
             if (!await SignInManager.SendTwoFactorCodeAsync(model.SelectedProvider))
             {
+                ErrorClass.LogError(User.Identity.GetUserId(), ErrorMessageType.Warning.ToString(), "SendCode token failed to send");
                 return View("Error");
             }
             return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });

@@ -79,6 +79,8 @@
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="VolunteerNetworkModel.User">
         <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="RefId" ColumnName="RefId" />
+          <ScalarProperty Name="KYCVerified" ColumnName="KYCVerified" />
           <ScalarProperty Name="Surname" ColumnName="Surname" />
           <ScalarProperty Name="Forename" ColumnName="Forename" />
           <ScalarProperty Name="AspNetUsersId" ColumnName="AspNetUsersId" />
@@ -181,5 +183,15 @@
         <ScalarProperty Name="Id" ColumnName="RoleId" />
       </EndProperty>
     </AssociationSetMapping>
+    <EntitySetMapping Name="ErrorLogs">
+      <EntityTypeMapping TypeName="VolunteerNetworkModel.ErrorLog">
+        <MappingFragment StoreEntitySet="ErrorLog">
+          <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+          <ScalarProperty Name="ErrorType" ColumnName="ErrorType" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

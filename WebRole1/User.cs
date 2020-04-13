@@ -26,6 +26,8 @@ namespace WebRole1
         public string AspNetUsersId { get; set; }
         public string Forename { get; set; }
         public string Surname { get; set; }
+        public bool KYCVerified { get; set; }
+        public string RefId { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual SearchArea SearchArea { get; set; }

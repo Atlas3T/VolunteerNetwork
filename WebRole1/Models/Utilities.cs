@@ -75,6 +75,24 @@ namespace WebRole1.Models
         public List<SelectListItem> searchCitiesListFour { get; set; }
     }
 
+    public class ErrorClass
+    {
+        public static void LogError(string userId, string errorType, string errorMessage)
+        {
+            using (var db = new VolunteerNetworkEntities())
+            {
+                ErrorLog newError = new ErrorLog()
+                {
+                    UserId = userId,
+                    ErrorType = errorType,
+                    ErrorMessage = errorMessage
+                };
+
+                db.ErrorLogs.Add(newError);
+                db.SaveChanges();
+            }
+        }
+    }
     enum TicketStatus
     {
         Unassigned = 1,
@@ -93,5 +111,12 @@ namespace WebRole1.Models
     {
         General,
         FoodDelivery
+    }
+
+    enum ErrorMessageType
+    {
+        Exception = 1,
+        Warning = 2,
+        Message = 3
     }
 }

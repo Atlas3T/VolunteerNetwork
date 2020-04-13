@@ -18,90 +18,14 @@ namespace WebRole1.Controllers
         public ActionResult MyProfile()
         {
             ShopperModel shopperModel = new ShopperModel(); ;
+            string strCurrentUserId = User.Identity.GetUserId();
 
-            using (var db = new VolunteerNetworkEntities())
-            {
-                ShopperController.SetCountryList(db);
-                ShopperController.SetCountyList(db);
-
-                string strCurrentUserId = User.Identity.GetUserId();
-
-                var users = from s in db.Users
-                            where s.AspNetUsersId == strCurrentUserId
-                            select s;
-
-                if (users.Count() == 0)
-                {
-                    shopperModel.address = new Address
-                    {
-                        Countries = countryList,
-                        CountryId = 235,
-                        States = countyList
-                    };
-                }
-                else
-                {
-                    User thisUser = users.FirstOrDefault();
-                    shopperModel.firstName = thisUser.Forename;
-                    shopperModel.surname = thisUser.Forename;
-                    shopperModel.address = new Address();
-
-                    ShopperAddress thisAddress = (from s in db.ShopperAddresses
-                                                  where s.UserId == thisUser.Id
-                                                  select s).FirstOrDefault();
-
-                    shopperModel.address.AddressLine1 = thisAddress.AddressLine1;
-                    shopperModel.address.AddressLine2 = thisAddress.AddressLine2;
-                    shopperModel.address.AddressLine3 = thisAddress.AddressLine3;
-                    shopperModel.address.AddressLine4 = thisAddress.AddressLine4;
-                    shopperModel.address.CountryId = thisAddress.Country;
-                    shopperModel.address.CityId = thisAddress.Locality;
-                    shopperModel.address.Postcode = thisAddress.Postcode;
-                    shopperModel.address.StateId = thisAddress.Region;
-                    shopperModel.address.Countries = countryList;
-
-                    foreach (var country in db.Countries)
-                    {
-                        shopperModel.address.Countries.Add(new SelectListItem { Text = country.CountryName, Value = country.CountryID.ToString() });
-                    }
-
-                    if (shopperModel.address.Countries != null)
-                    {
-                        var states = (from state in db.States
-                                      where state.CountryId == shopperModel.address.CountryId
-                                      select state).ToList();
-                        foreach (var state in states)
-                        {
-                            shopperModel.address.States.Add(new SelectListItem { Text = state.StateName, Value = state.StateId.ToString() });
-                        }
-
-                        if (shopperModel.address.States != null)
-                        {
-                            var cities = (from city in db.Cities
-                                          where city.StateId == shopperModel.address.StateId
-                                          select city).ToList();
-                            foreach (var city in cities)
-                            {
-                                shopperModel.address.Cities.Add(new SelectListItem { Text = city.CityName, Value = city.CityId.ToString() });
-                            }
-                        }
-                    }
-                }
-                return View(shopperModel);
-            }
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult MyProfile(ShopperModel model)
-        {
-            if (ModelState.IsValid &&
-                model.address.StateId > 0 &&
-                model.address.CityId > 0)
+            try
             {
                 using (var db = new VolunteerNetworkEntities())
                 {
-                    string strCurrentUserId = User.Identity.GetUserId();
+                    ShopperController.SetCountryList(db);
+                    ShopperController.SetCountyList(db);
 
                     var users = from s in db.Users
                                 where s.AspNetUsersId == strCurrentUserId
@@ -109,91 +33,181 @@ namespace WebRole1.Controllers
 
                     if (users.Count() == 0)
                     {
-                        User newUser = new User()
+                        shopperModel.address = new Address
                         {
-                            Forename = model.firstName,
-                            Surname = model.surname,
-                            AspNetUsersId = strCurrentUserId
+                            Countries = countryList,
+                            CountryId = 235,
+                            States = countyList
                         };
-
-                        db.Users.Add(newUser);
-                        db.SaveChanges();
-
-                        ShopperAddress newAddress = new ShopperAddress()
-                        {
-                            AddressLine1 = model.address.AddressLine1,
-                            AddressLine2 = model.address.AddressLine2,
-                            AddressLine3 = model.address.AddressLine3,
-                            AddressLine4 = model.address.AddressLine4,
-                            Locality = model.address.CityId,
-                            Region = model.address.StateId,
-                            Postcode = model.address.Postcode,
-                            Country = 235, //model.address.CountryId,
-                            UserId = newUser.Id
-                        };
-
-                        db.ShopperAddresses.Add(newAddress);
-                        db.SaveChanges();
                     }
                     else
                     {
                         User thisUser = users.FirstOrDefault();
-
-                        thisUser.Forename = model.firstName;
-                        thisUser.Surname = model.surname;
+                        shopperModel.firstName = thisUser.Forename;
+                        shopperModel.surname = thisUser.Forename;
+                        shopperModel.address = new Address();
 
                         ShopperAddress thisAddress = (from s in db.ShopperAddresses
                                                       where s.UserId == thisUser.Id
                                                       select s).FirstOrDefault();
 
-                        thisAddress.AddressLine1 = model.address.AddressLine1;
-                        thisAddress.AddressLine2 = model.address.AddressLine2;
-                        thisAddress.AddressLine3 = model.address.AddressLine3;
-                        thisAddress.AddressLine4 = model.address.AddressLine4;
-                        thisAddress.Country = 235; //model.address.CountryId;
-                        thisAddress.Locality = model.address.CityId;
-                        thisAddress.Postcode = model.address.Postcode;
-                        thisAddress.Region = model.address.StateId;
+                        shopperModel.address.AddressLine1 = thisAddress.AddressLine1;
+                        shopperModel.address.AddressLine2 = thisAddress.AddressLine2;
+                        shopperModel.address.AddressLine3 = thisAddress.AddressLine3;
+                        shopperModel.address.AddressLine4 = thisAddress.AddressLine4;
+                        shopperModel.address.CountryId = thisAddress.Country;
+                        shopperModel.address.CityId = thisAddress.Locality;
+                        shopperModel.address.Postcode = thisAddress.Postcode;
+                        shopperModel.address.StateId = thisAddress.Region;
+                        shopperModel.address.Countries = countryList;
 
-                        db.SaveChanges();
-                    }
-                }
-            }
-            else
-            {
-                using (var db = new VolunteerNetworkEntities())
-                {
-                    model.address.CountryId = 235;
-
-                    foreach (var country in db.Countries)
-                    {
-                        model.address.Countries.Add(new SelectListItem { Text = country.CountryName, Value = country.CountryID.ToString() });
-                    }
-
-                    if (model.address.Countries != null)
-                    {
-                        var states = (from state in db.States
-                                      where state.CountryId == 235
-//                                      where state.CountryId == model.address.CountryId
-                                      select state).ToList();
-                        foreach (var state in states)
+                        foreach (var country in db.Countries)
                         {
-                            model.address.States.Add(new SelectListItem { Text = state.StateName, Value = state.StateId.ToString() });
+                            shopperModel.address.Countries.Add(new SelectListItem { Text = country.CountryName, Value = country.CountryID.ToString() });
                         }
 
-                        if (model.address.States != null)
+                        if (shopperModel.address.Countries != null)
                         {
-                            var cities = (from city in db.Cities
-                                          where city.StateId == model.address.StateId
-                                          select city).ToList();
-                            foreach (var city in cities)
+                            var states = (from state in db.States
+                                          where state.CountryId == shopperModel.address.CountryId
+                                          select state).ToList();
+                            foreach (var state in states)
                             {
-                                model.address.Cities.Add(new SelectListItem { Text = city.CityName, Value = city.CityId.ToString() });
+                                shopperModel.address.States.Add(new SelectListItem { Text = state.StateName, Value = state.StateId.ToString() });
+                            }
+
+                            if (shopperModel.address.States != null)
+                            {
+                                var cities = (from city in db.Cities
+                                              where city.StateId == shopperModel.address.StateId
+                                              select city).ToList();
+                                foreach (var city in cities)
+                                {
+                                    shopperModel.address.Cities.Add(new SelectListItem { Text = city.CityName, Value = city.CityId.ToString() });
+                                }
                             }
                         }
                     }
                 }
-                return View(model);
+            }
+            catch (Exception e)
+            {
+                ErrorClass.LogError(strCurrentUserId, ErrorMessageType.Exception.ToString(), e.Message);
+            }
+
+            return View(shopperModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult MyProfile(ShopperModel model)
+        {
+            string strCurrentUserId = User.Identity.GetUserId();
+
+            try
+            {
+                if (ModelState.IsValid &&
+                    model.address.StateId > 0 &&
+                    model.address.CityId > 0)
+                {
+                    using (var db = new VolunteerNetworkEntities())
+                    {
+                        var users = from s in db.Users
+                                    where s.AspNetUsersId == strCurrentUserId
+                                    select s;
+
+                        if (users.Count() == 0)
+                        {
+                            User newUser = new User()
+                            {
+                                Forename = model.firstName,
+                                Surname = model.surname,
+                                AspNetUsersId = strCurrentUserId
+                            };
+
+                            db.Users.Add(newUser);
+                            db.SaveChanges();
+
+                            ShopperAddress newAddress = new ShopperAddress()
+                            {
+                                AddressLine1 = model.address.AddressLine1,
+                                AddressLine2 = model.address.AddressLine2,
+                                AddressLine3 = model.address.AddressLine3,
+                                AddressLine4 = model.address.AddressLine4,
+                                Locality = model.address.CityId,
+                                Region = model.address.StateId,
+                                Postcode = model.address.Postcode,
+                                Country = 235, //model.address.CountryId,
+                                UserId = newUser.Id
+                            };
+
+                            db.ShopperAddresses.Add(newAddress);
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            User thisUser = users.FirstOrDefault();
+
+                            thisUser.Forename = model.firstName;
+                            thisUser.Surname = model.surname;
+
+                            ShopperAddress thisAddress = (from s in db.ShopperAddresses
+                                                          where s.UserId == thisUser.Id
+                                                          select s).FirstOrDefault();
+
+                            thisAddress.AddressLine1 = model.address.AddressLine1;
+                            thisAddress.AddressLine2 = model.address.AddressLine2;
+                            thisAddress.AddressLine3 = model.address.AddressLine3;
+                            thisAddress.AddressLine4 = model.address.AddressLine4;
+                            thisAddress.Country = 235; //model.address.CountryId;
+                            thisAddress.Locality = model.address.CityId;
+                            thisAddress.Postcode = model.address.Postcode;
+                            thisAddress.Region = model.address.StateId;
+
+                            db.SaveChanges();
+                        }
+                    }
+                }
+                else
+                {
+                    using (var db = new VolunteerNetworkEntities())
+                    {
+                        model.address.CountryId = 235;
+
+                        foreach (var country in db.Countries)
+                        {
+                            model.address.Countries.Add(new SelectListItem { Text = country.CountryName, Value = country.CountryID.ToString() });
+                        }
+
+                        if (model.address.Countries != null)
+                        {
+                            var states = (from state in db.States
+                                          where state.CountryId == 235
+                                          //                                      where state.CountryId == model.address.CountryId
+                                          select state).ToList();
+                            foreach (var state in states)
+                            {
+                                model.address.States.Add(new SelectListItem { Text = state.StateName, Value = state.StateId.ToString() });
+                            }
+
+                            if (model.address.States != null)
+                            {
+                                var cities = (from city in db.Cities
+                                              where city.StateId == model.address.StateId
+                                              select city).ToList();
+                                foreach (var city in cities)
+                                {
+                                    model.address.Cities.Add(new SelectListItem { Text = city.CityName, Value = city.CityId.ToString() });
+                                }
+                            }
+                        }
+                    }
+                    return View(model);
+                }
+            }
+            catch (Exception e)
+            {
+                ErrorClass.LogError(strCurrentUserId, ErrorMessageType.Exception.ToString(), e.Message);
             }
 
             return RedirectToAction("Index", "Shopper");
@@ -203,65 +217,73 @@ namespace WebRole1.Controllers
         public ActionResult Index()
         {
             TicketListModel ticketListModel = new TicketListModel();
+            string strCurrentUserId = User.Identity.GetUserId();
 
-            using (var db = new VolunteerNetworkEntities())
+            try
             {
-                string strCurrentUserId = User.Identity.GetUserId();
-
-                var users = from s in db.Users
-                            where s.AspNetUsersId == strCurrentUserId
-                            select s;
-
-                if (users.Count() == 0)
+                using (var db = new VolunteerNetworkEntities())
                 {
-                    return RedirectToAction("MyProfile", "Shopper");
-                }
-                else
-                {
-                    User thisUser = users.FirstOrDefault();
+                    
 
-                    var supportTasks = from s in db.SupportTasks
-                                       where s.RaisedBy == thisUser.Id
-                                       select s;
+                    var users = from s in db.Users
+                                where s.AspNetUsersId == strCurrentUserId
+                                select s;
 
-                    ticketListModel.tickets = new List<Ticket>();
-                    foreach (SupportTask s in supportTasks)
+                    if (users.Count() == 0)
                     {
-                        var ticket = new Ticket
-                        {
-                            TicketNumber = s.Id,
-                            Title = s.Title,
-                            Description = s.Description,
-                            Type = s.Type,
-                            RaisedBy = s.RaisedBy,
-                            ClosedBy = s.ClosedBy,
-                            Status = s.Status,
-                            DateRaised = s.DateRaised,
-                            DateClosed = s.DateClosed,
-                            AssignedTo = s.AssignedTo,
-                            Severity = s.severity,
-                        };
+                        return RedirectToAction("MyProfile", "Shopper");
+                    }
+                    else
+                    {
+                        User thisUser = users.FirstOrDefault();
 
-                        switch (s.Status)
+                        var supportTasks = from s in db.SupportTasks
+                                           where s.RaisedBy == thisUser.Id
+                                           select s;
+
+                        ticketListModel.tickets = new List<Ticket>();
+                        foreach (SupportTask s in supportTasks)
                         {
-                            case (int)TicketStatus.Assigned:
-                                ticket.StatusText = "Assigned";
-                                break;
-                            case (int)TicketStatus.Closed:
-                                ticket.StatusText = "Closed";
-                                break;
-                            case (int)TicketStatus.Unassigned:
-                            default:
-                                ticket.StatusText = "Unassigned";
-                                break;
+                            var ticket = new Ticket
+                            {
+                                TicketNumber = s.Id,
+                                Title = s.Title,
+                                Description = s.Description,
+                                Type = s.Type,
+                                RaisedBy = s.RaisedBy,
+                                ClosedBy = s.ClosedBy,
+                                Status = s.Status,
+                                DateRaised = s.DateRaised,
+                                DateClosed = s.DateClosed,
+                                AssignedTo = s.AssignedTo,
+                                Severity = s.severity,
+                            };
+
+                            switch (s.Status)
+                            {
+                                case (int)TicketStatus.Assigned:
+                                    ticket.StatusText = "Assigned";
+                                    break;
+                                case (int)TicketStatus.Closed:
+                                    ticket.StatusText = "Closed";
+                                    break;
+                                case (int)TicketStatus.Unassigned:
+                                default:
+                                    ticket.StatusText = "Unassigned";
+                                    break;
+                            }
+
+                            ticketListModel.tickets.Add(ticket);
                         }
-
-                        ticketListModel.tickets.Add(ticket);
                     }
                 }
-
-                return View(ticketListModel);
             }
+            catch (Exception e)
+            {
+                ErrorClass.LogError(strCurrentUserId, ErrorMessageType.Exception.ToString(), e.Message);
+            }
+
+            return View(ticketListModel);
         }
 
         [HttpPost]
@@ -270,38 +292,44 @@ namespace WebRole1.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (var db = new VolunteerNetworkEntities())
+                string strCurrentUserId = User.Identity.GetUserId();
+
+                try
                 {
-                    string strCurrentUserId = User.Identity.GetUserId();
-
-                    var thisUser = (from s in db.Users
-                                    where s.AspNetUsersId == strCurrentUserId
-                                    select s).FirstOrDefault();
-
-                    var supportTasks = from s in db.SupportTasks
-                                       where s.RaisedBy == thisUser.Id
-                                       select s;
-
-                    model.tickets = new List<Ticket>();
-                    foreach (SupportTask s in supportTasks)
+                    using (var db = new VolunteerNetworkEntities())
                     {
-                        model.tickets.Add(new Ticket
+                        var thisUser = (from s in db.Users
+                                        where s.AspNetUsersId == strCurrentUserId
+                                        select s).FirstOrDefault();
+
+                        var supportTasks = from s in db.SupportTasks
+                                           where s.RaisedBy == thisUser.Id
+                                           select s;
+
+                        model.tickets = new List<Ticket>();
+                        foreach (SupportTask s in supportTasks)
                         {
-                            TicketNumber = s.Id,
-                            Title = s.Title,
-                            Description = s.Description,
-                            Type = s.Type,
-                            RaisedBy = s.RaisedBy,
-                            ClosedBy = s.ClosedBy,
-                            Status = s.Status,
-                            DateRaised = s.DateRaised,
-                            DateClosed = s.DateClosed,
-                            AssignedTo = s.AssignedTo,
-                            Severity = s.severity
-                        });
+                            model.tickets.Add(new Ticket
+                            {
+                                TicketNumber = s.Id,
+                                Title = s.Title,
+                                Description = s.Description,
+                                Type = s.Type,
+                                RaisedBy = s.RaisedBy,
+                                ClosedBy = s.ClosedBy,
+                                Status = s.Status,
+                                DateRaised = s.DateRaised,
+                                DateClosed = s.DateClosed,
+                                AssignedTo = s.AssignedTo,
+                                Severity = s.severity
+                            });
+                        }
                     }
                 }
-
+                catch (Exception e)
+                {
+                    ErrorClass.LogError(strCurrentUserId, ErrorMessageType.Exception.ToString(), e.Message);
+                }
             }
 
             return View(model);
@@ -320,31 +348,39 @@ namespace WebRole1.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (var db = new VolunteerNetworkEntities())
+                string strCurrentUserId = User.Identity.GetUserId();
+
+                try
                 {
-                    string strCurrentUserId = User.Identity.GetUserId();
-                    var users = from s in db.Users
-                                where s.AspNetUsersId == strCurrentUserId
-                                select s;
-
-                    if (users.Count() > 0)
+                    using (var db = new VolunteerNetworkEntities())
                     {
-                        var thisUser = users.FirstOrDefault();
+                        var users = from s in db.Users
+                                    where s.AspNetUsersId == strCurrentUserId
+                                    select s;
 
-                        SupportTask newTicket = new SupportTask()
+                        if (users.Count() > 0)
                         {
-                            Title = model.Title,
-                            Description = model.Description,
-                            Type = (int)TicketType.General,
-                            RaisedBy = thisUser.Id,
-                            Status = (int)TicketStatus.Unassigned,
-                            DateRaised = DateTime.Now,
-                            severity = (int)TicketSeverity.Medium,
-                        };
+                            var thisUser = users.FirstOrDefault();
 
-                        db.SupportTasks.Add(newTicket);
-                        db.SaveChanges();
+                            SupportTask newTicket = new SupportTask()
+                            {
+                                Title = model.Title,
+                                Description = model.Description,
+                                Type = (int)TicketType.General,
+                                RaisedBy = thisUser.Id,
+                                Status = (int)TicketStatus.Unassigned,
+                                DateRaised = DateTime.Now,
+                                severity = (int)TicketSeverity.Medium,
+                            };
+
+                            db.SupportTasks.Add(newTicket);
+                            db.SaveChanges();
+                        }
                     }
+                }
+                catch (Exception e)
+                {
+                    ErrorClass.LogError(strCurrentUserId, ErrorMessageType.Exception.ToString(), e.Message);
                 }
             }
 
@@ -354,130 +390,8 @@ namespace WebRole1.Controllers
         public ActionResult Details(int id)
         {
             Ticket thisTicket = null;
-
-            using (var db = new VolunteerNetworkEntities())
-            {
-                var tasks = from s in db.SupportTasks
-                            where s.Id == id
-                            select s;
-
-                if (tasks.Count() > 0)
-                {
-                    var thisTask = tasks.FirstOrDefault();
-
-                    thisTicket = new Ticket
-                    {
-                        Title = thisTask.Title,
-                        Description = thisTask.Description,
-                        TicketNumber = thisTask.Id,
-                        Type = thisTask.Type,
-                        RaisedBy = thisTask.RaisedBy,
-                        ClosedBy = thisTask.ClosedBy,
-                        Status = thisTask.Status,
-                        DateRaised = thisTask.DateRaised,
-                        DateClosed = thisTask.DateClosed,
-                        AssignedTo = thisTask.AssignedTo,
-                        Severity = thisTask.severity
-                    };
-
-                    switch (thisTask.Status)
-                    {
-                        case (int)TicketStatus.Assigned:
-                            thisTicket.StatusText = "Assigned";
-                            break;
-                        case (int)TicketStatus.Closed:
-                            thisTicket.StatusText = "Closed";
-                            break;
-                        case (int)TicketStatus.Unassigned:
-                        default:
-                            thisTicket.StatusText = "Unassigned";
-                            break;
-                    }
-
-                    switch (thisTask.severity)
-                    {
-                        case (int)TicketSeverity.Medium:
-                            thisTicket.SeverityText = "Medium";
-                            break;
-                        case (int)TicketSeverity.High:
-                            thisTicket.SeverityText = "High";
-                            break;
-                        case (int)TicketSeverity.Low:
-                        default:
-                            thisTicket.SeverityText = "Low";
-                            break;
-                    }
-
-                    switch (thisTask.Type)
-                    {
-                        case (int)TicketType.FoodDelivery:
-                            thisTicket.TypeText = "Food delivery";
-                            break;
-                        case (int)TicketType.General:
-                        default:
-                            thisTicket.TypeText = "General";
-                            break;
-                    }
-                }
-
-                return View(thisTicket);
-            }
-        }
-
-        public ActionResult Edit(int id)
-        {
-            Ticket thisTicket = null;
-
-            using (var db = new VolunteerNetworkEntities())
-            {
-                var tasks = from s in db.SupportTasks
-                            where s.Id == id
-                            select s;
-
-                if (tasks.Count() > 0)
-                {
-                    var thisTask = tasks.FirstOrDefault();
-
-                    thisTicket = new Ticket
-                    {
-                        Title = thisTask.Title,
-                        Description = thisTask.Description,
-                        TicketNumber = thisTask.Id,
-                        Type = thisTask.Type,
-                        RaisedBy = thisTask.RaisedBy,
-                        ClosedBy = thisTask.ClosedBy,
-                        Status = thisTask.Status,
-                        DateRaised = thisTask.DateRaised,
-                        DateClosed = thisTask.DateClosed,
-                        AssignedTo = thisTask.AssignedTo,
-                        Severity = thisTask.severity
-                    };
-
-                    switch (thisTask.severity)
-                    {
-                        case (int)TicketStatus.Unassigned:
-                            thisTicket.StatusText = "Unassigned";
-                            break;
-                        case (int)TicketStatus.Assigned:
-                            thisTicket.StatusText = "Assigned";
-                            break;
-                        case (int)TicketStatus.Closed:
-                            thisTicket.StatusText = "Closed";
-                            break;
-                        default:
-                            break;
-                    }
-                }
-
-                return View(thisTicket);
-            }
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(Ticket model, int id)
-        {
-            if (ModelState.IsValid)
+            
+            try
             {
                 using (var db = new VolunteerNetworkEntities())
                 {
@@ -489,13 +403,156 @@ namespace WebRole1.Controllers
                     {
                         var thisTask = tasks.FirstOrDefault();
 
-                        thisTask.Title = model.Title;
-                        thisTask.Description = model.Description;
-                        thisTask.severity = model.Severity;
-                        thisTask.Type = model.Type;
-                    }
+                        thisTicket = new Ticket
+                        {
+                            Title = thisTask.Title,
+                            Description = thisTask.Description,
+                            TicketNumber = thisTask.Id,
+                            Type = thisTask.Type,
+                            RaisedBy = thisTask.RaisedBy,
+                            ClosedBy = thisTask.ClosedBy,
+                            Status = thisTask.Status,
+                            DateRaised = thisTask.DateRaised,
+                            DateClosed = thisTask.DateClosed,
+                            AssignedTo = thisTask.AssignedTo,
+                            Severity = thisTask.severity
+                        };
 
-                    db.SaveChanges();
+                        switch (thisTask.Status)
+                        {
+                            case (int)TicketStatus.Assigned:
+                                thisTicket.StatusText = "Assigned";
+                                break;
+                            case (int)TicketStatus.Closed:
+                                thisTicket.StatusText = "Closed";
+                                break;
+                            case (int)TicketStatus.Unassigned:
+                            default:
+                                thisTicket.StatusText = "Unassigned";
+                                break;
+                        }
+
+                        switch (thisTask.severity)
+                        {
+                            case (int)TicketSeverity.Medium:
+                                thisTicket.SeverityText = "Medium";
+                                break;
+                            case (int)TicketSeverity.High:
+                                thisTicket.SeverityText = "High";
+                                break;
+                            case (int)TicketSeverity.Low:
+                            default:
+                                thisTicket.SeverityText = "Low";
+                                break;
+                        }
+
+                        switch (thisTask.Type)
+                        {
+                            case (int)TicketType.FoodDelivery:
+                                thisTicket.TypeText = "Food delivery";
+                                break;
+                            case (int)TicketType.General:
+                            default:
+                                thisTicket.TypeText = "General";
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                ErrorClass.LogError(User.Identity.GetUserId(), ErrorMessageType.Exception.ToString(), e.Message);
+            }
+
+            return View(thisTicket);
+        }
+
+        public ActionResult Edit(int id)
+        {
+            Ticket thisTicket = null;
+            
+            try
+            {
+                using (var db = new VolunteerNetworkEntities())
+                {
+                    var tasks = from s in db.SupportTasks
+                                where s.Id == id
+                                select s;
+
+                    if (tasks.Count() > 0)
+                    {
+                        var thisTask = tasks.FirstOrDefault();
+
+                        thisTicket = new Ticket
+                        {
+                            Title = thisTask.Title,
+                            Description = thisTask.Description,
+                            TicketNumber = thisTask.Id,
+                            Type = thisTask.Type,
+                            RaisedBy = thisTask.RaisedBy,
+                            ClosedBy = thisTask.ClosedBy,
+                            Status = thisTask.Status,
+                            DateRaised = thisTask.DateRaised,
+                            DateClosed = thisTask.DateClosed,
+                            AssignedTo = thisTask.AssignedTo,
+                            Severity = thisTask.severity
+                        };
+
+                        switch (thisTask.severity)
+                        {
+                            case (int)TicketStatus.Unassigned:
+                                thisTicket.StatusText = "Unassigned";
+                                break;
+                            case (int)TicketStatus.Assigned:
+                                thisTicket.StatusText = "Assigned";
+                                break;
+                            case (int)TicketStatus.Closed:
+                                thisTicket.StatusText = "Closed";
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                ErrorClass.LogError(User.Identity.GetUserId(), ErrorMessageType.Exception.ToString(), e.Message);
+            }
+
+            return View(thisTicket);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Ticket model, int id)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (var db = new VolunteerNetworkEntities())
+                    {
+                        var tasks = from s in db.SupportTasks
+                                    where s.Id == id
+                                    select s;
+
+                        if (tasks.Count() > 0)
+                        {
+                            var thisTask = tasks.FirstOrDefault();
+
+                            thisTask.Title = model.Title;
+                            thisTask.Description = model.Description;
+                            thisTask.severity = model.Severity;
+                            thisTask.Type = model.Type;
+                        }
+
+                        db.SaveChanges();
+                    }
+                }
+                catch (Exception e)
+                {
+                    ErrorClass.LogError(User.Identity.GetUserId(), ErrorMessageType.Exception.ToString(), e.Message);
                 }
             }
 

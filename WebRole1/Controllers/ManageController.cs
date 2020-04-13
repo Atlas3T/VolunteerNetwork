@@ -95,6 +95,7 @@ namespace WebRole1.Controllers
             else
             {
                 message = ManageMessageId.Error;
+                ErrorClass.LogError(User.Identity.GetUserId(), ErrorMessageType.Warning.ToString(), message.Value.ToString());
             }
             return RedirectToAction("ManageLogins", new { Message = message });
         }
@@ -240,6 +241,11 @@ namespace WebRole1.Controllers
                 }
                 return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
             }
+            else
+            {
+                ErrorClass.LogError(User.Identity.GetUserId(), ErrorMessageType.Warning.ToString(), result.Errors.FirstOrDefault());
+            }
+
             AddErrors(result);
             return View(model);
         }
@@ -269,6 +275,11 @@ namespace WebRole1.Controllers
                     }
                     return RedirectToAction("Index", new { Message = ManageMessageId.SetPasswordSuccess });
                 }
+                else
+                {
+                    ErrorClass.LogError(User.Identity.GetUserId(), ErrorMessageType.Warning.ToString(), result.Errors.FirstOrDefault());
+                }
+
                 AddErrors(result);
             }
 
@@ -332,7 +343,30 @@ namespace WebRole1.Controllers
             }
             else if (User.IsInRole("Volunteer"))
             {
-                return RedirectToAction("MyProfile", "Volunteer");
+                string strCurrentUserId = User.Identity.GetUserId();
+                using (var db = new VolunteerNetworkEntities())
+                {
+                    var users = from s in db.Users
+                                where s.AspNetUsersId == strCurrentUserId
+                                select s;
+
+                    if (users.Count() == 0)
+                    {
+                        return RedirectToAction("MyProfile", "Volunteer");
+                    }
+                    else
+                    {
+                        User thisUser = users.FirstOrDefault();
+                        if (thisUser.KYCVerified == true)
+                        {
+                            return RedirectToAction("Index", "Volunteer");
+                        }
+                        else
+                        {
+                            return RedirectToAction("KYCCheck", "Volunteer");
+                        }
+                    }
+                }
             }
             else
             {

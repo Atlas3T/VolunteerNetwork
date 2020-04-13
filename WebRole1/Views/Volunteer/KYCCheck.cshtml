@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "KYCCheck";
+    Layout = "~/Views/Shared/_LayoutKYC.cshtml";
+}
+
+<main class="nk-pages">
+    <section class="section section-l bg-light section-steps pb-4" id="steps">
+        <div class="container">
+            <div class="section-content section-content-boxed">
+                <div class="row g-gs justify-content-center align-items-center">
+                    <div class="col-lg-8">
+                        <div class="list-block pr-lg-4">
+                            <h4 class="title">Complete the Know Your Customer process</h4>
+                            <div class="content-size text-xs-center" style="visibility:hidden;">
+                                <p class="main-title"><span id="service-name">&nbsp;</span></p>
+                                <!-- <div class="environment">Environment: <span id="env">prod</span></div>                         -->
+                            </div>
+
+                            <ul class="list-check">
+                                <li>
+                                    <strong>Download the Blockpass app</strong> – Blockpass is a third party Know Your Customer (KYC) app for verifying the identity of volunteers.
+                                    <div class="row">
+                                        <div class="col-md-3 content-size text-xs-center">
+                                        </div>
+                                        <div class="col-md-3 content-size text-xs-center">
+                                            <a id="ios" href="https://itunes.apple.com/us/app/blockpass/id1322917010" target="_blank">
+                                                <img class="store-icon" src="/assets/images/appstore.png" />
+                                            </a>
+                                        </div>
+                                        <div class="col-md-3 content-size text-xs-center">
+                                            <a id="android" href="https://play.google.com/store/apps/details?id=com.blockpass_mobile" target="_blank">
+                                                <img class="store-icon" src="/assets/images/playstore.png" />
+                                            </a>
+                                        </div>
+                                        <div class="col-md-2 content-size text-xs-center">
+                                        </div>
+                                    </div>
+                                </li>
+                                <li><strong>Create your identity</strong> – Create your identity in the Blockpass mobile app.</li>
+                                <li>
+                                    <div id="blockpass-kyc-connect" style="cursor:pointer;">
+                                        <strong>Click here</strong> - This opens up a QR code which you should scan in your Blockpass app and then complete the verification process within the app
+                                    </div>
+                                </li>
+                                <li><a style="text-decoration: none; color: black;" href="/volunteer/index"><strong>Proceed to dashboard</strong> - Once you've verified your identity and the QR code has closed, proceed to the dashboard</a></li>
+                            </ul>
+                        </div><!-- .list-block -->
+                    </div><!-- .col -->
+                    <div class=" col-sm-10 col-md-8 col-lg-4">
+                        <img src="/images/gfx/steps.png" class="mb-2 mb-sm-0" alt="">
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .section-content -->
+        </div><!-- .container -->
+    </section><!-- .section -->
+</main>

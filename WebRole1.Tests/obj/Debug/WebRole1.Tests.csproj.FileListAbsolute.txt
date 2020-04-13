@@ -119,3 +119,6 @@ C:\Users\DarrenOliveiro-Pries\source\repos\VolunteerNetwork\VolunteerNetwork\Web
 C:\Users\DarrenOliveiro-Pries\source\repos\VolunteerNetwork\VolunteerNetwork\WebRole1.Tests\bin\Debug\SendGrid.dll
 C:\Users\DarrenOliveiro-Pries\source\repos\VolunteerNetwork\VolunteerNetwork\WebRole1.Tests\bin\Debug\SendGrid.pdb
 C:\Users\DarrenOliveiro-Pries\source\repos\VolunteerNetwork\VolunteerNetwork\WebRole1.Tests\bin\Debug\SendGrid.xml
+C:\Users\DarrenOliveiro-Pries\source\repos\VolunteerNetwork\VolunteerNetwork\WebRole1.Tests\obj\Debug\WebRole1.Tests.csproj.CoreCompileInputs.cache
+C:\Users\DarrenOliveiro-Pries\source\repos\VolunteerNetwork\VolunteerNetwork\WebRole1.Tests\bin\Debug\System.Net.Http.Formatting.dll
+C:\Users\DarrenOliveiro-Pries\source\repos\VolunteerNetwork\VolunteerNetwork\WebRole1.Tests\bin\Debug\System.Net.Http.Formatting.xml

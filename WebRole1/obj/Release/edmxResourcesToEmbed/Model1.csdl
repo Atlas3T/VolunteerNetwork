@@ -95,6 +95,7 @@
       <End Role="AspNetRole" EntitySet="AspNetRoles" />
       <End Role="AspNetUser" EntitySet="AspNetUsers" />
     </AssociationSet>
+    <EntitySet Name="ErrorLogs" EntityType="VolunteerNetworkModel.ErrorLog" />
   </EntityContainer>
   <EntityType Name="C__MigrationHistory">
     <Key>
@@ -190,6 +191,8 @@
     <NavigationProperty Name="SupportTasks1" Relationship="VolunteerNetworkModel.FK_Task_User1" FromRole="User" ToRole="SupportTask" />
     <NavigationProperty Name="SupportTasks2" Relationship="VolunteerNetworkModel.FK_Task_User2" FromRole="User" ToRole="SupportTask" />
     <NavigationProperty Name="VolunteerAddress" Relationship="VolunteerNetworkModel.FK_VolunteerAddress_User" FromRole="User" ToRole="VolunteerAddress" />
+    <Property Name="KYCVerified" Type="Boolean" Nullable="false" />
+    <Property Name="RefId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="ShopperAddress">
     <Key>
@@ -533,4 +536,13 @@
     <End Type="VolunteerNetworkModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
     <End Type="VolunteerNetworkModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
   </Association>
+  <EntityType Name="ErrorLog">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ErrorType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ErrorMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
 </Schema>

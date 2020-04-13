@@ -39,6 +39,7 @@
         <AssociationConnector Association="VolunteerNetworkModel.FK_VolunteerAddress_Countries" />
         <AssociationConnector Association="VolunteerNetworkModel.FK_VolunteerAddress_States" />
         <AssociationConnector Association="VolunteerNetworkModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="VolunteerNetworkModel.ErrorLog" Width="1.5" PointX="7.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
