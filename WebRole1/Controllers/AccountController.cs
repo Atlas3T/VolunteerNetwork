@@ -169,6 +169,8 @@ namespace WebRole1.Controllers
                             ErrorClass.LogError(User.Identity.GetUserId(), ErrorMessageType.Exception.ToString(), e.Message);
                         }
                     }
+
+
                     return RedirectToAction("Index", returnUrl);
 //                    return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
@@ -290,6 +292,20 @@ namespace WebRole1.Controllers
                 ErrorClass.LogError(User.Identity.GetUserId(), ErrorMessageType.Warning.ToString(), result.Errors.FirstOrDefault());
                 AddErrors(result);
             }
+
+            model.AccountType = new List<SelectListItem>()
+            {
+                new SelectListItem
+                {
+                    Value = "Volunteer",
+                    Text = "Volunteer"
+                },
+                new SelectListItem
+                {
+                    Value = "Shopper",
+                    Text = "Shopper"
+                }
+            };
 
             // If we got this far, something failed, redisplay form
             return View(model);
