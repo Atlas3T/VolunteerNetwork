@@ -430,6 +430,59 @@ namespace WebRole1.Controllers
 
                         thisTask.AssignedTo = thisUser.Id;
                         thisTask.Status = (int)TicketStatus.Assigned;
+
+                        AuditTable newAuditEvent = new AuditTable()
+                        {
+                            UserId = thisUser.Id,
+                            EventType = (int)AuditEventType.AssignTask,
+                            TaskId = thisTask.Id
+                        };
+
+                        db.AuditTables.Add(newAuditEvent);
+
+
+                        db.SaveChanges();
+                    }
+                }
+                catch (Exception e)
+                {
+                    ErrorClass.LogError(strCurrentUserId, ErrorMessageType.Exception.ToString(), e.Message);
+                }
+            }
+
+            return RedirectToAction("Index", "Volunteer");
+        }
+
+        public ActionResult Unassign(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                string strCurrentUserId = User.Identity.GetUserId();
+
+                try
+                {
+                    using (var db = new VolunteerNetworkEntities())
+                    {
+                        var thisTask = (from s in db.SupportTasks
+                                        where s.Id == id
+                                        select s).FirstOrDefault();
+
+                        thisTask.AssignedTo = null;
+                        thisTask.Status = (int)TicketStatus.Unassigned;
+
+                        var thisUser = (from s in db.Users
+                                        where s.AspNetUsersId == strCurrentUserId
+                                        select s).FirstOrDefault();
+
+                        AuditTable newAuditEvent = new AuditTable()
+                        {
+                            UserId = thisUser.Id,
+                            EventType = (int)AuditEventType.UnAssignTask,
+                            TaskId = thisTask.Id
+                        };
+
+                        db.AuditTables.Add(newAuditEvent);
+
                         db.SaveChanges();
                     }
                 }

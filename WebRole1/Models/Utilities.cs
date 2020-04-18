@@ -119,4 +119,13 @@ namespace WebRole1.Models
         Warning = 2,
         Message = 3
     }
+
+    enum AuditEventType
+    {
+        CreateTask = 1,
+        EditTask = 2,
+        AssignTask = 3,
+        CloseTask = 4,
+        UnAssignTask = 5
+    }
 }

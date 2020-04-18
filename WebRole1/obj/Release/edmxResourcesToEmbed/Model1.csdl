@@ -10,8 +10,10 @@
     <EntitySet Name="Users" EntityType="VolunteerNetworkModel.User" />
     <EntitySet Name="ShopperAddresses" EntityType="VolunteerNetworkModel.ShopperAddress" />
     <EntitySet Name="SupportTasks" EntityType="VolunteerNetworkModel.SupportTask" />
+    <EntitySet Name="AuditTables" EntityType="VolunteerNetworkModel.AuditTable" />
     <EntitySet Name="Cities" EntityType="VolunteerNetworkModel.City" />
     <EntitySet Name="Countries" EntityType="VolunteerNetworkModel.Country" />
+    <EntitySet Name="ErrorLogs" EntityType="VolunteerNetworkModel.ErrorLog" />
     <EntitySet Name="States" EntityType="VolunteerNetworkModel.State" />
     <EntitySet Name="SearchAreas" EntityType="VolunteerNetworkModel.SearchArea" />
     <EntitySet Name="VolunteerAddresses" EntityType="VolunteerNetworkModel.VolunteerAddress" />
@@ -26,6 +28,10 @@
     <AssociationSet Name="FK_User_AspNetUsers" Association="VolunteerNetworkModel.FK_User_AspNetUsers">
       <End Role="AspNetUser" EntitySet="AspNetUsers" />
       <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AuditTable_User" Association="VolunteerNetworkModel.FK_AuditTable_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="AuditTable" EntitySet="AuditTables" />
     </AssociationSet>
     <AssociationSet Name="FK_SearchAreas_User" Association="VolunteerNetworkModel.FK_SearchAreas_User">
       <End Role="User" EntitySet="Users" />
@@ -63,6 +69,10 @@
       <End Role="State" EntitySet="States" />
       <End Role="ShopperAddress" EntitySet="ShopperAddresses" />
     </AssociationSet>
+    <AssociationSet Name="FK_AuditTable_SupportTask" Association="VolunteerNetworkModel.FK_AuditTable_SupportTask">
+      <End Role="SupportTask" EntitySet="SupportTasks" />
+      <End Role="AuditTable" EntitySet="AuditTables" />
+    </AssociationSet>
     <AssociationSet Name="FK_SearchAreas_Cities" Association="VolunteerNetworkModel.FK_SearchAreas_Cities">
       <End Role="City" EntitySet="Cities" />
       <End Role="SearchArea" EntitySet="SearchAreas" />
@@ -95,7 +105,6 @@
       <End Role="AspNetRole" EntitySet="AspNetRoles" />
       <End Role="AspNetUser" EntitySet="AspNetUsers" />
     </AssociationSet>
-    <EntitySet Name="ErrorLogs" EntityType="VolunteerNetworkModel.ErrorLog" />
   </EntityContainer>
   <EntityType Name="C__MigrationHistory">
     <Key>
@@ -184,15 +193,16 @@
     <Property Name="AspNetUsersId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
     <Property Name="Forename" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Surname" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="KYCVerified" Type="Boolean" Nullable="false" />
+    <Property Name="RefId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="AspNetUser" Relationship="VolunteerNetworkModel.FK_User_AspNetUsers" FromRole="User" ToRole="AspNetUser" />
+    <NavigationProperty Name="AuditTables" Relationship="VolunteerNetworkModel.FK_AuditTable_User" FromRole="User" ToRole="AuditTable" />
     <NavigationProperty Name="SearchArea" Relationship="VolunteerNetworkModel.FK_SearchAreas_User" FromRole="User" ToRole="SearchArea" />
     <NavigationProperty Name="ShopperAddress" Relationship="VolunteerNetworkModel.FK_ShopperAddress_User" FromRole="User" ToRole="ShopperAddress" />
     <NavigationProperty Name="SupportTasks" Relationship="VolunteerNetworkModel.FK_Task_User" FromRole="User" ToRole="SupportTask" />
     <NavigationProperty Name="SupportTasks1" Relationship="VolunteerNetworkModel.FK_Task_User1" FromRole="User" ToRole="SupportTask" />
     <NavigationProperty Name="SupportTasks2" Relationship="VolunteerNetworkModel.FK_Task_User2" FromRole="User" ToRole="SupportTask" />
     <NavigationProperty Name="VolunteerAddress" Relationship="VolunteerNetworkModel.FK_VolunteerAddress_User" FromRole="User" ToRole="VolunteerAddress" />
-    <Property Name="KYCVerified" Type="Boolean" Nullable="false" />
-    <Property Name="RefId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="ShopperAddress">
     <Key>
@@ -230,6 +240,20 @@
     <NavigationProperty Name="User" Relationship="VolunteerNetworkModel.FK_Task_User" FromRole="SupportTask" ToRole="User" />
     <NavigationProperty Name="User1" Relationship="VolunteerNetworkModel.FK_Task_User1" FromRole="SupportTask" ToRole="User" />
     <NavigationProperty Name="User2" Relationship="VolunteerNetworkModel.FK_Task_User2" FromRole="SupportTask" ToRole="User" />
+    <NavigationProperty Name="AuditTables" Relationship="VolunteerNetworkModel.FK_AuditTable_SupportTask" FromRole="SupportTask" ToRole="AuditTable" />
+  </EntityType>
+  <EntityType Name="AuditTable">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="EventType" Type="Int32" Nullable="false" />
+    <Property Name="TaskId" Type="Int32" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EventDateTime" Type="DateTime" Nullable="false" Precision="7" />
+    <NavigationProperty Name="User" Relationship="VolunteerNetworkModel.FK_AuditTable_User" FromRole="AuditTable" ToRole="User" />
+    <NavigationProperty Name="SupportTask" Relationship="VolunteerNetworkModel.FK_AuditTable_SupportTask" FromRole="AuditTable" ToRole="SupportTask" />
   </EntityType>
   <EntityType Name="City">
     <Key>
@@ -256,6 +280,15 @@
     <Property Name="ThreeCharCountryCode" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
     <NavigationProperty Name="ShopperAddresses" Relationship="VolunteerNetworkModel.FK_ShopperAddress_Countries" FromRole="Country" ToRole="ShopperAddress" />
     <NavigationProperty Name="VolunteerAddresses" Relationship="VolunteerNetworkModel.FK_VolunteerAddress_Countries" FromRole="Country" ToRole="VolunteerAddress" />
+  </EntityType>
+  <EntityType Name="ErrorLog">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ErrorType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ErrorMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="State">
     <Key>
@@ -337,6 +370,18 @@
       </Principal>
       <Dependent Role="User">
         <PropertyRef Name="AspNetUsersId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AuditTable_User">
+    <End Type="VolunteerNetworkModel.User" Role="User" Multiplicity="1" />
+    <End Type="VolunteerNetworkModel.AuditTable" Role="AuditTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AuditTable">
+        <PropertyRef Name="UserId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -448,6 +493,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_AuditTable_SupportTask">
+    <End Type="VolunteerNetworkModel.SupportTask" Role="SupportTask" Multiplicity="0..1" />
+    <End Type="VolunteerNetworkModel.AuditTable" Role="AuditTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SupportTask">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AuditTable">
+        <PropertyRef Name="TaskId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_SearchAreas_Cities">
     <End Type="VolunteerNetworkModel.City" Role="City" Multiplicity="0..1" />
     <End Type="VolunteerNetworkModel.SearchArea" Role="SearchArea" Multiplicity="*" />
@@ -536,13 +593,4 @@
     <End Type="VolunteerNetworkModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
     <End Type="VolunteerNetworkModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
   </Association>
-  <EntityType Name="ErrorLog">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="UserId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="ErrorType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="ErrorMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-  </EntityType>
 </Schema>

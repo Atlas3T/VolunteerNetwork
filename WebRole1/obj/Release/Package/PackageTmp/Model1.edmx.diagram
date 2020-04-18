@@ -6,22 +6,25 @@
     <edmx:Diagrams>
       <Diagram DiagramId="e910e6e6f61745448a72efa8da878e6c" Name="Diagram1">
         <EntityTypeShape EntityType="VolunteerNetworkModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="VolunteerNetworkModel.AspNetRole" Width="1.5" PointX="0.75" PointY="11.75" />
-        <EntityTypeShape EntityType="VolunteerNetworkModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="12.5" />
-        <EntityTypeShape EntityType="VolunteerNetworkModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="15.25" />
-        <EntityTypeShape EntityType="VolunteerNetworkModel.AspNetUser" Width="1.5" PointX="3" PointY="10.5" />
+        <EntityTypeShape EntityType="VolunteerNetworkModel.AspNetRole" Width="1.5" PointX="0.75" PointY="13.625" />
+        <EntityTypeShape EntityType="VolunteerNetworkModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="12.375" />
+        <EntityTypeShape EntityType="VolunteerNetworkModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="9.875" />
+        <EntityTypeShape EntityType="VolunteerNetworkModel.AspNetUser" Width="1.5" PointX="3" PointY="12.375" />
         <EntityTypeShape EntityType="VolunteerNetworkModel.uk_towns" Width="1.5" PointX="0.75" PointY="3.75" />
-        <EntityTypeShape EntityType="VolunteerNetworkModel.User" Width="1.5" PointX="5.25" PointY="8.25" />
-        <EntityTypeShape EntityType="VolunteerNetworkModel.ShopperAddress" Width="1.5" PointX="7.5" PointY="8.125" />
-        <EntityTypeShape EntityType="VolunteerNetworkModel.SupportTask" Width="1.5" PointX="7.5" PointY="20.25" />
-        <EntityTypeShape EntityType="VolunteerNetworkModel.City" Width="1.5" PointX="5.25" PointY="4.375" />
-        <EntityTypeShape EntityType="VolunteerNetworkModel.Country" Width="1.5" PointX="5.25" PointY="18.125" />
-        <EntityTypeShape EntityType="VolunteerNetworkModel.State" Width="1.5" PointX="5.25" PointY="1.375" />
-        <EntityTypeShape EntityType="VolunteerNetworkModel.SearchArea" Width="1.5" PointX="7.5" PointY="4.375" />
-        <EntityTypeShape EntityType="VolunteerNetworkModel.VolunteerAddress" Width="1.5" PointX="10.5" PointY="8.125" />
+        <EntityTypeShape EntityType="VolunteerNetworkModel.User" Width="1.5" PointX="5.25" PointY="15.25" />
+        <EntityTypeShape EntityType="VolunteerNetworkModel.ShopperAddress" Width="1.5" PointX="10.5" PointY="15.25" />
+        <EntityTypeShape EntityType="VolunteerNetworkModel.SupportTask" Width="1.5" PointX="7.5" PointY="30.625" />
+        <EntityTypeShape EntityType="VolunteerNetworkModel.AuditTable" Width="1.5" PointX="9.75" PointY="23.625" />
+        <EntityTypeShape EntityType="VolunteerNetworkModel.City" Width="1.5" PointX="5.25" PointY="2.5" />
+        <EntityTypeShape EntityType="VolunteerNetworkModel.Country" Width="1.5" PointX="5.25" PointY="20.125" />
+        <EntityTypeShape EntityType="VolunteerNetworkModel.ErrorLog" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="VolunteerNetworkModel.State" Width="1.5" PointX="5.25" PointY="6.75" />
+        <EntityTypeShape EntityType="VolunteerNetworkModel.SearchArea" Width="1.5" PointX="7.5" PointY="15.625" />
+        <EntityTypeShape EntityType="VolunteerNetworkModel.VolunteerAddress" Width="1.5" PointX="7.5" PointY="11.25" />
         <AssociationConnector Association="VolunteerNetworkModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="VolunteerNetworkModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="VolunteerNetworkModel.FK_User_AspNetUsers" />
+        <AssociationConnector Association="VolunteerNetworkModel.FK_AuditTable_User" />
         <AssociationConnector Association="VolunteerNetworkModel.FK_SearchAreas_User" />
         <AssociationConnector Association="VolunteerNetworkModel.FK_ShopperAddress_User" />
         <AssociationConnector Association="VolunteerNetworkModel.FK_Task_User" />
@@ -31,6 +34,7 @@
         <AssociationConnector Association="VolunteerNetworkModel.FK_ShopperAddress_Cities" />
         <AssociationConnector Association="VolunteerNetworkModel.FK_ShopperAddress_Countries" />
         <AssociationConnector Association="VolunteerNetworkModel.FK_ShopperAddress_States" />
+        <AssociationConnector Association="VolunteerNetworkModel.FK_AuditTable_SupportTask" />
         <AssociationConnector Association="VolunteerNetworkModel.FK_SearchAreas_Cities" />
         <AssociationConnector Association="VolunteerNetworkModel.FK_SearchAreas_Cities1" />
         <AssociationConnector Association="VolunteerNetworkModel.FK_SearchAreas_Cities2" />
@@ -39,7 +43,6 @@
         <AssociationConnector Association="VolunteerNetworkModel.FK_VolunteerAddress_Countries" />
         <AssociationConnector Association="VolunteerNetworkModel.FK_VolunteerAddress_States" />
         <AssociationConnector Association="VolunteerNetworkModel.AspNetUserRoles" />
-        <EntityTypeShape EntityType="VolunteerNetworkModel.ErrorLog" Width="1.5" PointX="7.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

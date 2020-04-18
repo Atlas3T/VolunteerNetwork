@@ -17,6 +17,7 @@ namespace WebRole1
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
+            this.AuditTables = new HashSet<AuditTable>();
             this.SupportTasks = new HashSet<SupportTask>();
             this.SupportTasks1 = new HashSet<SupportTask>();
             this.SupportTasks2 = new HashSet<SupportTask>();
@@ -30,6 +31,8 @@ namespace WebRole1
         public string RefId { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AuditTable> AuditTables { get; set; }
         public virtual SearchArea SearchArea { get; set; }
         public virtual ShopperAddress ShopperAddress { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

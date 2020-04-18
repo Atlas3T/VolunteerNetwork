@@ -366,14 +366,24 @@ namespace WebRole1.Controllers
                             {
                                 Title = model.Title,
                                 Description = model.Description,
-                                Type = (int)TicketType.General,
+                                Type = model.Type,
                                 RaisedBy = thisUser.Id,
                                 Status = (int)TicketStatus.Unassigned,
                                 DateRaised = DateTime.Now,
-                                severity = (int)TicketSeverity.Medium,
+                                severity = model.Severity,
                             };
 
                             db.SupportTasks.Add(newTicket);
+                            db.SaveChanges();
+
+                            AuditTable newAuditEvent = new AuditTable()
+                            {
+                                UserId = thisUser.Id,
+                                EventType = (int)AuditEventType.CreateTask,
+                                TaskId = newTicket.Id
+                            };
+
+                            db.AuditTables.Add(newAuditEvent);
                             db.SaveChanges();
                         }
                     }
@@ -498,7 +508,7 @@ namespace WebRole1.Controllers
                             Severity = thisTask.severity
                         };
 
-                        switch (thisTask.severity)
+                        switch (thisTask.Status)
                         {
                             case (int)TicketStatus.Unassigned:
                                 thisTicket.StatusText = "Unassigned";
@@ -545,6 +555,15 @@ namespace WebRole1.Controllers
                             thisTask.Description = model.Description;
                             thisTask.severity = model.Severity;
                             thisTask.Type = model.Type;
+
+                            AuditTable newAuditEvent = new AuditTable()
+                            {
+                                UserId = thisTask.User.Id,
+                                EventType = (int)AuditEventType.EditTask,
+                                TaskId = thisTask.Id
+                            };
+
+                            db.AuditTables.Add(newAuditEvent);
                         }
 
                         db.SaveChanges();
@@ -557,6 +576,81 @@ namespace WebRole1.Controllers
             }
 
             return RedirectToAction("Index", "Shopper");
+        }
+
+        public ActionResult Unassign(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                string strCurrentUserId = User.Identity.GetUserId();
+
+                try
+                {
+                    using (var db = new VolunteerNetworkEntities())
+                    {
+                        var thisTask = (from s in db.SupportTasks
+                                        where s.Id == id
+                                        select s).FirstOrDefault();
+
+                        thisTask.AssignedTo = null;
+                        thisTask.Status = (int)TicketStatus.Unassigned;
+
+                        AuditTable newAuditEvent = new AuditTable()
+                        {
+                            UserId = thisTask.User.Id,
+                            EventType = (int)AuditEventType.UnAssignTask,
+                            TaskId = thisTask.Id
+                        };
+
+                        db.AuditTables.Add(newAuditEvent);
+
+                        db.SaveChanges();
+                    }
+                }
+                catch (Exception e)
+                {
+                    ErrorClass.LogError(strCurrentUserId, ErrorMessageType.Exception.ToString(), e.Message);
+                }
+            }
+
+            return RedirectToAction("Edit", "Shopper", new { id = id });
+        }
+
+        public ActionResult Close(int id)
+        {
+            if (ModelState.IsValid)
+            {
+                string strCurrentUserId = User.Identity.GetUserId();
+
+                try
+                {
+                    using (var db = new VolunteerNetworkEntities())
+                    {
+                        var thisTask = (from s in db.SupportTasks
+                                        where s.Id == id
+                                        select s).FirstOrDefault();
+
+                        thisTask.Status = (int)TicketStatus.Closed;
+
+                        AuditTable newAuditEvent = new AuditTable()
+                        {
+                            UserId = thisTask.User.Id,
+                            EventType = (int)AuditEventType.CloseTask,
+                            TaskId = thisTask.Id
+                        };
+
+                        db.AuditTables.Add(newAuditEvent);
+
+                        db.SaveChanges();
+                    }
+                }
+                catch (Exception e)
+                {
+                    ErrorClass.LogError(strCurrentUserId, ErrorMessageType.Exception.ToString(), e.Message);
+                }
+            }
+
+            return RedirectToAction("Edit", "Shopper", new { id = id });
         }
 
         private static void SetCountryList(VolunteerNetworkEntities db)

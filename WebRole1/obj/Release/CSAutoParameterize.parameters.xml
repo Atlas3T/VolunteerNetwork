@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <parameters>
   <parameter name="DefaultConnection-Web.config Connection String" description="DefaultConnection Connection String used in web.config by the application to access the database." defaultValue="Server=tcp:farmtofork.database.windows.net,1433;Initial Catalog=VolunteerNetwork;Persist Security Info=False;User ID=f2f84738;Password=Q4xq5ktzis2jGXem4c4fMmWXys6xwo;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="C:\\Users\\DarrenOliveiro-Pries\\source\\repos\\VolunteerNetwork\\VolunteerNetwork\\WebRole1\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+    <parameterEntry kind="XmlFile" scope="D:\\source\\Windows\\VolunteerNetwork\\WebRole1\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
   </parameter>
   <parameter name="VolunteerNetworkEntities-Web.config Connection String" description="VolunteerNetworkEntities Connection String used in web.config by the application to access the database." defaultValue="metadata=res://*/Model1.csdl|res://*/Model1.ssdl|res://*/Model1.msl;provider=System.Data.SqlClient;provider connection string=&quot;data source=tcp:farmtofork.database.windows.net,1433;initial catalog=VolunteerNetwork;persist security info=False;user id=f2f84738;password=Q4xq5ktzis2jGXem4c4fMmWXys6xwo;multipleactiveresultsets=False;connect timeout=30;encrypt=True;trustservercertificate=False;App=EntityFramework&quot;" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="C:\\Users\\DarrenOliveiro-Pries\\source\\repos\\VolunteerNetwork\\VolunteerNetwork\\WebRole1\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='VolunteerNetworkEntities']/@connectionString" />
+    <parameterEntry kind="XmlFile" scope="D:\\source\\Windows\\VolunteerNetwork\\WebRole1\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='VolunteerNetworkEntities']/@connectionString" />
   </parameter>
 </parameters>

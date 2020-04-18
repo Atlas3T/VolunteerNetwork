@@ -25,7 +25,7 @@
     </Endpoints>
     <Contents>
       <Content destination=".\">
-        <SourceDirectory path="C:\Users\DarrenOliveiro-Pries\source\repos\VolunteerNetwork\VolunteerNetwork\VolunteerNetwork\rcf\Debug\WebRole1Content\" />
+        <SourceDirectory path="D:\source\Windows\VolunteerNetwork\VolunteerNetwork\rcf\Debug\WebRole1Content\" />
       </Content>
     </Contents>
   </WebRole>

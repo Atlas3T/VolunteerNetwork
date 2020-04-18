@@ -121,6 +121,17 @@
     <Property Name="AssignedTo" Type="int" />
     <Property Name="severity" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="AuditTable">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="EventType" Type="int" Nullable="false" />
+    <Property Name="TaskId" Type="int" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="EventDateTime" Type="datetime2" Precision="7" Nullable="false" />
+  </EntityType>
   <EntityType Name="Cities">
     <Key>
       <PropertyRef Name="CityId" />
@@ -180,6 +191,30 @@
     <Property Name="Postcode" Type="nvarchar" MaxLength="15" Nullable="false" />
     <Property Name="Country" Type="int" Nullable="false" />
   </EntityType>
+  <Association Name="FK_AuditTable_SupportTask">
+    <End Role="SupportTask" Type="Self.SupportTask" Multiplicity="0..1" />
+    <End Role="AuditTable" Type="Self.AuditTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SupportTask">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AuditTable">
+        <PropertyRef Name="TaskId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AuditTable_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="AuditTable" Type="Self.AuditTable" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AuditTable">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
     <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
       <OnDelete Action="Cascade" />
@@ -451,12 +486,21 @@
     <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ShopperAddress" EntityType="Self.ShopperAddress" Schema="shopper" store:Type="Tables" />
     <EntitySet Name="SupportTask" EntityType="Self.SupportTask" Schema="shopper" store:Type="Tables" />
+    <EntitySet Name="AuditTable" EntityType="Self.AuditTable" Schema="utilities" store:Type="Tables" />
     <EntitySet Name="Cities" EntityType="Self.Cities" Schema="utilities" store:Type="Tables" />
     <EntitySet Name="Countries" EntityType="Self.Countries" Schema="utilities" store:Type="Tables" />
     <EntitySet Name="ErrorLog" EntityType="Self.ErrorLog" Schema="utilities" store:Type="Tables" />
     <EntitySet Name="States" EntityType="Self.States" Schema="utilities" store:Type="Tables" />
     <EntitySet Name="SearchAreas" EntityType="Self.SearchAreas" Schema="volunteer" store:Type="Tables" />
     <EntitySet Name="VolunteerAddress" EntityType="Self.VolunteerAddress" Schema="volunteer" store:Type="Tables" />
+    <AssociationSet Name="FK_AuditTable_SupportTask" Association="Self.FK_AuditTable_SupportTask">
+      <End Role="SupportTask" EntitySet="SupportTask" />
+      <End Role="AuditTable" EntitySet="AuditTable" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AuditTable_User" Association="Self.FK_AuditTable_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="AuditTable" EntitySet="AuditTable" />
+    </AssociationSet>
     <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
       <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />

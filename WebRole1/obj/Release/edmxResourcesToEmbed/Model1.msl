@@ -120,6 +120,18 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="AuditTables">
+      <EntityTypeMapping TypeName="VolunteerNetworkModel.AuditTable">
+        <MappingFragment StoreEntitySet="AuditTable">
+          <ScalarProperty Name="EventDateTime" ColumnName="EventDateTime" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+          <ScalarProperty Name="EventType" ColumnName="EventType" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Cities">
       <EntityTypeMapping TypeName="VolunteerNetworkModel.City">
         <MappingFragment StoreEntitySet="Cities">
@@ -137,6 +149,16 @@
           <ScalarProperty Name="TwoCharCountryCode" ColumnName="TwoCharCountryCode" />
           <ScalarProperty Name="CountryName" ColumnName="CountryName" />
           <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ErrorLogs">
+      <EntityTypeMapping TypeName="VolunteerNetworkModel.ErrorLog">
+        <MappingFragment StoreEntitySet="ErrorLog">
+          <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+          <ScalarProperty Name="ErrorType" ColumnName="ErrorType" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -183,15 +205,5 @@
         <ScalarProperty Name="Id" ColumnName="RoleId" />
       </EndProperty>
     </AssociationSetMapping>
-    <EntitySetMapping Name="ErrorLogs">
-      <EntityTypeMapping TypeName="VolunteerNetworkModel.ErrorLog">
-        <MappingFragment StoreEntitySet="ErrorLog">
-          <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
-          <ScalarProperty Name="ErrorType" ColumnName="ErrorType" />
-          <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>
