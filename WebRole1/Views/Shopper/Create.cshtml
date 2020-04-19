@@ -23,11 +23,34 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Description, 10, 40, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            <div style="float:left;">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Description, 10, 40, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
             </div>
+            <div style="float:left;">
+                Description suggestions<br />
+                Helpful details to include in your description include the following.<br /><br />
+                <ul class="list-check">
+                    <li>
+                        Shopping or medicine details to deliver
+                    </li>
+                    <li>
+                        Special delivery instructions such as where to leave items
+                    </li>
+                    <li>
+                        Special delivery time instructions
+                    </li>
+                    <li>
+                        Payment details for items being collected
+                    </li>
+                    <li>
+                        Contact details such as phone number, Email, Whatsapp
+                    </li>
+                </ul>
+            </div><div style="clear:both;"></div>
         </div>
 
         <div class="form-group">

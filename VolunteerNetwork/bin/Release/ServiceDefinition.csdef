@@ -27,12 +27,6 @@
       <Content destination=".\">
         <SourceDirectory path="D:\source\Windows\VolunteerNetwork\VolunteerNetwork\rcf\Release\WebRole1Content\" />
       </Content>
-      <Content destination=".\">
-        <SourceDirectory path="D:\source\Windows\VolunteerNetwork\VolunteerNetwork\ecf\WebRole1Content\" />
-      </Content>
     </Contents>
-    <Imports>
-      <Import moduleName="Diagnostics" />
-    </Imports>
   </WebRole>
 </ServiceDefinition>

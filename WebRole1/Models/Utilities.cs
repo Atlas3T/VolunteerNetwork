@@ -109,8 +109,9 @@ namespace WebRole1.Models
 
     enum TicketType
     {
-        General,
-        FoodDelivery
+        General = 1,
+        FoodDelivery = 2,
+        DogWalking = 3
     }
 
     enum ErrorMessageType

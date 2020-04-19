@@ -555,6 +555,9 @@ namespace WebRole1.Controllers
                         case (int)TicketType.FoodDelivery:
                             thisTicket.TypeText = "Food delivery";
                             break;
+                        case (int)TicketType.DogWalking:
+                            thisTicket.TypeText = "Dog Walking";
+                            break;
                         case (int)TicketType.General:
                         default:
                             thisTicket.TypeText = "General";

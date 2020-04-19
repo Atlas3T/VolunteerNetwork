@@ -16,7 +16,6 @@
                 <table style="width:100%">
                     <tr>
                         <th>title</th>
-                        <th>Description</th>
                         <th>Status</th>
                         <th>Edit record</th>
                         <th>Get record details</th>
@@ -26,9 +25,6 @@
                         <tr>
                             <td>
                                 @Html.DisplayFor(m => item.Title, new { @class = "form-control" })
-                            </td>
-                            <td>
-                                @Html.DisplayFor(m => item.Description, new { @class = "form-control" })
                             </td>
                             <td>
                                 @Html.DisplayFor(m => item.StatusText, new { @class = "form-control" })

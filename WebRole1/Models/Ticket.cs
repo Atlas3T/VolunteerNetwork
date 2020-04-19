@@ -27,6 +27,7 @@ namespace WebRole1.Models
                 List<SelectListItem> myList = new List<SelectListItem>();
                 var data = new[]{
                                      new SelectListItem{ Value="1",Text="Food Delivery"},
+                                     new SelectListItem{ Value="1",Text="Dog Walking"},
                                      new SelectListItem{ Value="2",Text="General"}
                                 };
                 myList = data.ToList();

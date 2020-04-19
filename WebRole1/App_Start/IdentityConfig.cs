@@ -33,7 +33,7 @@ namespace WebRole1
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("test@example.com", "Voluntry Network Team"),
+                From = new EmailAddress("noreply@volunteernetwork.live", "Voluntry Network Team"),
                 Subject = message.Subject,
                 PlainTextContent = message.Body,
                 HtmlContent = message.Body
