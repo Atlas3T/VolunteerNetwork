@@ -21,6 +21,7 @@ namespace WebRole1
             this.SupportTasks = new HashSet<SupportTask>();
             this.SupportTasks1 = new HashSet<SupportTask>();
             this.SupportTasks2 = new HashSet<SupportTask>();
+            this.MessageLogs = new HashSet<MessageLog>();
         }
     
         public int Id { get; set; }
@@ -42,5 +43,7 @@ namespace WebRole1
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SupportTask> SupportTasks2 { get; set; }
         public virtual VolunteerAddress VolunteerAddress { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MessageLog> MessageLogs { get; set; }
     }
 }

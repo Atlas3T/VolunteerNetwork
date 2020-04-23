@@ -26,9 +26,9 @@ namespace WebRole1.Models
             {
                 List<SelectListItem> myList = new List<SelectListItem>();
                 var data = new[]{
-                                     new SelectListItem{ Value="1",Text="Food Delivery"},
-                                     new SelectListItem{ Value="1",Text="Dog Walking"},
-                                     new SelectListItem{ Value="2",Text="General"}
+                                     new SelectListItem{ Value=((int)TicketType.FoodDelivery).ToString(),Text="Food Delivery"}, 
+                                     new SelectListItem{ Value=((int)TicketType.DogWalking).ToString(),Text="Dog Walking"},
+                                     new SelectListItem{ Value=((int)TicketType.General).ToString(),Text="General"}
                                 };
                 myList = data.ToList();
                 return myList;
@@ -50,9 +50,9 @@ namespace WebRole1.Models
             {
                 List<SelectListItem> myList = new List<SelectListItem>();
                 var data = new[]{
-                                     new SelectListItem{ Value="1",Text="Unassiged"},
-                                     new SelectListItem{ Value="2",Text="Assigned"},
-                                     new SelectListItem{ Value="3",Text="Closed"}
+                                     new SelectListItem{ Value=((int)TicketStatus.Unassigned).ToString(),Text="Unassiged"},
+                                     new SelectListItem{ Value=((int)TicketStatus.Assigned).ToString(),Text="Assigned"},
+                                     new SelectListItem{ Value=((int)TicketStatus.Closed).ToString(),Text="Closed"}
                                 };
                 myList = data.ToList();
                 return myList;
@@ -76,9 +76,9 @@ namespace WebRole1.Models
 
                 List<SelectListItem> myList = new List<SelectListItem>();
                 var data = new[]{
-                                     new SelectListItem{ Value="1",Text="Low"},
-                                     new SelectListItem{ Value="2",Text="Medium"},
-                                     new SelectListItem{ Value="3",Text="High"}
+                                     new SelectListItem{ Value=((int)TicketSeverity.Low).ToString(),Text="Low"},
+                                     new SelectListItem{ Value=((int)TicketSeverity.Medium).ToString(),Text="Medium"},
+                                     new SelectListItem{ Value=((int)TicketSeverity.High).ToString(),Text="High"}
                                 };
                 myList = data.ToList();
                 return myList;
@@ -96,5 +96,11 @@ namespace WebRole1.Models
 
         [Display(Name = "Type")]
         public string TypeText { get; set; }
+
+        [Display(Name = "Phone (optional)")]
+        public string PhoneNumber { get; set; }
+
+        [Display(Name = "Email (optional)")]
+        public string Email { get; set; }
     }
 }

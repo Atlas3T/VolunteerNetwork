@@ -18,6 +18,7 @@ namespace WebRole1
         public SupportTask()
         {
             this.AuditTables = new HashSet<AuditTable>();
+            this.MessageLogs = new HashSet<MessageLog>();
         }
     
         public int Id { get; set; }
@@ -31,11 +32,15 @@ namespace WebRole1
         public Nullable<System.DateTime> DateClosed { get; set; }
         public Nullable<int> AssignedTo { get; set; }
         public int severity { get; set; }
+        public string ContactPhoneNumber { get; set; }
+        public string ContactEmailAddress { get; set; }
     
         public virtual User User { get; set; }
         public virtual User User1 { get; set; }
         public virtual User User2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AuditTable> AuditTables { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MessageLog> MessageLogs { get; set; }
     }
 }

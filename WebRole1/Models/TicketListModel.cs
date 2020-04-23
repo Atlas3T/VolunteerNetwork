@@ -10,5 +10,7 @@ namespace WebRole1.Models
     {
         [Display(Name = "Tickets")]
         public List<Ticket> tickets { get; set; }
+
+        public int VolunteerCount { get; set; }
     }
 }

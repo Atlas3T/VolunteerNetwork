@@ -9,66 +9,83 @@
 
 @using (Html.BeginForm("Create", "shopper", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
-    <div style="border:dashed; border-width: 1px; border-color: #bbbbbb; padding: 10px; background-color: #EEEEEE">
-        @Html.AntiForgeryToken()
-        <h4>Use this page to detail what you need support with.</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div style="float:left;">
-                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextAreaFor(model => model.Description, 10, 40, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div style="float:left;">
-                Description suggestions<br />
-                Helpful details to include in your description include the following.<br /><br />
-                <ul class="list-check">
-                    <li>
-                        Shopping or medicine details to deliver
-                    </li>
-                    <li>
-                        Special delivery instructions such as where to leave items
-                    </li>
-                    <li>
-                        Special delivery time instructions
-                    </li>
-                    <li>
-                        Payment details for items being collected
-                    </li>
-                    <li>
-                        Contact details such as phone number, Email, Whatsapp
-                    </li>
-                </ul>
-            </div><div style="clear:both;"></div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(x => Model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-5">
-                @Html.DropDownListFor(m => m.Type, Model.TypeList, "Please select")
-                @Html.ValidationMessageFor(x => x.Type, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(x => Model.Severity, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-5">
-                @Html.DropDownListFor(m => m.Severity, Model.SeverityList, "Please select")
-                @Html.ValidationMessageFor(x => x.Severity, "", new { @class = "text-danger" })
-            </div>
+<div style="border:dashed; border-width: 1px; border-color: #bbbbbb; padding: 10px; background-color: #EEEEEE">
+    @Html.AntiForgeryToken()
+    <h4>Use this page to detail what you need support with.</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    <div class="form-group">
+        <div style="float:left;">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Description, 10, 40, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div style="float:left;">
+            Description suggestions<br />
+            Helpful details to include in your description include the following.<br /><br />
+            <ul class="list-check">
+                <li>
+                    Shopping or medicine details to deliver
+                </li>
+                <li>
+                    Special delivery instructions such as where to leave items
+                </li>
+                <li>
+                    Special delivery time instructions
+                </li>
+                <li>
+                    Payment details for items being collected
+                </li>
+                <li>
+                    Contact details such as phone number, Email, Whatsapp
+                </li>
+            </ul>
+        </div><div style="clear:both;"></div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => Model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-5">
+            @Html.DropDownListFor(m => m.Type, Model.TypeList, "Please select")
+            @Html.ValidationMessageFor(x => x.Type, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => Model.Severity, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-5">
+            @Html.DropDownListFor(m => m.Severity, Model.SeverityList, "Please select")
+            @Html.ValidationMessageFor(x => x.Severity, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+</div>
 
     <div class="form-group">
         <div class="col-md-offset-0 col-md-10" style="padding-top:20px;">

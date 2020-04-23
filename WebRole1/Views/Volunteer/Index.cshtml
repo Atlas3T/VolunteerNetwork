@@ -16,33 +16,41 @@
                 <table style="width:100%">
                     <tr>
                         <th>title</th>
+                        <th>Date Raised</th>
+                        <th>Date Closed</th>
                         <th>Status</th>
                         <th>Edit record</th>
                         <th>Get record details</th>
                     </tr>
                     @foreach (var item in Model.tickets)
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(m => item.Title, new { @class = "form-control" })
-                            </td>
-                            <td>
-                                @Html.DisplayFor(m => item.StatusText, new { @class = "form-control" })
-                            </td>
-                            <td>
-                                @if (item.Status == 1)
-                                {
-                                    @Html.ActionLink("Assign", "Assign", new { id = item.TicketNumber })
-                                }
-                                else if (item.Status == 2)
-                                {
-                                    @Html.ActionLink("Unassign", "Unassign", new { id = item.TicketNumber })
-                                }
-                            </td>
-                            <td>
-                                @Html.ActionLink("Details", "Details", new { id = item.TicketNumber })
-                            </td>
-                        </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(m => item.Title, new { @class = "form-control" })
+                    </td>
+                    <td>
+                        @item.DateRaised.ToString("f")
+                    </td>
+                    <td>
+                        @string.Format("{0:f}", item.DateClosed)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.StatusText, new { @class = "form-control" })
+                    </td>
+                    <td>
+                        @if (item.Status == 1)
+                        {
+                            @Html.ActionLink("Assign", "Assign", new { id = item.TicketNumber })
+                        }
+                        else if (item.Status == 2)
+                        {
+                            @Html.ActionLink("Unassign", "Unassign", new { id = item.TicketNumber })
+                        }
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "Details", new { id = item.TicketNumber })
+                    </td>
+                </tr>
                     }
                 </table>
             </div>

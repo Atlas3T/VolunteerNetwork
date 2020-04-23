@@ -105,6 +105,15 @@
       <End Role="AspNetRole" EntitySet="AspNetRoles" />
       <End Role="AspNetUser" EntitySet="AspNetUsers" />
     </AssociationSet>
+    <EntitySet Name="MessageLogs" EntityType="VolunteerNetworkModel.MessageLog" />
+    <AssociationSet Name="FK_MessageLog_User" Association="VolunteerNetworkModel.FK_MessageLog_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="MessageLog" EntitySet="MessageLogs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MessageLog_SupportTask" Association="VolunteerNetworkModel.FK_MessageLog_SupportTask">
+      <End Role="SupportTask" EntitySet="SupportTasks" />
+      <End Role="MessageLog" EntitySet="MessageLogs" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="C__MigrationHistory">
     <Key>
@@ -203,6 +212,7 @@
     <NavigationProperty Name="SupportTasks1" Relationship="VolunteerNetworkModel.FK_Task_User1" FromRole="User" ToRole="SupportTask" />
     <NavigationProperty Name="SupportTasks2" Relationship="VolunteerNetworkModel.FK_Task_User2" FromRole="User" ToRole="SupportTask" />
     <NavigationProperty Name="VolunteerAddress" Relationship="VolunteerNetworkModel.FK_VolunteerAddress_User" FromRole="User" ToRole="VolunteerAddress" />
+    <NavigationProperty Name="MessageLogs" Relationship="VolunteerNetworkModel.FK_MessageLog_User" FromRole="User" ToRole="MessageLog" />
   </EntityType>
   <EntityType Name="ShopperAddress">
     <Key>
@@ -241,6 +251,9 @@
     <NavigationProperty Name="User1" Relationship="VolunteerNetworkModel.FK_Task_User1" FromRole="SupportTask" ToRole="User" />
     <NavigationProperty Name="User2" Relationship="VolunteerNetworkModel.FK_Task_User2" FromRole="SupportTask" ToRole="User" />
     <NavigationProperty Name="AuditTables" Relationship="VolunteerNetworkModel.FK_AuditTable_SupportTask" FromRole="SupportTask" ToRole="AuditTable" />
+    <Property Name="ContactPhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ContactEmailAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="MessageLogs" Relationship="VolunteerNetworkModel.FK_MessageLog_SupportTask" FromRole="SupportTask" ToRole="MessageLog" />
   </EntityType>
   <EntityType Name="AuditTable">
     <Key>
@@ -592,5 +605,41 @@
   <Association Name="AspNetUserRoles">
     <End Type="VolunteerNetworkModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
     <End Type="VolunteerNetworkModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+  </Association>
+  <EntityType Name="MessageLog">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TicketId" Type="Int32" Nullable="false" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="MessageDateTime" Type="DateTimeOffset" Nullable="false" Precision="7" />
+    <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="User" Relationship="VolunteerNetworkModel.FK_MessageLog_User" FromRole="MessageLog" ToRole="User" />
+    <NavigationProperty Name="SupportTask" Relationship="VolunteerNetworkModel.FK_MessageLog_SupportTask" FromRole="MessageLog" ToRole="SupportTask" />
+  </EntityType>
+  <Association Name="FK_MessageLog_User">
+    <End Type="VolunteerNetworkModel.User" Role="User" Multiplicity="1" />
+    <End Type="VolunteerNetworkModel.MessageLog" Role="MessageLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MessageLog">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MessageLog_SupportTask">
+    <End Type="VolunteerNetworkModel.SupportTask" Role="SupportTask" Multiplicity="1" />
+    <End Type="VolunteerNetworkModel.MessageLog" Role="MessageLog" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SupportTask">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MessageLog">
+        <PropertyRef Name="TicketId" />
+      </Dependent>
+    </ReferentialConstraint>
   </Association>
 </Schema>

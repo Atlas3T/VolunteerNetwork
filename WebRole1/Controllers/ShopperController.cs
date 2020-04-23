@@ -242,6 +242,17 @@ namespace WebRole1.Controllers
                                            select s;
 
                         ticketListModel.tickets = new List<Ticket>();
+
+
+                        int volunteerCount = (from s in db.SearchAreas
+                                              where (s.City1 == thisUser.ShopperAddress.City.CityId ||
+                                                     s.City2 == thisUser.ShopperAddress.City.CityId ||
+                                                     s.City3 == thisUser.ShopperAddress.City.CityId ||
+                                                     s.City4 == thisUser.ShopperAddress.City.CityId)
+                                              select s).Count();
+
+                        ticketListModel.VolunteerCount = 1;
+
                         foreach (SupportTask s in supportTasks)
                         {
                             var ticket = new Ticket
@@ -371,6 +382,8 @@ namespace WebRole1.Controllers
                                 Status = (int)TicketStatus.Unassigned,
                                 DateRaised = DateTime.Now,
                                 severity = model.Severity,
+                                ContactPhoneNumber = model.PhoneNumber,
+                                ContactEmailAddress = model.Email
                             };
 
                             db.SupportTasks.Add(newTicket);
@@ -425,7 +438,9 @@ namespace WebRole1.Controllers
                             DateRaised = thisTask.DateRaised,
                             DateClosed = thisTask.DateClosed,
                             AssignedTo = thisTask.AssignedTo,
-                            Severity = thisTask.severity
+                            Severity = thisTask.severity,
+                            Email = thisTask.ContactEmailAddress,
+                            PhoneNumber = thisTask.ContactPhoneNumber
                         };
 
                         switch (thisTask.Status)
@@ -508,7 +523,9 @@ namespace WebRole1.Controllers
                             DateRaised = thisTask.DateRaised,
                             DateClosed = thisTask.DateClosed,
                             AssignedTo = thisTask.AssignedTo,
-                            Severity = thisTask.severity
+                            Severity = thisTask.severity,
+                            Email = thisTask.ContactEmailAddress,
+                            PhoneNumber = thisTask.ContactPhoneNumber
                         };
 
                         switch (thisTask.Status)
@@ -558,6 +575,8 @@ namespace WebRole1.Controllers
                             thisTask.Description = model.Description;
                             thisTask.severity = model.Severity;
                             thisTask.Type = model.Type;
+                            thisTask.ContactPhoneNumber = model.PhoneNumber;
+                            thisTask.ContactEmailAddress = model.Email;
 
                             AuditTable newAuditEvent = new AuditTable()
                             {
@@ -634,6 +653,8 @@ namespace WebRole1.Controllers
                                         select s).FirstOrDefault();
 
                         thisTask.Status = (int)TicketStatus.Closed;
+                        thisTask.ClosedBy = thisTask.RaisedBy;
+                        thisTask.DateClosed = DateTime.Now;
 
                         AuditTable newAuditEvent = new AuditTable()
                         {

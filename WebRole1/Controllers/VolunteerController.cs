@@ -166,15 +166,15 @@ namespace WebRole1.Controllers
 
                             if (model.address.VolunteerAreaTwoId != null)
                             {
-                                newSearchArea.City1 = model.address.VolunteerAreaTwoId;
+                                newSearchArea.City2 = model.address.VolunteerAreaTwoId;
                             }
                             if (model.address.VolunteerAreaThreeId != null)
                             {
-                                newSearchArea.City1 = model.address.VolunteerAreaThreeId;
+                                newSearchArea.City3 = model.address.VolunteerAreaThreeId;
                             }
                             if (model.address.VolunteerAreaFourId != null)
                             {
-                                newSearchArea.City1 = model.address.VolunteerAreaFourId;
+                                newSearchArea.City4 = model.address.VolunteerAreaFourId;
                             }
 
                             db.SearchAreas.Add(newSearchArea);
@@ -332,6 +332,8 @@ namespace WebRole1.Controllers
                                 DateClosed = s.DateClosed,
                                 AssignedTo = s.AssignedTo,
                                 Severity = s.severity,
+                                Email = s.ContactEmailAddress,
+                                PhoneNumber = s.ContactPhoneNumber
                             };
 
                             switch (s.Status)
@@ -396,7 +398,9 @@ namespace WebRole1.Controllers
                                 DateRaised = s.DateRaised,
                                 DateClosed = s.DateClosed,
                                 AssignedTo = s.AssignedTo,
-                                Severity = s.severity
+                                Severity = s.severity,
+                                Email = s.ContactEmailAddress,
+                                PhoneNumber = s.ContactPhoneNumber
                             });
                         }
                     }
@@ -519,7 +523,9 @@ namespace WebRole1.Controllers
                         DateRaised = thisTask.DateRaised,
                         DateClosed = thisTask.DateClosed,
                         AssignedTo = thisTask.AssignedTo,
-                        Severity = thisTask.severity
+                        Severity = thisTask.severity,
+                        Email = thisTask.ContactEmailAddress,
+                        PhoneNumber = thisTask.ContactPhoneNumber
                     };
 
                     switch (thisTask.Status)

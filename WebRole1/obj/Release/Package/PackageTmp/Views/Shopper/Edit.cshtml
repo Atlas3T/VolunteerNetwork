@@ -9,70 +9,85 @@
 
 @using (Html.BeginForm("Edit", "shopper", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
-    <div style="border:dashed; border-width: 1px; border-color: #bbbbbb; padding: 10px; background-color: #EEEEEE">
-        @Html.AntiForgeryToken()
-        <h4>Update your support ticket with any new details you want to change or add.</h4>
-        <hr />
-        @Html.ValidationSummary("", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(m => m.TicketNumber, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.DisplayFor(m => m.TicketNumber, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.DateRaised, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.DisplayFor(m => m.DateRaised, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.DateClosed, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.DisplayFor(m => m.DateClosed, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.Title, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.Description, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(m => m.Description, 10, 40, new { @class = "form-control" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(x => Model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-5">
-                @Html.DropDownListFor(m => m.Type, Model.TypeList, "Please select")
-                @Html.ValidationMessageFor(x => x.Type, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(x => Model.Severity, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-5">
-                @Html.DropDownListFor(m => m.Severity, Model.SeverityList, "Please select")
-                @Html.ValidationMessageFor(x => x.Severity, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.StatusText, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.DisplayFor(m => m.StatusText, new { @class = "form-control" })
-                @if (Model.Status == 2)
-                {
-                    @Html.Label(" | ", new { @style = "padding-left:10px; padding-right:10px;" })
-                    @Html.ActionLink("Unassign", "Unassign", new { id = Model.TicketNumber, @class = "col-md-offset-0 col-md-10" })
-                    @Html.Label(" | ", new { @style = "padding-left:10px; padding-right:10px;" })
-                    @Html.ActionLink("Close", "Close", new { id = Model.TicketNumber, style = "" })
-                }
-            </div>
+<div style="border:dashed; border-width: 1px; border-color: #bbbbbb; padding: 10px; background-color: #EEEEEE">
+    @Html.AntiForgeryToken()
+    <h4>Update your support ticket with any new details you want to change or add.</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.TicketNumber, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DisplayFor(m => m.TicketNumber, new { @class = "form-control" })
         </div>
     </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.DateRaised, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Model.DateRaised.ToString("dd MMM yyyy HH:mm")
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.DateClosed, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @(Model.DateClosed.HasValue ? Model.DateClosed.Value.ToString("dd MMM yyyy HH:mm") : "")
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Title, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Description, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(m => m.Description, 10, 40, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(x => Model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-5">
+            @Html.DropDownListFor(m => m.Type, Model.TypeList, "Please select")
+            @Html.ValidationMessageFor(x => x.Type, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(x => Model.Severity, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-5">
+            @Html.DropDownListFor(m => m.Severity, Model.SeverityList, "Please select")
+            @Html.ValidationMessageFor(x => x.Severity, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.StatusText, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DisplayFor(m => m.StatusText, new { @class = "form-control" })
+            @if (Model.Status == 2)
+            {
+                @Html.Label(" | ", new { @style = "padding-left:10px; padding-right:10px;" })
+                @Html.ActionLink("Unassign", "Unassign", new { id = Model.TicketNumber, @class = "col-md-offset-0 col-md-10" })
+                @Html.Label(" | ", new { @style = "padding-left:10px; padding-right:10px;" })
+                @Html.ActionLink("Close", "Close", new { id = Model.TicketNumber, style = "" })
+            }
+        </div>
+    </div>
+</div>
 
     <div class="form-group" style="padding-top:20px;">
         <div class="col-md-offset-0 col-md-10">

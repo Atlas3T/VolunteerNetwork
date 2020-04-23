@@ -43,6 +43,9 @@
         <AssociationConnector Association="VolunteerNetworkModel.FK_VolunteerAddress_Countries" />
         <AssociationConnector Association="VolunteerNetworkModel.FK_VolunteerAddress_States" />
         <AssociationConnector Association="VolunteerNetworkModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="VolunteerNetworkModel.MessageLog" Width="1.5" PointX="9.75" PointY="27" />
+        <AssociationConnector Association="VolunteerNetworkModel.FK_MessageLog_User" />
+        <AssociationConnector Association="VolunteerNetworkModel.FK_MessageLog_SupportTask" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

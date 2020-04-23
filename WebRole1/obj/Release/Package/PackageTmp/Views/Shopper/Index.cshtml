@@ -5,41 +5,54 @@
     Layout = "~/Views/Shared/_LayoutSimple.cshtml";
 }
 
+        <h4>Volunteers covering your area: @Model.VolunteerCount</h4>
+        <p>
+            If there are no volunteers covering your area then please look for any volunteer groups acting independently through Facebook and other groups and suggest they register
+            online at this site. We can preload whole groups of volunteers to make this a painless process.
+        </p>
+
 <div class="section-content section-content-boxed">
     <div class="row g-gs justify-content-center align-items-center">
         <div class="col-lg-12">
             <div class="list-block pr-lg-12">
-
                 <h2>Your ticket list</h2>
                 <h4>The tasks below represent all of your personal tasks which have either been processed or are awaiting processing.</h4>
                 <h4>To change the address associated to your tasks please visit your <a href="/Shopper/MyProfile">profile page</a>.</h4>
                 <hr />
                 <p>
-                        <a href="/shopper/create" class="btn scrollto"><em class="icon ni ni-question"></em><span>Create new ticket</span></a>
+                    <a href="/shopper/create" class="btn scrollto"><em class="icon ni ni-question"></em><span>Create new ticket</span></a>
                 </p>
                 <table style="width:100%">
                     <tr>
-                        <th>title</th>
+                        <th>Title</th>
+                        <th>Date Raised</th>
+                        <th>Date Closed</th>
                         <th>Status</th>
                         <th>Edit record</th>
                         <th>Record details</th>
                     </tr>
                     @foreach (var item in Model.tickets)
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(m => item.Title, new { @class = "form-control" })
-                            </td>
-                            <td>
-                                @Html.DisplayFor(m => item.StatusText, new { @class = "form-control" })
-                            </td>
-                            <td>
-                                @Html.ActionLink("Edit", "Edit", new { id = item.TicketNumber })
-                            </td>
-                            <td>
-                                @Html.ActionLink("Details", "Details", new { id = item.TicketNumber })
-                            </td>
-                        </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(m => item.Title, new { @class = "form-control" })
+                    </td>
+                    <td>
+                        @item.DateRaised.ToString("f")
+                    </td>
+                    <td>
+                        @string.Format("{0:f}", item.DateClosed)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.StatusText, new { @class = "form-control" })
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.TicketNumber })
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "Details", new { id = item.TicketNumber })
+                    </td>
+                </tr>
                     }
                 </table>
             </div>

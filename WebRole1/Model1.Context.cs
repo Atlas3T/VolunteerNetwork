@@ -41,5 +41,6 @@ namespace WebRole1
         public virtual DbSet<State> States { get; set; }
         public virtual DbSet<SearchArea> SearchAreas { get; set; }
         public virtual DbSet<VolunteerAddress> VolunteerAddresses { get; set; }
+        public virtual DbSet<MessageLog> MessageLogs { get; set; }
     }
 }
